@@ -1,0 +1,999 @@
+,text_1,text_2,label,chrf_score
+0,take measures in order to,take additional measures to,4.0,0.5066079295154184
+1,was seeking to,will strive to,3.0,0.1739130434782609
+2,canada aims to,canada works to,2.333,0.5316091954022989
+3,refugees and,refugee population,2.667,0.49504950495049505
+4,measures and,"instruments , and",3.0,0.3
+5,provide both,", is provided",3.667,0.4861111111111111
+6,policy goals,political goals,4.333,0.5612244897959184
+7,of non-governmental organisations,for non-governmental organizations,4.0,0.8278867102396515
+8,of the service,of services are,3.333,0.574712643678161
+9,resource availability .,of the resources available .,5.0,0.5714285714285714
+10,all nations that,all the countries that,5.0,0.4137115839243498
+11,now continue,in continuing,4.0,0.5902777777777778
+12,the issue of,the questions of,3.667,0.37037037037037035
+13,not already,there were no,1.6669999999999998,0.1532567049808429
+14,two types,two different types,4.667,0.6666666666666666
+15,you doing up there,you doin ' up here,5.0,0.5698924731182795
+16,", religions",religious and,3.333,0.5747126436781609
+17,matters that are,"subject matter ,",2.333,0.3333333333333333
+18,continues to play an,there continues to be a,3.333,0.6179775280898877
+19,mitigate the consequences,reduce the impact,5.0,0.23041474654377875
+20,", in certain instances",", in some instances",4.667,0.529513888888889
+21,of alternative measures,of other measures,4.667,0.41038525963149075
+22,be improved,be consolidated,3.333,0.20599250936329588
+23,p.m. to 4:00 p.m.,a.m. to 4 p.m.,3.0,0.5633802816901409
+24,did n't he,do n't know what it is,2.667,0.3448275862068966
+25,you are about,you 're not gonna,2.667,0.29051987767584103
+26,police investigations,an investigation,2.667,0.6388888888888888
+27,and the human rights,", and rights",3.333,0.3692614770459083
+28,is colonel,'s colonel,4.333,0.8666666666666667
+29,", including in particular the",", particularly those of",2.667,0.398970398970399
+30,been permitted to,is allowed to,4.333,0.20094562647754138
+31,is considered that,is believed that,3.333,0.3812636165577342
+32,of human trafficking .,the trafficking of human beings .,3.333,0.8333333333333333
+33,of the commission for the,committees on,1.3330000000000002,0.187793427230047
+34,it is committed,the government is committed,2.333,0.8394160583941606
+35,- when did you,"well , did you",3.333,0.5217391304347826
+36,we have to go .,we should get going .,3.0,0.2544529262086514
+37,and the mark,and the trade mark,4.667,0.8415841584158416
+38,", detailed",issue in detail,4.333,0.5833333333333334
+39,was an emergency,was urgent,2.667,0.2583979328165374
+40,those wishing to,persons who wish to,4.333,0.32608695652173914
+41,others and,other jurisdictions and,3.333,0.5681818181818181
+42,convention provides,convention shall be,4.0,0.5353535353535354
+43,both employers,the employer shall,3.0,0.6022408963585433
+44,compromise is,compromise proposed,3.333,0.7807807807807807
+45,is anxious to,is intended to,3.667,0.220125786163522
+46,considerably better,much better,3.667,0.29723991507430997
+47,"additionally , it","in addition , it has",3.667,0.5518018018018018
+48,proposals presented in,the proposals contained in,3.333,0.5527638190954773
+49,works well,are working,1.6669999999999998,0.2850877192982456
+50,report addresses,report is,3.667,0.3645833333333333
+51,"of treaties ,",nations treaty,2.333,0.42452830188679247
+52,it is concerned that,it notes with concern that,4.0,0.5340699815837938
+53,"fight against racism ,","fighting racism ,",3.0,0.5087719298245613
+54,provides an overview of the,gives an overview of,3.667,0.6232492997198881
+55,data are available,data base,2.667,0.2054794520547945
+56,note with appreciation that,note with satisfaction that,4.0,0.6122448979591836
+57,of the following draft decision :,the following draft resolutions :,4.333,0.639344262295082
+58,"yes , she is","yeah , i 'm sure",3.667,0.2693602693602693
+59,ability to,they are able to,2.667,0.2674897119341563
+60,we are confident that,we strongly believe that,4.667,0.2748226950354609
+61,provincial governments,in the provinces,2.667,0.2998236331569665
+62,- everything is,- that 's all,2.333,0.10840108401084012
+63,"- yeah , i do","- yes , he did",4.333,0.330188679245283
+64,be regarded as a,be considered to be an,3.667,0.2482269503546099
+65,withdraw,considered withdrawn,4.0,0.8208955223880597
+66,of the highest importance,of the greatest importance,4.333,0.7153392330383481
+67,invited committee members,invited the committee,3.333,0.6033182503770739
+68,very sorry,"sorry , guys",4.667,0.4112554112554112
+69,is implemented in,be applied in,2.0,0.24822695035460995
+70,the contents,the content,5.0,0.9042553191489362
+71,arguments presented,-rrb- arguments,3.0,0.4244306418219461
+72,has all along been,have long been,4.667,0.47461368653421626
+73,the policy objectives,the aims and objectives,2.667,0.552584670231729
+74,responding to questions,answer the questions,4.333,0.429042904290429
+75,fair and adequate,fair and appropriate,3.667,0.5743243243243243
+76,is just not,'s just not,4.333,0.8823529411764705
+77,is to ensure that,guaranteeing that,3.0,0.25287356321839083
+78,further consideration of the item,discussion of the topic,3.667,0.33898305084745756
+79,preventing the use,prevention of the use,4.333,0.7067510548523206
+80,men were,two men were,3.333,0.9322033898305084
+81,you are all,you 're all,4.333,0.6078431372549019
+82,of qualifications and,of skills and,3.667,0.21657250470809788
+83,is an important stage,is an important step,2.333,0.851449275362319
+84,prepared by,report prepared by,4.667,0.9239130434782608
+85,such issues should be,these issues should be,4.0,0.7974910394265233
+86,regarding the application of the,on the operation of the,3.667,0.4428904428904429
+87,to discuss,to be considered in,3.0,0.1984126984126984
+88,3/12/2005 ad -lrb- updated,", 20/11/2005 ad -lrb- updated",2.333,0.8473389355742297
+89,do n't know what happened,do n't know anything,3.667,0.4621212121212122
+90,of the society,community was,2.667,0.11695906432748539
+91,accordance with the provisions of article,provided for in article,2.0,0.2633969118982743
+92,include the following :,will be the following :,2.0,0.7235772357723577
+93,on implementing the,concerning the implementation of the,4.0,0.7142857142857142
+94,recommendations of the task,recommendations of the panel of,3.667,0.8299866131191432
+95,of ammunition,"munitions ,",1.6669999999999998,0.5501618122977346
+96,outlined that,"indicated that ,",3.667,0.478395061728395
+97,neither is,", nor was",3.0,0.1126126126126126
+98,", the board established",", the council established",3.0,0.6360708534621577
+99,presented by,pointed out by,3.0,0.36082474226804123
+100,was noticeably,have been distinctly,4.333,0.1790633608815427
+101,let 's get to it,"right , let 's get going",3.0,0.641025641025641
+102,distributed to,to submit to,2.0,0.17699115044247787
+103,have put in place,has put,3.333,0.16049382716049385
+104,including references to,have referred to,4.667,0.2609427609427609
+105,"committee , having",the commission on the,3.667,0.26371308016877637
+106,probe into,investigation was,2.333,0.14227642276422767
+107,go forward with,go ahead with,5.0,0.3794037940379404
+108,now i feel,i 've been feeling,3.667,0.3815261044176707
+109,is therefore important,is why it is important,3.667,0.452991452991453
+110,or programs,"programmes , as well",2.0,0.5141843971631206
+111,take responsibility for,be responsible for,5.0,0.5166666666666666
+112,i 'm an idiot,i 'm such an idiot,4.667,0.803030303030303
+113,", including where",", particularly where",3.667,0.3153153153153153
+114,- you did n't,- i do n't believe this,2.0,0.2608695652173913
+115,its grave concern at :,its serious concern at :,4.667,0.634517766497462
+116,", having regard to the",in respecting the,3.0,0.22807017543859648
+117,conflict resolution,conflicts have,3.0,0.37500000000000006
+118,be utilized for,to be used for,3.667,0.4301075268817205
+119,enter into force,brought into force,4.667,0.6447688564476886
+120,followed closely,has been closely following,4.667,0.632183908045977
+121,greater participation of,greater involvement of,4.333,0.3364632237871674
+122,continue its consideration of this matter,continue consideration of this issue,4.333,0.7236842105263157
+123,all members of,the states members of,4.0,0.7103825136612023
+124,you 're talking,you talk,3.333,0.33898305084745756
+125,", particularly the","and , in particular , the",3.667,0.648148148148148
+126,seems to be an,now seems to,2.667,0.5162241887905605
+127,endangered wildlife in,endangered species in,2.333,0.506872852233677
+128,", activities and","operations , and",3.0,0.25925925925925924
+129,/ or recommendations,audit recommendations,2.667,0.7670454545454546
+130,purposes are,"goals and objectives ,",4.0,0.19047619047619047
+131,you worry,you 're worried about,4.333,0.5194805194805194
+132,report refers to the,report mentions the,5.0,0.4118773946360153
+133,relating to the situation in,regarding the situation in,4.667,0.6785243741765481
+134,provincial and territorial,the provinces and territories,3.667,0.6722689075630252
+135,provisional agreement,interim agreement,3.333,0.45119705340699806
+136,why do i say that,why would they be doing that,3.0,0.37393162393162394
+137,center of gaza strip,central gaza strip,4.667,0.5973025048169557
+138,on the question of the,on the issue of,3.0,0.3368794326241135
+139,are reproduced in annex,appear in annex,3.0,0.37225042301184436
+140,"- yes , she did","yes , that 's it",3.333,0.3439153439153439
+141,advice from the,to the views of the,3.0,0.2325581395348837
+142,have thus been,have therefore been,3.333,0.5833333333333334
+143,referred to in paragraph,referred to in section,4.333,0.5868544600938967
+144,are accepted,is to be adopted,2.0,0.2693602693602693
+145,"of data ,",data are available,2.667,0.3603603603603603
+146,certain circumstances -lrb-,some cases -lrb-,4.667,0.2849002849002849
+147,are fundamental,is a key factor,3.0,0.10666666666666669
+148,- how 're you doing,- how you doing,4.0,0.6728778467908902
+149,a bit tired,really tired,3.667,0.4263565891472869
+150,various regional groups,regional groups,3.667,0.6345177664974619
+151,relationships are,relations officer,1.6669999999999998,0.5057471264367817
+152,given time,given point in time,3.0,0.7738095238095237
+153,attach importance to,attached special importance to,3.667,0.8108108108108107
+154,police officers and,", the police and",3.333,0.39094650205761305
+155,used to think that,was just thinking that,3.333,0.4297693920335429
+156,assumed responsibility,they are responsible for,3.667,0.4230118443316413
+157,departments of education,ministry of education,4.333,0.5345911949685535
+158,of the tribunal for the,of the courts to,3.0,0.2861952861952862
+159,it supported the,and endorsed the,2.0,0.32098765432098764
+160,"dominic , i am so sorry",- i 'm sorry,4.0,0.2663230240549828
+161,aims to,is making an effort to,2.333,0.3055555555555556
+162,'s very important for,was very important for,4.667,0.9408602150537635
+163,everything looks,all this is,3.333,0.11538461538461538
+164,apply them,to be implemented,3.667,0.1626016260162602
+165,of small arms .,of use of nuclear weapons .,2.0,0.23114355231143555
+166,non-governmental organizations,the non-governmental organisations,4.333,0.8602150537634407
+167,are implemented,be put into effect,3.333,0.14322916666666669
+168,is illustrated in,is listed in,4.0,0.369047619047619
+169,and the costs of,and cost of,5.0,0.38461538461538464
+170,of people with disabilities,of persons with disabilities,5.0,0.7384823848238483
+171,are at present,is currently the,3.0,0.19943019943019943
+172,been actively involved,actively engaged,5.0,0.39682539682539686
+173,participate effectively in,be actively involved in,3.667,0.3663793103448276
+174,'s hard to believe,is hard to believe,4.0,0.9354838709677419
+175,but were,", but rather that",3.333,0.33854166666666674
+176,all necessary steps to,all measures necessary,4.667,0.5042735042735043
+177,the baltic states,the baltic sea,2.667,0.692488262910798
+178,the goals set out in,the objectives set forth in,3.0,0.3754578754578755
+179,each state party to,states parties to,3.667,0.37832310838445804
+180,documentation and,documents and to,4.0,0.5208333333333334
+181,will leave,'m leaving,3.667,0.3555555555555555
+182,plenary meetings and,plenary sessions and,3.667,0.4857142857142857
+183,", but rather that",", but it is",3.333,0.275779376498801
+184,cases even,case then,3.667,0.3153153153153153
+185,"report , dated",report of the work of the,3.333,0.3968253968253968
+186,agreement reached,to reaching,1.3330000000000002,0.28776978417266186
+187,development of a,of setting up a,3.667,0.1616915422885572
+188,persons with reduced mobility,passengers with reduced mobility,5.0,0.814676616915423
+189,the knowledge and,the skills and,2.667,0.25821596244131456
+190,measured in,measured during,4.0,0.7865168539325841
+191,", the sources said",the officials said,4.667,0.35483870967741943
+192,had originally been,had initially been,4.667,0.5386178861788617
+193,and we are,", and we stand",3.667,0.6118143459915611
+194,most of its,the majority of its,2.667,0.5376344086021505
+195,where are you taking him ?,wh-where are you taking him ?,4.667,0.9873949579831933
+196,concepts and,to the principles and,2.667,0.35256410256410253
+197,"yes , that 's true .","yes , it does .",2.333,0.29411764705882354
+198,of facilitating and,facilitation and,4.333,0.5864197530864198
+199,to implement its,to carry out the,4.333,0.1358024691358025
+200,rates at,rate is,3.0,0.37037037037037035
+201,strives to,to pursue efforts to,3.333,0.27450980392156865
+202,are currently under,is under way,4.667,0.2531645569620253
+203,'s what it is,'s exactly right,3.0,0.18518518518518517
+204,and non-governmental organizations ;,and ngos ;,4.333,0.12944983818770225
+205,established within,created in,3.333,0.1360544217687075
+206,moved forward,move ahead,3.667,0.21241830065359477
+207,is thanks to,thank you to,2.667,0.3859649122807018
+208,these programmes,the two programmes,4.667,0.7055961070559611
+209,their special needs,their particular needs,4.333,0.4662698412698413
+210,the euro area,the euro zone,3.667,0.6349206349206349
+211,a view to improving,to help improve,3.333,0.3519668737060041
+212,'s losing,is losing,3.333,0.8461538461538461
+213,legal regulations,of regulations,3.667,0.6690140845070423
+214,and the outcome,and the results,4.667,0.47999999999999987
+215,will be issued in,will be included in,4.667,0.6235827664399094
+216,generating electricity,produce electricity,3.667,0.5121527777777778
+217,required by the,", in accordance with the",2.667,0.18656716417910446
+218,miles away,kilometres away,3.0,0.6458333333333334
+219,n't leave you,n't let you,3.667,0.5016181229773463
+220,a rise in,has been an increase in,3.667,0.4008438818565401
+221,"oh , uh , yeah","yes , the hell there is",2.333,0.18817204301075266
+222,that 's exactly who i am,that 's correct,2.667,0.30744336569579295
+223,partnership established,"partnership """,4.0,0.4871794871794872
+224,are very close .,'re so close .,2.333,0.48872180451127817
+225,came back,was coming,2.0,0.101010101010101
+226,even dressed,dressed,4.0,0.5
+227,were different,to differ,2.667,0.42424242424242425
+228,products and services in,product and service,4.333,0.6666666666666666
+229,relevant legislation,laws and regulations,4.0,0.30476190476190484
+230,speculate that,is suggested that,3.667,0.2966101694915254
+231,reports presented to the,reports before the,4.0,0.3827751196172249
+232,best contribute to,contribute to,3.667,0.7
+233,for the purposes,only for the purpose,4.333,0.8992805755395684
+234,"right , right , yeah","yes , it is",3.667,0.14056224899598393
+235,i 'm not scared,- i 'm not afraid,5.0,0.5511811023622046
+236,approximately 200 000,about 200 000,2.0,0.3389830508474576
+237,achievement of the goals of the,achieve the goals of the,4.333,0.683453237410072
+238,'s coming this way .,'m coming in .,3.667,0.3747534516765286
+239,appropriate ways to,ways and means of,3.667,0.20449897750511245
+240,also encourages the,also calls upon the,2.333,0.3232323232323233
+241,is an issue that,is a subject that,2.0,0.3676470588235294
+242,funds will,funding is,2.667,0.28888888888888886
+243,resources to,"available resources , to",3.667,0.778816199376947
+244,listed in annex,contained in annex,4.0,0.6901041666666666
+245,"thoughts , no","- no , dad",2.333,0.1797385620915033
+246,- so what happened ?,"-well , what happened ?",4.667,0.7771535580524344
+247,educational system in,education system in,4.667,0.7650273224043717
+248,once again reiterate,once again reaffirms,3.0,0.6285714285714286
+249,", as are the",as well as on the,2.667,0.36666666666666664
+250,routes used,routes of,3.667,0.5421686746987951
+251,was pleased to note that,notes with satisfaction that,4.333,0.2663622526636225
+252,", arrived here",arrived in the,4.0,0.5362318840579711
+253,- these are,"- well , this is",1.3330000000000002,0.20370370370370375
+254,is over .,'s all over .,3.0,0.7004830917874396
+255,of supporting and,'s support of,3.667,0.4373522458628842
+256,ask the secretary-general,requested the secretary- general,3.0,0.7399425287356324
+257,parties to the treaty,the states parties to the treaty,4.0,0.9438775510204082
+258,beginning of the first,start of the first,4.667,0.5497382198952879
+259,are benefiting from,take advantage of,4.0,0.11247443762781185
+260,"by its president ,",by the chairman,3.333,0.13157894736842107
+261,be necessary for the,was essential for,4.0,0.20348837209302326
+262,that situation,such a situation,3.333,0.6695156695156695
+263,attention is paid,pay attention to the,4.667,0.5518018018018018
+264,add to the,", contributing to the",3.0,0.5232558139534884
+265,you 're pretty,you look pretty,5.0,0.5316091954022989
+266,board of directors and the,board and the,3.0,0.3978978978978979
+267,resources and,", natural resources and",4.0,0.9130434782608696
+268,and the suggestions,and propositions,4.333,0.2674897119341564
+269,am in favour of,expressed support for,3.0,0.10178117048346057
+270,"no , we wo n't","no , he does n't",2.333,0.41310541310541304
+271,grown increasingly,becoming ever more,3.333,0.13978494623655915
+272,sbi decided to,sbi agreed to,4.0,0.38011695906432746
+273,are attending,participate in the,3.0,0.2272727272727272
+274,which was indispensable,which was vital,3.333,0.4060913705583757
+275,of not less than 3,of not less than three,4.0,0.9119496855345911
+276,of russia 's,of russia,4.667,0.7065217391304348
+277,would help to,is instrumental in,3.0,0.09090909090909091
+278,this is not a toy,it 's not a toy,5.0,0.6293706293706294
+279,scared to death,really scared,3.667,0.33875338753387535
+280,have an opportunity,were given the opportunity,3.667,0.6298449612403102
+281,shall be defined by,are established by,3.667,0.2642276422764228
+282,require for,needed to be,4.0,0.07751937984496125
+283,is ensuring that,is to guarantee that,4.333,0.31175059952038364
+284,there is still,there may be,3.333,0.32448377581120946
+285,risen significantly,increased substantially,3.667,0.1972386587771203
+286,is of vital importance that,is necessary that,3.0,0.19148936170212766
+287,of participating,of engaging in,3.667,0.17543859649122806
+288,it has become a,has now become a,4.333,0.6481481481481481
+289,has reviewed and considered,considered by,4.667,0.34632034632034625
+290,is primarily due to,is largely due to,4.667,0.4907975460122699
+291,", with special emphasis",", including , in particular",2.667,0.11164274322169059
+292,targeted,well targeted,4.333,0.9166666666666666
+293,intensive debate,intense debate,3.333,0.6766917293233082
+294,indicated that they,indicates that he,3.667,0.5828220858895705
+295,countries members of the,countries in the,3.333,0.4428341384863123
+296,it was a party to,is a state party to,3.333,0.5895691609977326
+297,"now , however ,","there is , however ,",2.333,0.7307692307692308
+298,very crucial,very critical,5.0,0.5555555555555556
+299,took place during,had taken place in,4.333,0.37671232876712324
+300,almost 25 per cent,nearly 25 per cent,5.0,0.6344086021505376
+301,is crucial that,is vitally important for,2.667,0.18656716417910446
+302,council members held,the members of the council welcomed,3.333,0.6754385964912281
+303,showed that it,demonstrated that it,4.0,0.6473829201101929
+304,"- yeah , that 's it","- yes , he did",3.333,0.21875000000000006
+305,equal treatment of men and,equality between men and,3.333,0.3934191702432046
+306,'m wondering,wonder,4.0,0.39325842696629215
+307,", i wish to begin",", i should like to begin",4.667,0.5811403508771931
+308,has been actively engaged in,has been active in,3.0,0.5510204081632653
+309,participating in,are invited to participate in the,2.333,0.5921052631578948
+310,is vitally important,is imperative,3.333,0.1984126984126984
+311,correspondents and,reporter and,2.333,0.22371364653243847
+312,reporting guidelines,""" guidelines",4.333,0.5089820359281436
+313,really were,'re really,1.6669999999999998,0.49603174603174605
+314,are fairly,are relatively more,2.0,0.31746031746031744
+315,of basic rights,"for fundamental rights ,",4.667,0.3855721393034826
+316,", the panel found",", the committee found",3.667,0.4809843400447427
+317,of contacts between new,of the relationship between the,3.667,0.41471048513302033
+318,is crucial to,would be important to,4.0,0.17699115044247785
+319,significantly increased,much more significant,3.0,0.4597701149425287
+320,and the next day,"the following day ,",4.667,0.26570048309178745
+321,what were your intentions,"why , what 's the matter",2.667,0.2157738095238095
+322,of the opinion that,are of the view that,5.0,0.45180722891566266
+323,their member states,their members,2.333,0.6079664570230607
+324,an increase of almost,an increase of nearly,3.667,0.6936936936936936
+325,is a major component,are an important part,3.333,0.18939393939393942
+326,are certainly,have actually,4.333,0.15873015873015872
+327,", the council is",", the council extended",3.0,0.8156028368794327
+328,", this is a",this represents an,4.333,0.3804347826086956
+329,", resulting from the",derived from the,3.667,0.4093567251461988
+330,"so , what is it ?",what 's all this ?,4.333,0.3082191780821918
+331,levels in,level -lrb-,3.333,0.39800995024875624
+332,presented in,was reported in,4.333,0.4421768707482993
+333,council was,"security council ,",3.333,0.6159420289855072
+334,opportunity to present,the possibility of submitting,3.333,0.1897689768976898
+335,is absolutely,is all very,2.667,0.22653721682847894
+336,becoming members,become part,3.667,0.24358974358974358
+337,", it is required to",there is a need to,4.0,0.3048780487804878
+338,reminded the public,reminds members of the public that,3.333,0.6759259259259258
+339,and i am happy to,", and i am glad",3.333,0.4778554778554779
+340,offence was committed,"criminal offence ,",1.3330000000000002,0.3571428571428571
+341,to include in,be contained in,3.0,0.24922118380062308
+342,counsel recalls that,""" the security council recalls that",3.667,0.7192982456140351
+343,the results of such,results of this,3.333,0.5693581780538302
+344,- is it,"- hey , it",3.333,0.3125
+345,reaffirms that the,reaffirming that the,3.667,0.7643312101910826
+346,n't eaten anything,n't eaten,3.667,0.44520547945205474
+347,why did n't you say something,why do you want to,3.0,0.2427821522309711
+348,first six months,first six months of this year,4.0,0.9121621621621623
+349,in the circumstances,under the circumstances,4.667,0.8801498127340824
+350,parliament needs to,this house must,2.667,0.10351966873706005
+351,appreciates the efforts,appreciated the efforts,4.667,0.8292682926829267
+352,the protection provided for in this,the protection provided under this,5.0,0.7561728395061729
+353,program objectives,the program 's objectives,3.667,0.8539094650205761
+354,"yeah , he does","of course , yeah",2.667,0.2991452991452992
+355,their decision,their own decisions,3.667,0.8194444444444444
+356,my fear is that,my concern is that,4.0,0.5338541666666666
+357,achieving sustainable,sustainable management,4.0,0.5017921146953406
+358,who maintain,who are in,4.0,0.2508960573476703
+359,"- yeah , this is","- yeah , he 's",3.333,0.5263157894736843
+360,a huge opportunity,a great opportunity,4.0,0.6623931623931623
+361,and detailed,detailed description,2.667,0.6634304207119741
+362,and that is exactly,and precisely,3.0,0.18867924528301888
+363,results of an,the outcome of the,4.0,0.196969696969697
+364,-roger who is this,- who 's that,3.333,0.28888888888888886
+365,continued for,continues with,3.667,0.5345911949685535
+366,of aboriginal languages,of indigenous languages,4.0,0.47154471544715443
+367,sufficient enough,insufficient,1.6669999999999998,0.5476190476190477
+368,is the establishment of,is to set up,3.667,0.14604810996563572
+369,in the development and implementation of,in the elaboration and implementation of,2.333,0.6666666666666666
+370,'s very important that,was essential for,4.333,0.12280701754385964
+371,"no , that 's not true",it is not true,4.333,0.44943820224719105
+372,center was,centre was,4.0,0.48888888888888893
+373,may remain,continued to be,3.667,0.10416666666666667
+374,customs clearance,customs,2.667,0.33333333333333337
+375,it is crucial that,it is also essential,3.0,0.3184713375796178
+376,i am scared,i 'm so scared,4.667,0.625
+377,assistance payments,assistance to,3.0,0.5450733752620546
+378,but i am,"well , i 've",3.333,0.16949152542372883
+379,get involved,had been involved,3.667,0.6666666666666667
+380,considered and adopted,discussed and adopted,4.0,0.627147766323024
+381,the differences among,the differences between,3.667,0.7308377896613191
+382,and regulations of,and rules of the,3.333,0.32679738562091504
+383,the arab states,the arabs,4.0,0.47619047619047616
+384,reaffirm the,", reiterating",3.667,0.15625
+385,on the development of a,the process of drafting a,3.0,0.24154589371980673
+386,achieving a higher degree of,achieve greater,3.333,0.23415977961432505
+387,to avoid,thus avoiding,4.333,0.6111111111111112
+388,i work,i really am,3.0,0.16666666666666669
+389,has not yet been,have not already been,5.0,0.4166666666666667
+390,examination of the question of the,consideration of the issue of the,3.333,0.5307855626326964
+391,- what 's that mean,what 's that supposed to mean,4.667,0.7428571428571428
+392,list -rrb-,-rrb- listed,3.333,0.5627705627705628
+393,pertinent terms and conditions of,requirements for the,3.333,0.1141552511415525
+394,cost of transportation,cost of transporting,4.667,0.7772020725388601
+395,this is unbelievable,- you 're unbelievable,4.667,0.6026365348399249
+396,'re really,are really,3.333,0.8666666666666667
+397,rule 160,article 160,3.0,0.6321839080459768
+398,it emphasises,the state party emphasizes,3.0,0.5367231638418078
+399,sake of the,interests of both the,3.667,0.36842105263157887
+400,are relevant to the,shall apply to the,3.333,0.31504065040650403
+401,and submit them,and present them,3.333,0.4232804232804233
+402,goes well beyond,go far beyond,3.667,0.3914141414141414
+403,is worth emphasising,is necessary to underline,2.667,0.15740740740740738
+404,all necessary measures for,all appropriate measures to ensure that,4.333,0.42338709677419356
+405,order to improve,", with a view to improving",3.0,0.5287356321839081
+406,is absolutely,is definitely,4.333,0.25396825396825395
+407,management regimes,regulatory regimes,4.0,0.3978494623655913
+408,"yes , i am","oh , yes , you are",2.667,0.4819277108433736
+409,strengthening cooperation among,strengthened cooperation between,3.667,0.6351981351981351
+410,nuclear weapons and international,nuclear weapons and the,2.0,0.6045197740112995
+411,"acknowledges ,",was acknowledged,4.667,0.7692307692307693
+412,drafting committee,drafting of a,3.0,0.4444444444444445
+413,adopted a resolution,adoption of resolutions,4.333,0.6273408239700374
+414,was underlined that,was stressed that,2.667,0.39877300613496935
+415,ministers of,prime minister in,3.667,0.5666666666666665
+416,are bad,be harmful,2.667,0.24305555555555555
+417,medical doctors,by doctors,4.333,0.4583333333333333
+418,months back,months away,2.667,0.5490196078431374
+419,am going to tell you,'m going to tell you,5.0,0.942857142857143
+420,are operated by,are carried out by,4.333,0.3385416666666667
+421,been communicated to,been forwarded to,3.667,0.31007751937984496
+422,are in favour,lend my support,3.667,0.10903426791277257
+423,"activities , especially","activities , particularly",4.333,0.5716586151368761
+424,was still in,are in,3.667,0.13108614232209737
+425,findings of the,outcomes of all the,1.6669999999999998,0.310077519379845
+426,its operations,current operations,2.333,0.7282913165266107
+427,is not available to,are not subject to,3.333,0.2642276422764228
+428,even more comprehensive,more comprehensive,4.667,0.775
+429,the proper functioning of,the normal functioning of,3.333,0.6444444444444445
+430,human rights violation,breaches of human rights,3.0,0.5160744500846024
+431,"first and foremost ,",the first is that the,3.0,0.27462121212121215
+432,guiding principles,principles,3.333,0.5102040816326531
+433,the special rapporteur informed the government,the special rapporteur advised the government,4.667,0.8102918586789555
+434,decided to defer the,decides to defer,4.333,0.584795321637427
+435,council is,rights council,3.667,0.6329113924050632
+436,on establishing,to be established,4.333,0.6036745406824147
+437,also concluded,group concluded,4.667,0.660919540229885
+438,of progress made in implementing,of progress in the implementation,4.0,0.6644144144144143
+439,both the government of,the government is,4.0,0.6578947368421053
+440,article 78 of,section 78 of,3.667,0.4126984126984127
+441,was able to,'ve managed to,3.667,0.20833333333333334
+442,medical services,medical care is,4.667,0.472636815920398
+443,adoption by,adopted an,4.0,0.33730158730158727
+444,and capacity,and the ability,2.667,0.28911564625850333
+445,ensure the protection of,purpose of protecting,4.0,0.4166666666666667
+446,"member state , and",member states as well,3.667,0.6434599156118143
+447,assisted to,is helping to,3.333,0.19157088122605365
+448,in my answer,in my reply,4.667,0.4078014184397163
+449,the ship,board ships,3.333,0.4310344827586207
+450,included in,mainstreamed in,4.0,0.33707865168539325
+451,preparing for,of the preparations for,4.667,0.47826086956521735
+452,"no , no , this is","- nope ,",4.0,0.11029411764705883
+453,is a need for,was vital for,2.333,0.2380952380952381
+454,is to be,must therefore be,3.667,0.2864583333333333
+455,and services sectors,and service sectors,5.0,0.8045977011494252
+456,assets were,asset of,4.0,0.32520325203252043
+457,"return of refugees ,",refugee return,4.667,0.5029585798816568
+458,", government departments",departments is,2.667,0.42276422764227645
+459,- you 're lying,you are a liar,4.667,0.26881720430107525
+460,real democracy,true democracy,3.667,0.681159420289855
+461,am aware,is well known,3.0,0.08333333333333334
+462,is naturally,are certainly,3.333,0.1736111111111111
+463,toppled iraqi president saddam hussein,iraqi president saddam hussein,3.0,0.7925072046109509
+464,passenger traffic,passengers,3.333,0.47101449275362317
+465,during the elections,at the elections,2.667,0.672514619883041
+466,by resolution,-lrb- resolutions,3.0,0.7951070336391438
+467,financing of this,financing of such,4.333,0.7471264367816093
+468,has agreed to,has been committed to,4.333,0.3982300884955752
+469,transportation to,transport to,4.0,0.5357142857142857
+470,", is committed to",remains committed to,3.0,0.7882882882882883
+471,said that it,was suggested that it,4.333,0.6570512820512819
+472,is important for,is critical to,2.0,0.16290726817042606
+473,major general ghazi,general ghazi,4.333,0.660377358490566
+474,the counterfeiting,counterfeits,5.0,0.5704697986577181
+475,policy recommendations,in recommendations,3.0,0.7155322862129144
+476,committee considers that,is of the opinion that,4.0,0.21126760563380284
+477,is certainly,is undoubtedly,4.667,0.2061855670103093
+478,- cost,costs are,3.667,0.48245614035087725
+479,it is very important that,it was essential for,3.333,0.15151515151515152
+480,you heard,you 've heard,4.333,0.7246376811594203
+481,and to enhance their,and strengthening their,4.667,0.35580524344569286
+482,"collection of data ,",gather data,4.667,0.17068273092369482
+483,reaffirming that,", reiterating",3.0,0.20202020202020202
+484,what the hell 's this,what is this,3.667,0.34090909090909094
+485,ceased to be,to suspend the,3.333,0.24054982817869416
+486,any requirement,information requirements,3.0,0.7338308457711441
+487,", it 's clear",", it is clear",4.667,0.6666666666666666
+488,and allocation of resources,and resource allocation,4.667,0.6846473029045643
+489,and this is,and it 's gonna be,2.667,0.2898550724637681
+490,"are you ok ,","- you all right ,",4.667,0.33333333333333337
+491,", relating to",", in relation to",3.667,0.5709876543209877
+492,", achieving","achievement ,",4.0,0.45977011494252873
+493,both countries in,", the two countries",4.0,0.5668934240362811
+494,our standard of living,the living standards,4.333,0.5699481865284974
+495,supplied with,providing them with,3.667,0.28528528528528535
+496,it is essential for,", it is necessary that",4.333,0.3273809523809524
+497,achieved in the area of,made in the field of,4.0,0.37953795379537947
+498,of formulating,process of formulating,3.0,0.934959349593496
+499,the troop-contributing countries,the countries,3.0,0.32608695652173925
+500,at a press conference held,at a press conference,4.333,0.8043478260869565
+501,be completely,that is absolutely,3.667,0.21212121212121207
+502,the creation of the state of,the establishment of the state of,5.0,0.6153846153846155
+503,currently studying,currently working,3.333,0.551948051948052
+504,other non-governmental organizations,national non-governmental organizations,3.333,0.8530571992110453
+505,", i 've just",", but i 've got",3.333,0.5272108843537415
+506,at all levels of,at all stages of,4.0,0.46913580246913567
+507,and state governments,"and governments ,",3.0,0.6169429097605894
+508,work with,'m trying to work with,4.0,0.8333333333333333
+509,", undertaking",undertaken the,3.667,0.5503144654088051
+510,were not able to,can no longer be,2.667,0.19753086419753085
+511,not stopped,not ceased,5.0,0.2777777777777778
+512,to believe,to be considered,2.667,0.3703703703703704
+513,aimed at promoting,designed to promote,3.667,0.3952991452991453
+514,objective is to assist,objective is to support,4.667,0.70578231292517
+515,outcomes of its,the results of its,3.667,0.4817708333333333
+516,is approving,am in favour of,2.333,0.1360544217687075
+517,was just about to,were about to,4.667,0.47281323877068554
+518,is an extremely important issue,is very important,3.667,0.36285362853628533
+519,the security council is ready to,the council is ready to,3.667,0.6643356643356644
+520,security systems,the security services,4.0,0.5714285714285714
+521,to points raised,to issues raised,4.0,0.4938271604938271
+522,"i am single , yes","yeah , i did",1.6669999999999998,0.16666666666666666
+523,and the ways in,", and the manner in",4.0,0.5167958656330749
+524,'re funny,is funny,2.667,0.546875
+525,conclusions as well as,of conclusions and,4.0,0.5584642233856895
+526,present proposals,forward proposals,3.333,0.5287356321839081
+527,"prescribed time ,","prescribed time limit ,",4.333,0.9161147902869757
+528,is crucial,is a key component,4.333,0.18072289156626503
+529,goals and objectives,and objectives,4.333,0.6804733727810651
+530,have already taken steps,has taken steps,4.333,0.4854368932038835
+531,its cooperation with,its partnerships with,4.0,0.31249999999999994
+532,of the military and,of the army and,4.333,0.47619047619047616
+533,"mental illnesses ,","mentally ill ,",4.333,0.38631346578366454
+534,express our appreciation to the secretary-general,thanking the secretary-general,2.667,0.4521674140508221
+535,a person under the age,persons below the age,3.667,0.4810996563573884
+536,continues to experience,has continued to,4.0,0.35353535353535354
+537,of these negotiations,of the negotiation process,4.0,0.7631578947368421
+538,", did n't we ?",", did n't l ?",4.0,0.7017543859649121
+539,"concerned , the committee",", in the committee",3.333,0.5581039755351682
+540,of the limits,of the limitations,4.0,0.8787878787878787
+541,shall be retained,is maintained,2.333,0.28368794326241137
+542,regions across the,regions at,3.333,0.4535147392290249
+543,everything 's all right,all is well,4.333,0.12953367875647667
+544,but that is,"- well , this is",3.0,0.2222222222222222
+545,beginning of this century,turn of the century,2.667,0.4261796042617961
+546,what happens,what the hell just happened,2.667,0.6969696969696969
+547,", it is essential",it is important to,4.333,0.31963470319634696
+548,established in december,created in december,4.0,0.5970149253731343
+549,"clearly , it",it was clear that,4.0,0.33333333333333337
+550,reporting obligations,"obligations """,4.0,0.4896421845574388
+551,maybe this,are perhaps,3.333,0.13157894736842105
+552,were under,is still under,3.333,0.4430379746835443
+553,plans is,plan -lrb-,4.667,0.3216374269005848
+554,order to move,for moving,4.333,0.22875816993464052
+555,a better understanding of the,improved understanding of the,4.333,0.7106918238993711
+556,aim is to,'s objective is to,4.333,0.4954954954954956
+557,"of children , in particular","of children , particularly",4.333,0.8128415300546447
+558,are currently under way,is in progress,2.667,0.05952380952380952
+559,have voted in favour,has voted,3.333,0.24390243902439024
+560,consider that to be,think that is,3.333,0.2620545073375262
+561,following two reports,following reports,3.667,0.70902394106814
+562,protection of the child,welfare of children,3.667,0.2902155887230514
+563,remind the house,to be reminded,3.333,0.3508771929824561
+564,already adopted,had been adopted,3.333,0.4894179894179894
+565,"bodies of the united nations ,","organs of the united nations ,",4.333,0.8242424242424242
+566,is the question,is all about,3.333,0.13661202185792348
+567,networks on,"new networks ,",3.333,0.7575757575757576
+568,enhance international,strengthen international,3.667,0.6648936170212766
+569,and further promote,and the promotion and,4.667,0.4291417165668663
+570,objectives for,the specific objectives of,2.667,0.6955380577427821
+571,"cases , such","cases , these",3.667,0.607638888888889
+572,requests the commission,call upon the commission,3.333,0.6148867313915858
+573,the programme be,the program is,4.667,0.6516290726817042
+574,order to guarantee,of ensuring that,3.667,0.130718954248366
+575,", as indicated in",as referred to in,3.667,0.21839080459770116
+576,is only one,is all a,2.667,0.16260162601626021
+577,", the authorities should",", the administration should",3.333,0.4740061162079511
+578,recommendation that,further recommends that,3.667,0.542406311637081
+579,- ladies,"well , ladies",3.667,0.75
+580,language used,"language , or",2.667,0.6190476190476191
+581,well known,may know,3.333,0.3424657534246575
+582,knew you 'd come back .,knew you 'd come .,3.0,0.7416666666666668
+583,the committee agrees with,the commission agrees with,5.0,0.7079646017699115
+584,are essential,was important,3.667,0.14285714285714285
+585,"of the citizens of europe ,","of europeans ,",4.333,0.33764367816091956
+586,is my sister,'s my sister,4.667,0.894736842105263
+587,are effectively,be clearly,2.333,0.15277777777777782
+588,you 're trying to,you would like to,4.0,0.24137931034482762
+589,economic conditions,economic,3.667,0.3571428571428571
+590,client services .,service to clients .,4.667,0.6193693693693694
+591,is significant,would be important,2.667,0.11204481792717087
+592,believe to be,think is,4.333,0.049999999999999996
+593,am asking you,'m just asking you,4.0,0.803030303030303
+594,'s difficult for,is hard for,3.667,0.19230769230769232
+595,know each other,know them,3.667,0.29411764705882354
+596,and consequently,and therefore is,3.333,0.18518518518518517
+597,reiterating that,reiterated its view that,4.333,0.5710955710955711
+598,"of employment ,","of employment opportunities ,",3.667,0.8513189448441247
+599,"thank you , doctor","thank you , gentlemen",3.333,0.611814345991561
+600,", where appropriate","when required ,",3.333,0.15527950310559005
+601,had yet to be,have still not been,4.0,0.24024024024024024
+602,of links between,of relationships between,4.0,0.5594405594405594
+603,centres of,regional centres for,4.333,0.6862745098039216
+604,those persons and,the individuals and,3.333,0.24943310657596374
+605,i am here,- i 'm in here,4.333,0.4761904761904761
+606,should be established,should be developed,3.667,0.45537340619307837
+607,in all aspects of,in every aspect of,4.333,0.4452054794520548
+608,reaffirmed by,been confirmed by,3.667,0.6116207951070335
+609,reaffirms the need,reiterates the need,4.667,0.5448717948717947
+610,as well as the,as was the,2.667,0.4654654654654654
+611,is n't possible,could n't be,3.667,0.25956284153005466
+612,defence of the rights of,protecting the rights of,4.0,0.5658914728682171
+613,the following,the following projects,2.333,0.9210526315789473
+614,iceland 's,iceland,4.0,0.625
+615,purposes of prostitution,context of prostitution,4.667,0.6464174454828661
+616,must be of,must be given to,1.6669999999999998,0.6995884773662551
+617,is easy for,'s very easy for,4.667,0.7592592592592593
+618,completed,has now been completed,4.667,0.8333333333333333
+619,you in here ?,- are you there ?,3.333,0.4892966360856269
+620,orally and,orally amended,2.667,0.7594936708860762
+621,", including , for example ,",", for example to",2.667,0.49145299145299143
+622,and the objective,and the aim,3.667,0.40767386091127095
+623,", and intergovernmental","and intergovernmental organizations ,",4.0,0.8599695585996956
+624,is the administration,is the government,2.333,0.30386740331491713
+625,a couple of months ago,just a few months ago,4.667,0.4982817869415808
+626,the egyptian government,the government of egypt,3.667,0.6585365853658538
+627,applies only to,be limited to,4.0,0.14905149051490515
+628,has knowledge,is also known,2.667,0.3015873015873016
+629,observes that,has pointed out that,1.0,0.28273809523809523
+630,exists no,there being no,4.333,0.2142857142857143
+631,presented to the,to submit a,3.667,0.11538461538461538
+632,the tribunal shall,the tribunal is required,2.0,0.6625258799171843
+633,most indebted,most heavily indebted,3.667,0.7817109144542772
+634,and young people,and young persons,4.0,0.7107843137254902
+635,and by strengthening,and further strengthening,4.667,0.7314814814814814
+636,were not sufficient to,do not suffice to,4.333,0.5175438596491228
+637,factor is,success factor,3.0,0.5476190476190476
+638,respondents noted,respondents indicated,2.333,0.7158836689038031
+639,- this was,then it was,3.667,0.3289473684210526
+640,at the following session .,at the next session .,4.0,0.5289855072463768
+641,commission endorsed the,committee endorsed the,3.333,0.6372549019607844
+642,first nations people,"first nations ,",2.333,0.6764705882352942
+643,"programs and services ,",program / service,5.0,0.5108877721943048
+644,eu 2020 strategy,europe 2020 strategy is,4.0,0.8450704225352113
+645,the secretariat of the committee,the secretariat of the commission,3.0,0.8614864864864864
+646,integrate itself,to become integrated,4.0,0.5395683453237411
+647,is contrary to,be inconsistent with,4.333,0.19283746556473833
+648,who are they,- who the hell is that,3.333,0.3650793650793651
+649,languages other,language -rrb-,3.0,0.4704301075268818
+650,particular attention is paid,particular attention to,3.333,0.74
+651,are talking about,speak of,4.333,0.06127450980392156
+652,is capable of being,is able to,4.0,0.23504273504273504
+653,committee at the,commission at its,3.667,0.33088235294117646
+654,to be prepared by the,drawn up by the,3.0,0.297951582867784
+655,objectives in terms,objectives are,4.0,0.5520833333333334
+656,of the general conference,the general assembly was,3.333,0.4389880952380953
+657,the advantages of,the benefit of,4.333,0.22300469483568078
+658,dated 30 november 2000,on 30 november 2000,4.667,0.7552083333333334
+659,should like to emphasise,wish to emphasise,5.0,0.5368589743589745
+660,the adverse effects of,the negative impacts of,2.667,0.32312925170068024
+661,was eventually,had subsequently,3.333,0.19943019943019943
+662,its concern about the,preoccupation over the,3.333,0.22401433691756273
+663,purpose of this project is,aim of this project is,4.333,0.7142857142857142
+664,is often difficult,can be hard,1.6669999999999998,0.07882882882882884
+665,new government has,"government has ,",3.333,0.7625272331154684
+666,rates as,rate used,3.667,0.35714285714285715
+667,'s list of issues,its list of issues,5.0,0.9246575342465755
+668,"oh , really .","oh , is that so ?",4.333,0.2599388379204893
+669,and assessments,evaluations were,2.333,0.10582010582010583
+670,cautioned that,was indicated that,2.333,0.46218487394957986
+671,assessment should be,evaluation was,3.333,0.09861932938856015
+672,"or indirectly , to",or indirectly involved,4.0,0.7337526205450735
+673,also remains,is still in,3.333,0.12411347517730496
+674,account of the recommendations,in mind the recommendations,3.667,0.6556372549019608
+675,process to be followed,procedures to be used,3.667,0.45532646048109965
+676,japan has,the government of japan has,3.0,0.783132530120482
+677,- i see,i 've been seeing,3.0,0.393939393939394
+678,like russia,such as russia,4.667,0.5113636363636362
+679,provided for in section,provided in article,3.0,0.44776119402985076
+680,and will allow,and will enable,4.667,0.5890804597701149
+681,results from the,the effects of the,4.667,0.23114355231143552
+682,was here,'s been here,3.0,0.4802259887005649
+683,refusing to,are unwilling to,3.333,0.46296296296296297
+684,- that 's my,is this my,3.0,0.2867383512544803
+685,areas of competence,terms of reference,2.333,0.3252032520325204
+686,it 's my job .,this is my job .,2.667,0.6837606837606837
+687,may be able to,may be allowed,3.333,0.5217391304347826
+688,", is necessary",there must,4.333,0.07507507507507506
+689,'s interested in,is interested in,4.333,0.9259259259259259
+690,- i 'm telling you,i say to you,3.0,0.1789709172259508
+691,is n't your,'re not in your,2.333,0.41198501872659177
+692,socio-economic rights,economic and social rights,4.333,0.6578947368421053
+693,by reason of its,by virtue of its,4.667,0.43209876543209874
+694,runs contrary to,was contrary to,4.667,0.7835820895522388
+695,particular concerns,specific concerns,3.333,0.43967280163599193
+696,receive benefits,benefits are,3.0,0.470737913486005
+697,"hey , you okay",you feeling all right,4.667,0.20491803278688522
+698,- this is great,"great , thank you",4.333,0.30183727034120733
+699,", in the implementation of the",in implementing its,3.667,0.35353535353535354
+700,is hereby replaced by the following,is replaced by the following,4.0,0.7651991614255766
+701,opportunity is,opportunity today,2.667,0.8050847457627119
+702,emphasized the need,emphasized the importance,4.667,0.7504873294346979
+703,expanded by,an increase by,4.333,0.20833333333333334
+704,are necessary,needs to be done,2.333,0.12345679012345678
+705,participate actively in the,be actively involved in the,3.333,0.5782312925170068
+706,issue of trafficking,trafficking in persons,3.0,0.5461393596986818
+707,are derived from the,arise from the,4.333,0.4536489151873766
+708,sincerely hopes,to be hoped,3.333,0.2203856749311295
+709,", and in particular those",", particularly regarding",3.0,0.44642857142857134
+710,permanent members and,permanent category and the,3.667,0.5087719298245613
+711,translates into,are translated into,4.667,0.6976744186046512
+712,completely destroyed,was destroyed,4.667,0.44642857142857145
+713,changed by,is to amend,3.0,0.10964912280701754
+714,basic infrastructure,infrastructure,4.667,0.6804733727810651
+715,are communicated,- communications,4.0,0.6296296296296297
+716,is in here,'re over here,3.667,0.3418803418803419
+717,it is quite clear,it is also clear,3.667,0.4861111111111112
+718,who was that,- who 's that,2.333,0.5555555555555556
+719,may be considered,may be regarded,4.0,0.4079254079254079
+720,", especially in the countries",", particularly in countries",3.333,0.4689480354879594
+721,provided for under paragraph,called for in paragraph,3.667,0.49333333333333335
+722,"is essential that ,",is critical that,3.333,0.37037037037037035
+723,of the board of directors,of the board of the,3.333,0.6316590563165904
+724,documents issued,documents on,2.667,0.5725190839694657
+725,also contributed to,has helped to,4.333,0.19916142557651992
+726,- i do n't,ls n't,2.667,0.2347417840375587
+727,objects of the,of the purposes of the,2.667,0.4878048780487805
+728,ethnic communities,ethnic groups,4.0,0.3333333333333333
+729,and considers the,are considered to be the,4.333,0.5701754385964913
+730,you need,necessary,4.333,0.1488095238095238
+731,you are such an idiot,you fool,3.667,0.10658914728682171
+732,which was applicable,that can be applied,2.667,0.27777777777777785
+733,the trans-european networks,the trans-european transport network,4.333,0.8661417322834647
+734,of enhancing the,in fostering the,2.667,0.3950617283950617
+735,had died,just died,3.333,0.4464285714285714
+736,concerned with,very concerned about,2.333,0.6336088154269971
+737,equal conditions,equals,4.667,0.2133333333333333
+738,main aim of the,main objectives of the,4.333,0.542929292929293
+739,emphasizes the importance of the,underlines the need for,4.333,0.21561771561771562
+740,seriously wounded,were wounded,3.333,0.42857142857142855
+741,members of the council,the legislative council,4.0,0.42517006802721086
+742,the creation of mechanisms,the establishment of mechanisms,4.667,0.5833333333333333
+743,by the way in which,by the manner in which,4.333,0.6646825396825399
+744,", i think that 's",i believe this is,4.0,0.18390804597701152
+745,and current,and was currently,4.0,0.7692307692307693
+746,the obligations of,the commitments contained in,4.0,0.21212121212121213
+747,main trading partner,major trading partners,4.0,0.7909604519774013
+748,are considered to be,shall be regarded as,4.333,0.21904761904761902
+749,such measures,the relevant measures,3.667,0.5899705014749261
+750,would be required,may be necessary to,1.3330000000000002,0.15873015873015875
+751,commission for human rights and,commission and,3.333,0.37313432835820887
+752,departments and,"other government departments , and",4.0,0.7638888888888887
+753,committee took,commission to,3.333,0.3216374269005847
+754,used to identify,used to indicate,4.0,0.54320987654321
+755,""" i am","yes , i am",4.0,0.641025641025641
+756,remain very,was still very,2.667,0.32196969696969696
+757,"quite clearly ,",it is clearly,3.333,0.5013550135501355
+758,delegation is convinced that,delegation firmly believes that,3.0,0.4715762273901809
+759,i do n't have time,i have n't got time,4.0,0.5662393162393162
+760,authority is,authorities to,3.667,0.6185567010309279
+761,", referring to",refers to the,4.0,0.3216374269005847
+762,the task force and,the working group and,4.0,0.26371308016877637
+763,shall refuse to,are unwilling to,3.333,0.21164021164021166
+764,had indicated that,shown that,4.0,0.1927437641723356
+765,"of small and medium-sized enterprises ,",small and medium sized enterprises,4.333,0.787037037037037
+766,is there anybody there,is anyone in there,5.0,0.3490401396160559
+767,are quickly,are rapidly,3.333,0.2745098039215687
+768,pointed out that,important to point out that,3.667,0.6164383561643836
+769,it noted that the,working group noted that the,4.333,0.811965811965812
+770,and organizations,"-rrb- , the organization",2.0,0.6907894736842105
+771,-it 's just,this is just,3.667,0.46511627906976744
+772,- where 'd,where the hell did,2.667,0.4618473895582329
+773,particulars of the,"for further details ,",2.333,0.21097046413502113
+774,quality of her,high quality of its,3.333,0.7222222222222223
+775,not already,have not yet been,2.667,0.2380952380952381
+776,"resources , both human and",of human resources and,4.333,0.5916305916305916
+777,becomes possible,is still possible,4.0,0.502450980392157
+778,being seriously,seriously considering,4.0,0.5979643765903309
+779,it was necessary to,there must be an,4.0,0.12345679012345678
+780,selling of,purchase and sale of,4.0,0.21568627450980393
+781,few weeks and,week and,3.333,0.3333333333333333
+782,"both categories ,","categories ,",3.667,0.6785714285714285
+783,", the commission was",", the board did",1.6669999999999998,0.24509803921568626
+784,normal conditions of,its normal,4.0,0.2727272727272727
+785,'re on the right track,are on the right path,3.667,0.7130584192439863
+786,intensify our efforts to,strengthen efforts to,4.667,0.45597484276729566
+787,products exported,", exports",3.333,0.35279805352798055
+788,"knew that ,",is recognised that,3.333,0.32608695652173914
+789,it is necessary to,it was vital to,3.0,0.18640350877192982
+790,natural disasters,disaster reduction,2.667,0.4337899543378996
+791,this is awesome !,that 's great !,3.333,0.13986013986013987
+792,is an attempt,is now trying,4.333,0.14285714285714285
+793,be perceived as,interpreted as,4.0,0.2822580645161291
+794,our shared commitment,our common commitment,4.0,0.5495495495495496
+795,regarding the application of the,on the implementation of the,3.333,0.44673539518900346
+796,approximately one million,around one million,4.333,0.4663608562691131
+797,accessible to everyone,accessible,4.667,0.4098360655737705
+798,is moving forward,going ahead,3.667,0.15587529976019185
+799,"about 20,000","around 20,000",3.667,0.5381944444444444
+800,and publication,and was published,3.667,0.40682414698162733
+801,adopted the draft decision,approved the draft decision,3.333,0.8050847457627118
+802,is part and parcel of,is one of,3.667,0.13487475915221578
+803,been relatively,is very,1.6669999999999998,0.09971509971509973
+804,right and obligation to,right and the duty to,3.667,0.4269293924466339
+805,"- gentlemen , gentlemen",my lords and gentlemen,3.333,0.4084967320261438
+806,", i just got",i only got,3.333,0.23297491039426527
+807,coming back,coming home,3.0,0.5294117647058825
+808,", the board had",", the commission has",2.667,0.358974358974359
+809,'s fine,is fine,4.667,0.7777777777777778
+810,its consideration of this,review of this,2.667,0.28037383177570097
+811,"medical doctors ,","for doctors ,",4.0,0.5319148936170213
+812,", not only at",", not just at",3.667,0.42857142857142855
+813,this is something that,this really,2.667,0.15398550724637683
+814,see table,tables,4.0,0.4301075268817204
+815,been informed,received information,3.333,0.49107142857142866
+816,an area of solidarity,solidarity,2.0,0.4310344827586207
+817,is permitted to,may be able to,3.667,0.13440860215053763
+818,contributing to the,by facilitating the,3.667,0.3333333333333333
+819,'s recommendations contained in,recommendations included in,4.333,0.5931198102016607
+820,of the labour,of the population is,1.6669999999999998,0.4761904761904762
+821,the assembly also wishes to,the assembly too wishes to,4.333,0.7786885245901639
+822,co-sponsors on the draft resolution,the sponsors of the draft resolution,3.333,0.7975460122699388
+823,"'s all right ,",", are you all right",3.0,0.6527777777777778
+824,be forwarded to the,be transmitted to the,2.667,0.46906187624750495
+825,was indicated that,points out that,3.667,0.24122807017543862
+826,", especially in the area",", in particular in the areas",4.0,0.502283105022831
+827,united nations membership,member states of the united nations,3.333,0.6666666666666667
+828,never was,i 've never been,3.333,0.48611111111111116
+829,it was nevertheless,it nonetheless,4.333,0.3854166666666667
+830,"recalled that ,",was indicated that,2.333,0.40364583333333337
+831,the specificities of,the characteristics of,4.333,0.2730696798493409
+832,""" current",currently working,2.333,0.639269406392694
+833,'m coming back,comes back,3.333,0.31531531531531537
+834,recommendation .,policy recommendations .,3.0,0.8391608391608391
+835,allows you to,it enables you to,3.333,0.5351681957186545
+836,was in favour of,is also supporting,4.667,0.14598540145985403
+837,centres for,regional centres for,2.333,0.9042553191489362
+838,but it was,"; however , it is",3.333,0.26422764227642276
+839,enhance productivity,improve productivity,3.333,0.6571428571428571
+840,the international criminal tribunal,the appeals tribunal,2.0,0.2903225806451613
+841,and stressing the,and underscored the,2.667,0.28344671201814053
+842,shall adopt its own rules of,shall adopt its rules of,4.333,0.7901726427622842
+843,' exports,domestic export,2.667,0.6572769953051643
+844,both the united states,from the united states,4.0,0.8034188034188035
+845,are set out in annex,listed in annex,3.333,0.41176470588235287
+846,were essential for,is key to,3.667,0.07990867579908675
+847,", thereby contributing",", thus providing",4.333,0.1851851851851852
+848,- who 's,who are they,3.0,0.3107344632768362
+849,so proud of you,really proud of you,4.333,0.813953488372093
+850,are essential to,be necessary for,3.0,0.19753086419753085
+851,result of the,outcomes of all the,1.3330000000000002,0.37537537537537535
+852,'m asking you to,ask you to,3.333,0.42635658914728675
+853,to continue its endeavours,to continue his efforts,4.667,0.49568965517241376
+854,i hope you 're kidding,you 're kidding,3.333,0.6648936170212767
+855,replaced by :,replaced as follows :,4.333,0.6194690265486725
+856,which is applicable to,that applied to,4.333,0.26595744680851063
+857,2 . demands,. demands,4.0,0.7831325301204818
+858,i think that 's,i think that is,4.667,0.8533333333333335
+859,why exactly,why,3.667,0.12903225806451613
+860,member states of the eu,members of the european union,4.333,0.5924170616113744
+861,what 's happened,what happens,4.333,0.5343511450381679
+862,of ministers of,state minister for,2.667,0.5598958333333334
+863,is recommending,further recommends,4.0,0.5989583333333334
+864,shall be authorized to,shall be permitted to,4.333,0.4896907216494845
+865,were required to,are available to,2.667,0.17283950617283952
+866,objectives and targets,objectives with,3.0,0.46099290780141833
+867,are not consistent with,was incompatible with,3.333,0.21346469622331696
+868,to strengthen its efforts to,intensify efforts to,3.333,0.3913630229419703
+869,all aspects of the,all areas of the,4.333,0.5446623093681917
+870,play an important role in,play a major role in,3.667,0.45454545454545453
+871,were involved,to become involved,3.667,0.6969696969696969
+872,the rights and liberties of,the rights and freedoms of,4.333,0.6010928961748634
+873,been withdrawn and,been removed and,3.667,0.29411764705882354
+874,is now complete,is complete,5.0,0.6060606060606061
+875,- are you sure ?,"well , yes .",1.6669999999999998,0.10178117048346054
+876,"of these issues ,","in these matters ,",4.0,0.3995433789954338
+877,it necessary,it needs to be,3.667,0.29209621993127144
+878,references in,referred to in,4.0,0.3616352201257861
+879,while countering terrorism,when combating terrorism,4.333,0.536480686695279
+880,any agreement,the peace agreements,3.333,0.6845238095238094
+881,is for that reason that,is exactly why,3.333,0.0935374149659864
+882,", and considered",", and considers that",3.333,0.8273381294964028
+883,be derived from,be drawn from,4.333,0.3523035230352304
+884,outcomes of these,results from these,4.667,0.365296803652968
+885,available online,", which is available",3.333,0.4916067146282974
+886,'s views .,views .,4.333,0.625
+887,been solved,can be resolved,5.0,0.5243445692883896
+888,the european union has,the eu has,4.0,0.28233151183970856
+889,of the activities of,on the operations of,2.333,0.2952380952380953
+890,also reiterate,also reaffirmed that,5.0,0.4683195592286501
+891,is recognised,also recognized,4.667,0.5763239875389408
+892,of course we are,of course i 'm right,3.667,0.5635491606714629
+893,members of the committee for,member of the board,3.333,0.3794037940379404
+894,month ago,months in the,4.333,0.3864734299516908
+895,please keep,shall be kept,3.0,0.28735632183908044
+896,recommendations :,recommendations for action,2.667,0.8766233766233767
+897,policy recommendations,specific recommendations,3.0,0.7191201353637902
+898,specific situations,special situation,4.0,0.6134969325153373
+899,was the issue,is the matter,4.667,0.39682539682539675
+900,chairman of the working group,chair of the working group,2.667,0.8015267175572519
+901,here it goes .,there you go .,4.0,0.36231884057971014
+902,safeguard security,guarantee the security,2.333,0.5345911949685533
+903,was often,are most often,4.0,0.5476190476190476
+904,million of,millions and millions,4.0,0.562015503875969
+905,", particularly article",", in particular its article",4.333,0.7166666666666667
+906,", i welcome the",", i am grateful for the",3.333,0.30075187969924816
+907,and the aims,and the goals of the,3.667,0.5663430420711973
+908,political initiatives,policy initiatives,3.333,0.6318681318681318
+909,is because,is the reason why,3.0,0.20325203252032523
+910,i really hope that,i am hopeful that,4.0,0.3787878787878788
+911,direction towards,moving towards,3.0,0.4225352112676056
+912,very concerned,further concerned,4.0,0.6779661016949152
+913,and so i,and that is why i,2.333,0.3645833333333333
+914,particularly with respect to the,including those relating to the,3.667,0.27777777777777773
+915,or workshops,training workshops,4.0,0.7590759075907592
+916,as a result of,immediately following the adjournment of,2.333,0.2245862884160756
+917,is available to,are offered to,2.667,0.13440860215053763
+918,field of,is a matter of,2.667,0.21857923497267762
+919,", and modernization",and modernization construction,4.333,0.8333333333333334
+920,is incompatible with,be contrary to,3.333,0.11834319526627218
+921,you doing okay,you 're gonna be ok,3.667,0.2777777777777778
+922,"aboriginal communities , and",aboriginal and,3.333,0.4149377593360996
+923,is a simple one,'s simple,4.333,0.4061624649859944
+924,of antimicrobial drugs,of antimicrobials,3.667,0.7192982456140351
+925,produced per,produced by,3.0,0.6914893617021276
+926,reported that,be pointed out that,2.667,0.4204204204204204
+927,assistance provided by the,help from the,3.667,0.1201201201201201
+928,"yes , they are .","yeah , that 's right .",4.333,0.3073286052009455
+929,members of this council,"legislative council ,",3.0,0.3284072249589491
+930,should help to,should contribute to,4.667,0.4683195592286501
+931,"like france ,","including france ,",3.0,0.6212121212121212
+932,whether we need to,whether it is necessary to,5.0,0.4703476482617588
+933,ca n't believe this is happening,ca n't believe this,3.667,0.5851063829787234
+934,of equal opportunity,of equality of opportunity,4.0,0.8287292817679558
+935,he 's gone,he is gone,3.667,0.6
+936,advisory committee 's comments,observations of the advisory committee,4.0,0.6065959952885748
+937,discussed at,discussion within,4.333,0.4833333333333332
+938,both children,"children """,3.333,0.5555555555555556
+939,is the situation,'s the situation,4.333,0.9259259259259259
+940,of this paper is,of this article shall be,2.667,0.4545454545454546
+941,are indicated below,included the following,3.667,0.21825396825396826
+942,", then click ok",", and click ok",4.667,0.577956989247312
+943,a press conference held in,a news conference in,2.333,0.5240174672489082
+944,coming months,the next few months,3.333,0.4204204204204204
+945,", reported that",", the report said",4.333,0.49868766404199477
+946,a set of indicators,a series of indicators,4.667,0.7837301587301586
+947,consideration of this item at its,consideration of this matter at its,2.333,0.8034744842562432
+948,increase their efforts to,step up their efforts to,4.667,0.6622023809523808
+949,matters related to,matters relevant to the,4.333,0.6249999999999999
+950,'ve heard a lot,heard a lot,3.667,0.7024793388429753
+951,contribute significantly,made a significant contribution,4.667,0.7357357357357357
+952,was decided to,decides whether to,2.667,0.43417366946778707
+953,the importing of,the import of,4.333,0.6439393939393939
+954,- this is,"- hey , it 's",3.667,0.21739130434782608
+955,achieve the objectives,achieving the goals,5.0,0.33854166666666663
+956,this factor,these considerations,2.667,0.19503546099290786
+957,i really am,"yes , i do",1.6669999999999998,0.11904761904761904
+958,continued to consider,continued its consideration of,3.333,0.738831615120275
+959,did n't i,"do n't you think ,",3.0,0.38288288288288286
+960,"had shown that ,",indicated that,3.667,0.23809523809523805
+961,international instruments,international human rights instruments,3.667,0.8753501400560223
+962,are in the,are subject to the,2.667,0.40160642570281113
+963,process of selecting,the select,3.667,0.2828282828282828
+964,'s interesting to see,is interesting to see,4.333,0.9459459459459458
+965,shall be in,are currently in,2.0,0.20370370370370375
+966,been contributing,significantly contributed,3.0,0.5446623093681917
+967,at the national and international levels,", nationally and internationally",4.0,0.6085376930063577
+968,have yet been,have ever been,1.6669999999999998,0.4874213836477987
+969,i got a gift for you,i got a present for you,5.0,0.6741573033707865
+970,"no , i am","oh , well , i",3.333,0.2898550724637681
+971,shortfalls in,there is a shortage,2.0,0.31531531531531526
+972,revenue generation,revenue,4.333,0.3125
+973,i wish i knew,i want to know,3.667,0.220125786163522
+974,national non-governmental organizations,the non-governmental organizations,3.667,0.7962962962962963
+975,the poorest of the poor,the very poor,4.0,0.23076923076923075
+976,only half,half,4.0,0.2770083102493075
+977,confirms that a,confirmed that a,4.333,0.7142857142857143
+978,at all levels of,at all stages of the,4.333,0.46762589928057546
+979,led by iyad,headed by iyad,2.333,0.8522727272727272
+980,- we 've got,i think we 've,3.667,0.49828178694158076
+981,recommendations issued by the,recommendations contained in the,3.667,0.6156716417910447
+982,million u.s. dollars of,"million us dollars ,",5.0,0.6518151815181518
+983,considers that the,is of the opinion that the,3.0,0.4703476482617588
+984,listed in paragraph,in accordance with paragraph,2.667,0.5268199233716476
+985,that 's exactly what i,this is what i,3.333,0.29411764705882354
+986,", including both",", which included the",2.667,0.40767386091127095
+987,be ensured that,assured that,3.0,0.6147540983606556
+988,that solution,such a solution,5.0,0.6386292834890965
+989,explanations of vote,explanation,3.0,0.5120481927710843
+990,is also important,is also imperative,2.667,0.6164383561643836
+991,is certain that,expressed his belief that,3.333,0.2962962962962963
+992,on the proposed,relating to the proposed programme,3.667,0.7523148148148148
+993,unless specified otherwise,unless specifically stated otherwise,4.667,0.8571428571428571
+994,its efforts to combat,the area of combating,3.667,0.31531531531531537
+995,considered by the,give consideration to the,4.333,0.4901960784313726
+996,an enlarged security,an expanded security,4.0,0.6
+997,are detailed,"for detailed information ,",4.333,0.6269113149847094
