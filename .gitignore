@@ -1,2 +1,3 @@
-**/*.vscode
-**/*wandb
+
+notebooks/labels/.ipynb_checkpoints/
+notebooks/labels/.vector_cache/
