@@ -14,7 +14,7 @@ import sys
 import os
 import glob
 import pandas as pd
-
+import pickle
 
 sys.path.insert(0,os.path.join(os.getcwd(),"data\\dataset-sts"))
 
@@ -93,13 +93,13 @@ for f in ds_files:
 #%%     
 
 
-import pickle
+
 
 with open('data\combined_data.pickle', 'wb') as handle:
     pickle.dump(data_df, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
     
-    
+#cheeck
 with open('data\combined_data.pickle', 'rb') as handle:
     b = pickle.load(handle)
 
