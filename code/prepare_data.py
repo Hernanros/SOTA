@@ -99,7 +99,7 @@ with open('data\combined_data.pickle', 'wb') as handle:
     pickle.dump(data_df, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
     
-#cheeck
+#check
 with open('data\combined_data.pickle', 'rb') as handle:
     b = pickle.load(handle)
 
