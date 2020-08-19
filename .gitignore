@@ -4,3 +4,4 @@
 **/*__MACOSX
 **/*venv
 **/*.virtual_documents
+__pycache__
