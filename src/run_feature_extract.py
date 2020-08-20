@@ -1,28 +1,26 @@
-
 import pickle
 import argparse
 import bleu
+import cosine_similarites
+
 
 def main(args):
     print(args.pickle)
 
     picklefile = 'data\combined_data_test.pickle'
-    features = ['bleu']
+    extractors = dict(bleu=bleu.Bleu(), cosine_similarites=cosine_similarites.CosineSimilarity())
+    features = args.features
+    if features == 'ALL':
+        features = list(extractors.keys())
+    else:
+        features = features.lower().split(',')
 
     with open(picklefile, 'rb') as handle:
-        df = pickle.load(handle)    
+        df = pickle.load(handle)
 
-
-    for feature in features:
-        if feature is 'bleu':
-            extractor = bleu.Bleu()
+    for feature_name, extractor in extractors.items():
+        if feature_name in features:
             df = extractor.run(df)
-        elif feature is 'something1':
-            pass        
-        elif feature is 'something2':
-            pass        
-        elif feature is 'something3':
-            pass        
 
     with open(picklefile, 'wb') as handle:
         pickle.dump(df, handle, protocol=pickle.HIGHEST_PROTOCOL)
