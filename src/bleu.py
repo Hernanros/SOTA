@@ -2,14 +2,8 @@
 run bleu feature extract
 """
 
-import pandas as pd   
 import re
-import numpy as np
-import os   
-import scipy
 from nltk.corpus import stopwords
-
-from nltk import pos_tag, word_tokenize
 import nltk
 
 
@@ -20,7 +14,7 @@ class Bleu:
         nltk.download('averaged_perceptron_tagger')
         nltk.download('stopwords')
 
-    def preprocess(self,raw_text,stopwords_remove=True):
+    def preprocess(self, raw_text, stopwords_remove=True):
         # keep only words
         letters_only_text = re.sub("[^a-zA-Z]", " ", str(raw_text))
         # convert to lower case and split 
@@ -48,15 +42,8 @@ class Bleu:
             s1 = str(df['text_1'][i])
             s2 = str(df['text_2'][i])
             #print(s1,",",s2)
-            dis = self.BLEU1score(s1,s2,stopwords_remove=False)
-            df.loc[i,'bleu_allwords']=dis
-
-        for i in range(df.shape[0]):
-            s1 = str(df['text_1'][i])
-            s2 = str(df['text_2'][i])
-            #print(s1,",",s2)
-            dis = self.BLEU1score(s1,s2,stopwords_remove=True)
-            df.loc[i,'bleu_withoutstop']=dis
+            df.loc[i, 'bleu_allwords'] = self.BLEU1score(s1, s2, stopwords_remove=False)
+            df.loc[i, 'bleu_withoutstop'] = self.BLEU1score(s1, s2, stopwords_remove=True)
 
         return df
 
