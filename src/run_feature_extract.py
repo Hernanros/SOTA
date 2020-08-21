@@ -1,14 +1,14 @@
 import pickle
 import argparse
-import bleu
-import cosine_similarites
+from .bleu import Bleu
+from .cosine_similarites import CosineSimilarity
 
 
 def main(args):
     print(args.pickle)
 
     picklefile = 'data\combined_data_test.pickle'
-    extractors = dict(bleu=bleu.Bleu(), cosine_similarites=cosine_similarites.CosineSimilarity())
+    extractors = dict(bleu=Bleu(), cosine_similarites=CosineSimilarity())
     features = args.features
     if features == 'ALL':
         features = list(extractors.keys())

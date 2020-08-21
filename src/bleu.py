@@ -33,7 +33,7 @@ class Bleu:
         return BLEUscore
 
 
-    def run(self,df):
+    def run(self, df):
 
         df['bleu_allwords'] = 0
         df['bleu_withoutstop'] = 0
