@@ -2,13 +2,14 @@ import pickle
 import argparse
 from .bleu import Bleu
 from .cosine_similarites import CosineSimilarity
+from .elmo_euclidean_distance import EuclideanElmoDistance
 
 
 def main(args):
     print(args.pickle)
 
     picklefile = 'data\combined_data_test.pickle'
-    extractors = dict(bleu=Bleu(), cosine_similarites=CosineSimilarity())
+    extractors = dict(bleu=Bleu(), cosine_similarites=CosineSimilarity(), elmo_similarites=EuclideanElmoDistance())
     features = args.features
     if features == 'ALL':
         features = list(extractors.keys())
