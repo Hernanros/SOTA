@@ -11,7 +11,7 @@ class EuclideanElmoDistance:
     def create_embedding(self, sentence: list) -> torch.Tensor:
         # embed words in sentence
         sent = Sentence(sentence)
-        self.embedding.embed(sent)
+        self.embeddings.embed(sent)
         # return average embedding of words in sentence
         return torch.stack([token.embedding for token in sent]).mean(axis=0)
 
