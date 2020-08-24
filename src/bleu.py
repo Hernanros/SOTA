@@ -37,7 +37,7 @@ class Bleu:
         df['bleu_allwords'] = df.apply(lambda x: self.BLEU1score(str(x.text_1), str(x.text_2),
                                                                  stopwords_remove=False), axis=1)
         df['bleu_withoutstop'] = df.apply(lambda x: self.BLEU1score(str(x.text_1), str(x.text_2),
-                                                                    stopwords_remove=False), axis=1)
+                                                                    stopwords_remove=True), axis=1)
         # df['bleu_allwords'] = 0
         # df['bleu_withoutstop'] = 0
         # for i in range(df.shape[0]):
