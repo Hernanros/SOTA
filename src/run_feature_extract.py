@@ -4,6 +4,7 @@ from .bleu import Bleu
 from .cosine_similarites import CosineSimilarity
 from .elmo_euclidean_distance import EuclideanElmoDistance
 from .bertscore import BertScore
+from .chrFScore import chrFScore
 
 
 def main(args):
@@ -11,7 +12,7 @@ def main(args):
 
     picklefile = 'data\combined_data_test.pickle'
     extractors = dict(bleu=Bleu(), cosine_similarites=CosineSimilarity(), elmo_similarites=EuclideanElmoDistance(),
-                      bert=BertScore())
+                      bert=BertScore(), chrf_score=chrFScore())
     features = args.features
     if features == 'ALL':
         features = list(extractors.keys())
