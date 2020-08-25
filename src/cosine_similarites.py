@@ -1,7 +1,7 @@
 """
 run glove & fasttext embedding cosine similarity feature extraction
 """
-
+import pandas
 import re
 import numpy as np
 import scipy

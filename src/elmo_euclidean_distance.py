@@ -1,3 +1,4 @@
+import pandas
 from flair.embeddings import ELMoEmbeddings
 from flair.data import Sentence
 from scipy.spatial.distance import euclidean

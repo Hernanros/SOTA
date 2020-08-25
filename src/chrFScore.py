@@ -1,3 +1,4 @@
+import pandas
 from nltk.translate import chrf_score
 
 
