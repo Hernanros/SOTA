@@ -12,6 +12,7 @@ from .chrFScore import chrFScore
 from .WMD import WMD
 from .POS_distance import POSDistance
 from .ngram_overlap import NgramOverlap
+from .ROUGE import ROUGE
 
 
 def main(args):
@@ -20,7 +21,7 @@ def main(args):
     picklefile = 'data\combined_data_test.pickle'
     extractors = dict(bleu=Bleu(), cosine_similarites=CosineSimilarity(), elmo_similarites=EuclideanElmoDistance(),
                       bert=BertScore(), chrf_score=chrFScore(), pos_distance=POSDistance(), wmd=WMD(),
-                      ngram_overlap=NgramOverlap(args.max_n))
+                      ngram_overlap=NgramOverlap(args.max_n), rouge=ROUGE())
     features = args.features
     if features == 'ALL':
         features = list(extractors.keys())
