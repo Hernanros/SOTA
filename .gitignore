@@ -5,3 +5,5 @@
 **/*venv
 **/*.virtual_documents
 __pycache__
+
+data/*
