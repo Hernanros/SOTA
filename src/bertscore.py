@@ -9,6 +9,8 @@ class BertScore:
 
     def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
         # apply function to all word pairs in dataset
-        df['BertScore'] = score(df['text_1'].to_list(), df['text_2'].to_list(), lang="en", verbose=False)
-
+        df['text1'] = df['text_1'].str.strip()
+        df['text_2'] = df['text_2'].str.strip()
+        _, _, F1 = score(df['text1'].tolist(), df['text2'].tolist(), lang='en')
+        df['BertScore'] = F1.numpy()
         return df
