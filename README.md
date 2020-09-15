@@ -12,4 +12,8 @@ $ winpty docker run -it -p 8080:8080 --name sota-nlp-container --user root -v //
 
 use run_notebook to open jupyter, it will open on 127.0.0.1:8080
 
+todo:
+ try: BuildKit to save pip cache and reduce build time when changing requirements.ini
+
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++
