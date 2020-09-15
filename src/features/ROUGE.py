@@ -1,7 +1,7 @@
 """implements ROUGE metrics"""
 import pandas as pd
-from rouge.rouge import rouge_n_sentence_level
-from rouge.rouge import rouge_l_sentence_level
+from rouge import rouge_n_sentence_level
+from rouge import rouge_l_sentence_level
 
 
 class ROUGE:

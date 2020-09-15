@@ -9,13 +9,22 @@ import argparse
 #print(f"P:{sys.path}")
 
 
-from features import Bleu, CosineSimilarity, EuclideanElmoDistance, BertScore, chrFScore, POSDistance, WMD,NgramOverlap,ROUGE
+from features.bleu import Bleu
+from features.bertscore import BertScore
+from features.chrFScore import chrFScore
+from features.cosine_similarites import CosineSimilarity
+from features.elmo_euclidean_distance import EuclideanElmoDistance
+from features.ngram_overlap import NgramOverlap
+from features.POS_distance import POSDistance
+from features.ROUGE import ROUGE
+from features.WMD import WMD
+
 
 def main(args):
     print(args)
     return
 
-    picklefile = 'data\combined_data_test.pickle'
+    picklefile = "data/combined_data_test.pickle"
     extractors = dict(bleu=Bleu(), cosine_similarites=CosineSimilarity(), elmo_similarites=EuclideanElmoDistance(),
                       bert=BertScore(), chrf_score=chrFScore(), pos_distance=POSDistance(), wmd=WMD(),
                       ngram_overlap=NgramOverlap(args.max_n), rouge=ROUGE())

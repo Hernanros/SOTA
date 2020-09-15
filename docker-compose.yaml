@@ -1,0 +1,7 @@
+version: "3.3"
+
+services:
+  sotanlp:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
