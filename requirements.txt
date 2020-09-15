@@ -30,7 +30,6 @@ decorator==4.4.2
 defusedxml==0.6.0
 Deprecated==1.2.10
 docutils==0.15.2
-easy-rouge==0.2.2
 editdistance==0.5.3
 entrypoints==0.3
 filelock==3.0.12

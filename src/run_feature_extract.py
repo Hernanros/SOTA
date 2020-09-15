@@ -21,18 +21,20 @@ from features.WMD import WMD
 
 
 def main(args):
-    print(args)
-    return
 
-    picklefile = "data/combined_data_test.pickle"
+    picklefile = args.pickle
     extractors = dict(bleu=Bleu(), cosine_similarites=CosineSimilarity(), elmo_similarites=EuclideanElmoDistance(),
                       bert=BertScore(), chrf_score=chrFScore(), pos_distance=POSDistance(), wmd=WMD(),
                       ngram_overlap=NgramOverlap(args.max_n), rouge=ROUGE())
+                      
     features = args.features
     if features == 'ALL':
         features = list(extractors.keys())
     else:
         features = features.lower().split(',')
+
+    return
+
 
     with open(picklefile, 'rb') as handle:
         df = pickle.load(handle)
@@ -48,8 +50,8 @@ def main(args):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--pickle', type=str, help='pickle path for combined dataset')
-    parser.add_argument('--features', type=str, help='use "ALL" for all features, or comma separated list of features')
+    parser.add_argument('--pickle', type=str, required=True, help='pickle path for combined dataset')
+    parser.add_argument('--features', required=True, type=str, help='use "ALL" for all features, or comma separated list of features')
     parser.add_argument('--max_n', type=int, help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
 
     args = parser.parse_args()

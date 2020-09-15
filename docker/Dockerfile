@@ -41,7 +41,7 @@ RUN echo "jupyter notebook --no-browser --allow-root" >> /usr/local/bin/run_note
 # ROUGE
 ########
 
-RUN pip uninstall easy-rouge
+#RUN pip uninstall -yq easy-rouge
 RUN cd /tmp && mkdir rouge && git clone https://github.com/neural-dialogue-metrics/rouge.git && cd rouge && python3 ./setup.py install
 RUN cd -
 
