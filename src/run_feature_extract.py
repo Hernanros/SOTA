@@ -4,6 +4,8 @@ This file implements running the different semantic similiarity metrics on a dat
 
 import pickle
 import argparse
+import configparser
+
 
 #import sys
 #print(f"P:{sys.path}")
@@ -20,12 +22,37 @@ from features.ROUGE import ROUGE
 from features.WMD import WMD
 
 
+
 def main(args):
 
+    creds_path_ar = ["credentials.ini"]
+    PATH_ROOT = ""
+    PATH_DATA = ""
+    GloVe_840B_300d_PATH = ""
+
+    for creds_path in creds_path_ar:
+        if path.exists(creds_path):
+            config_parser = configparser.ConfigParser()
+            config_parser.read(creds_path)
+            PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
+            PATH_DATA = config_parser['MAIN']["PATH_DATA"]
+            GloVe_840B_300d_PATH = config_parser['MAIN']["GloVe_840B_300d_PATH"]
+            WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
+            ENV = config_parser['MAIN']["ENV"]
+            break
+
+
     picklefile = args.pickle
-    extractors = dict(bleu=Bleu(), cosine_similarites=CosineSimilarity(), elmo_similarites=EuclideanElmoDistance(),
-                      bert=BertScore(), chrf_score=chrFScore(), pos_distance=POSDistance(), wmd=WMD(),
-                      ngram_overlap=NgramOverlap(args.max_n), rouge=ROUGE())
+    extractors = dict(
+        bleu=Bleu(), 
+        cosine_similarites=CosineSimilarity(), 
+        elmo_similarites=EuclideanElmoDistance(),
+        bert=BertScore(), 
+        chrf_score=chrFScore(), 
+        pos_distance=POSDistance(), 
+        wmd=WMD(vector_dir=GloVe_840B_300d_PATH),
+        ngram_overlap=NgramOverlap(args.max_n), 
+        rouge=ROUGE())
                       
     features = args.features
     if features == 'ALL':
