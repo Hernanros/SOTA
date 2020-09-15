@@ -4,11 +4,16 @@ This file implements running the different semantic similiarity metrics on a dat
 
 import pickle
 import argparse
-from src import *
 
+#import sys
+#print(f"P:{sys.path}")
+
+
+from features import Bleu, CosineSimilarity, EuclideanElmoDistance, BertScore, chrFScore, POSDistance, WMD,NgramOverlap,ROUGE
 
 def main(args):
-    print(args.pickle)
+    print(args)
+    return
 
     picklefile = 'data\combined_data_test.pickle'
     extractors = dict(bleu=Bleu(), cosine_similarites=CosineSimilarity(), elmo_similarites=EuclideanElmoDistance(),
@@ -32,6 +37,7 @@ def main(args):
 
 
 if __name__ == '__main__':
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--pickle', type=str, help='pickle path for combined dataset')
     parser.add_argument('--features', type=str, help='use "ALL" for all features, or comma separated list of features')

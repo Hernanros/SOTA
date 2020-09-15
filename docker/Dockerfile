@@ -45,3 +45,6 @@ RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
 
 WORKDIR /root
 EXPOSE 8080
+
+#expose port 22 for remote vscode
+EXPOSE 22 
