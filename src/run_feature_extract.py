@@ -30,6 +30,7 @@ def main(args):
     PATH_ROOT = ""
     PATH_DATA = ""
     GloVe_840B_300d_PATH = ""
+    Glove_twitter_27B_PATH = ""
 
     for creds_path in creds_path_ar:
         if path.exists(creds_path):
@@ -38,6 +39,7 @@ def main(args):
             PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
             PATH_DATA = config_parser['MAIN']["PATH_DATA"]
             GloVe_840B_300d_PATH = config_parser['MAIN']["GloVe_840B_300d_PATH"]
+            Glove_twitter_27B_PATH= config_parser['MAIN']["Glove_twitter_27B_PATH"]
             WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
             ENV = config_parser['MAIN']["ENV"]
             break
@@ -50,7 +52,7 @@ def main(args):
         elmo_similarites=EuclideanElmoDistance(),
         bert=BertScore(), 
         chrf_score=chrFScore(), 
-        pos_distance=POSDistance(), 
+        pos_distance=POSDistance(vector_path=Glove_twitter_27B_PATH), 
         wmd=WMD(vector_path=GloVe_840B_300d_PATH),
         ngram_overlap=NgramOverlap(args.max_n), 
         rouge=ROUGE())
