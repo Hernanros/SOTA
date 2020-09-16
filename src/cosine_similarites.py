@@ -4,77 +4,67 @@ run glove & fasttext embedding cosine similarity feature extraction
 import pandas
 import re
 import numpy as np
-import scipy
-from nltk.corpus import stopwords
+from gensim.models.fasttext import FastText
+from sklearn.metrics.pairwise import cosine_similarity
 import gensim.downloader as api
-import nltk
 import torchtext.vocab as torch_vocab
 
 
 class CosineSimilarity:
 
     def __init__(self):
-        nltk.download("punkt")
-        nltk.download('averaged_perceptron_tagger')
-        self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100),
-                           fasttext=api.load("fasttext-wiki-news-subwords-300"))
+        self.models = dict(fasttext=api.load("fasttext-wiki-news-subwords-300"),
+                           glove=torch_vocab.GloVe(name='twitter.27B', dim=100))
+        self.models['fasttext'].init_sims(replace=True)
 
-    def preprocess(self, raw_text: str, stopwords_remove: bool = True, remove_non_model: bool = False,
-                   method: str = 'glove') -> list:
-        assert method in ['glove', 'fasttext'], 'Method given is not recognized, must be "glove" or "fasttext"'
-        # keep only words
-        letters_only_text = re.sub("[^a-zA-Z]", " ", str(raw_text))
-        # convert to lower case and split
-        words = letters_only_text.lower().split()
-        # print(words)
+    def compute_cs(self, reference: str, candidate: str, model: str):
+        reference = reference.strip().split()
+        candidate = candidate.strip().split()
 
-        if remove_non_model:
-            words = list(filter(lambda x: x in self.models[method].vocab, words))
+        reference_vectors = []
+        for word in reference:
+            if word in self.models[model].wv.vocab:
+                reference_vectors.append(self.fasttext.wv[word])
+            else:
+                pass
+        reference_vectors = np.array(reference_vectors)
 
-        # remove stopwords
-        stopword_set = set(stopwords.words("english"))
-        cleaned_words = list(set([w for w in words if w not in stopword_set]))
+        candidate_vectors = []
+        for word in candidate:
+            if word in self.models[model].wv.vocab:
+                candidate_vectors.append(self.models[model].wv[word])
+            else:
+                pass
+        candidate_vectors = np.array(candidate_vectors)
 
-        return cleaned_words if stopwords_remove else words
+        try:
+            min_reference_vector = np.min(reference_vectors, axis=0)
+            min_candidate_vector = np.min(candidate_vectors, axis=0)
+        except:
+            return None
 
-    def embedding_cosine_distance(self, s1: str, s2: str, method: str = 'glove',
-                                  stopwords_remove: bool = True, remove_non_model: bool = False) -> float:
-        assert method in ['glove', 'fasttext'], 'Method given is not recognized, must be "glove" or "fasttext"'
-        vector_1 = [self.models[method][word] for word in self.preprocess(s1, stopwords_remove=stopwords_remove,
-                                                                          remove_non_model=remove_non_model,
-                                                                          method=method)]
-        vector_2 = [self.models[method][word] for word in self.preprocess(s2, stopwords_remove=stopwords_remove,
-                                                                          remove_non_model=remove_non_model,
-                                                                          method=method)]
+        mean_reference_vector = np.mean(reference_vectors, axis=0)
+        mean_candidate_vector = np.mean(candidate_vectors, axis=0)
 
-        if len(vector_1) == 0 or len(vector_2) == 0:
-            return -1
+        max_reference_vector = np.max(reference_vectors, axis=0)
+        max_candidate_vector = np.max(candidate_vectors, axis=0)
 
-        # print(np.stack(vector_1))
-        vector_1 = np.mean(np.stack(vector_1), axis=0)
-        vector_2 = np.mean(np.stack(vector_2), axis=0)
-        cosine = scipy.spatial.distance.cosine(vector_1, vector_2)
-        return round((1 - cosine) * 100, 2)
+        reference_vector = np.concatenate((min_reference_vector, mean_reference_vector, max_reference_vector))
+        reference_vector = reference_vector / np.linalg.norm(reference_vector)
+        reference_vector = np.expand_dims(reference_vector, axis=0)
+
+        candidate_vector = np.concatenate((min_candidate_vector, mean_candidate_vector, max_candidate_vector))
+        candidate_vector = candidate_vector / np.linalg.norm(candidate_vector)
+        candidate_vector = np.expand_dims(candidate_vector, axis=0)
+
+        score = cosine_similarity(reference_vector, candidate_vector)[0][0]
+        return 1 - score
 
     def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
 
-        df['glove_allwords'] = df.apply(lambda x: self.embedding_cosine_distance(str(x.text_1), str(x.text_2),
-                                                                                 stopwords_remove=False,
-                                                                                 remove_non_model=False,
-                                                                                 method='glove'), axis=1)
-        df['glove_withoutstop'] = df.apply(lambda x: self.embedding_cosine_distance(str(x.text_1), str(x.text_2),
-                                                                                    stopwords_remove=True,
-                                                                                    remove_non_model=False,
-                                                                                    method='glove'), axis=1)
-        df['ftext_allwords'] = df.apply(lambda x: self.embedding_cosine_distance(str(x.text_1), str(x.text_2),
-                                                                                 stopwords_remove=False,
-                                                                                 remove_non_model=True,
-                                                                                 method='fasttext'), axis=1)
-        df['ftext_withoutstop'] = df.apply(lambda x: self.embedding_cosine_distance(str(x.text_1), str(x.text_2),
-                                                                                    stopwords_remove=True,
-                                                                                    remove_non_model=True,
-                                                                                    method='fasttext'), axis=1)
-
+        df['glove_cosine'] = df.apply(lambda row: self.compute_cs_word2vec(row.text_1, row.text_2, 'glove'))
+        df['fasttext_cosine'] = df.apply(lambda row: self.compute_cs_word2vec(row.text_1, row.text_2, 'fasttext'))
+        return df
         # for i in range(df.shape[0]):
         #     s1 = str(df['text_1'][i])
         #     s2 = str(df['text_2'][i])
