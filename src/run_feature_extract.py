@@ -63,7 +63,6 @@ def main(args):
     else:
         features = features.lower().split(',')
 
-    return
 
 
     with open(picklefile, 'rb') as handle:

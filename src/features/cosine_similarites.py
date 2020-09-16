@@ -19,12 +19,12 @@ class CosineSimilarity:
 
     def __init__(self, glove_path=None):
         self.downloaded = False
-        self.glove_path = vector_path
+        self.glove_path = glove_path
 
     def download(self):
         nltk.download("punkt")
         nltk.download('averaged_perceptron_tagger')
-        self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100, vectors_cache=self.glove_path),
+        self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100, cache=self.glove_path),
                            fasttext=api.load("fasttext-wiki-news-subwords-300"))
         self.downloaded = True
 
@@ -71,6 +71,8 @@ class CosineSimilarity:
         if not self.downloaded:
             self.download()        
 
+        print("cosine_similarites start");
+
         df['glove_allwords'] = df.apply(lambda x: self.embedding_cosine_distance(str(x.text_1), str(x.text_2),
                                                                                  stopwords_remove=False,
                                                                                  remove_non_model=False,
@@ -99,5 +101,9 @@ class CosineSimilarity:
         #                                                           remove_non_model=True, method='fasttext')
         #     df['ftext_withoutstop'] = self.embedding_cosine_distance(s1, s2, stopwords_remove=True,
         #                                                              remove_non_model=True, method='fasttext')
+
+        print("cosine_similarites end");
+
+
         return df
 
