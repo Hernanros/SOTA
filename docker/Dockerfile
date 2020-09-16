@@ -1,4 +1,5 @@
-FROM ubuntu:18.04
+# FROM ubuntu:18.04
+FROM nvidia/cuda
 
 #RUN apt-get update && \
 #		apt-get install -y software-properties-common && \
@@ -8,6 +9,10 @@ FROM ubuntu:18.04
 #		libglib2.0-0 autoconf automake \
 #		libtool build-essential unzip \
 #		libarchive-dev vim
+
+
+ENV TZ=Europe/Kiev
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
 RUN apt-get update 
