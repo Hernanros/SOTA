@@ -48,7 +48,7 @@ def main(args):
     picklefile = args.pickle
     extractors = dict(
         bleu=Bleu(), 
-        cosine_similarites=CosineSimilarity(), 
+        cosine_similarites=CosineSimilarity(glove_path=Glove_twitter_27B_PATH), 
         elmo_similarites=EuclideanElmoDistance(),
         bert=BertScore(), 
         chrf_score=chrFScore(), 

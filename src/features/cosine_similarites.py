@@ -1,5 +1,9 @@
 """
 run glove & fasttext embedding cosine similarity feature extraction
+
+models:
+- glove uses torchtext, and predownloaded can be determined using 'vectors_cache'
+- fasttext uses gensim downloader, path is always ~/gensim-data. To control it, make a symlink
 """
 import pandas
 import re
@@ -13,13 +17,14 @@ import torchtext.vocab as torch_vocab
 
 class CosineSimilarity:
 
-    def __init__(self):
+    def __init__(self, glove_path=None):
         self.downloaded = False
+        self.glove_path = vector_path
 
     def download(self):
         nltk.download("punkt")
         nltk.download('averaged_perceptron_tagger')
-        self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100),
+        self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100, vectors_cache=self.glove_path),
                            fasttext=api.load("fasttext-wiki-news-subwords-300"))
         self.downloaded = True
 

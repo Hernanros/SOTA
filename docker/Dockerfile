@@ -40,7 +40,6 @@ RUN echo "jupyter notebook --no-browser --allow-root" >> /usr/local/bin/run_note
 ########
 # ROUGE
 ########
-
 #RUN pip uninstall -yq easy-rouge
 RUN cd /tmp && mkdir rouge && git clone https://github.com/neural-dialogue-metrics/rouge.git && cd rouge && python3 ./setup.py install
 RUN cd -
@@ -51,6 +50,9 @@ ADD docker/welcome_message.txt /
 RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
         >> /etc/bash.bashrc \
         ; cat welcome_message.txt > /etc/motd
+
+# gensim
+RUN ln -s /root/opt/gensim-data /root/gensim-data
 
 WORKDIR /root
 EXPOSE 8080
