@@ -5,7 +5,8 @@ This file implements running the different semantic similiarity metrics on a dat
 import pickle
 import argparse
 import configparser
-
+import os.path
+from os import path
 
 #import sys
 #print(f"P:{sys.path}")
@@ -50,7 +51,7 @@ def main(args):
         bert=BertScore(), 
         chrf_score=chrFScore(), 
         pos_distance=POSDistance(), 
-        wmd=WMD(vector_dir=GloVe_840B_300d_PATH),
+        wmd=WMD(vector_path=GloVe_840B_300d_PATH),
         ngram_overlap=NgramOverlap(args.max_n), 
         rouge=ROUGE())
                       
