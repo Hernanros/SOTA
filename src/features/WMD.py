@@ -20,7 +20,7 @@ class WMD:
     def download(self):
         if not os.path.exists(self.vector_path):
             print("[WMD] downloading glove")
-            #chakin.download(number=16, save_dir=self.vector_path)  # select GloVe.840B.300d
+            chakin.download(number=16, save_dir=self.vector_path)  # select GloVe.840B.300d
 
         self.model = KeyedVectors.load_word2vec_format(self.vector_path+"/glove.840B.300d.zip", binary=True)
         self.downloaded = True

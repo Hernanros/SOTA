@@ -7,9 +7,17 @@ import torch
 class EuclideanElmoDistance:
 
     def __init__(self):
+        self.downloaded = False
+
+    def download(self):        
         self.embeddings = ELMoEmbeddings()
+        self.downloaded = True
 
     def create_embedding(self, sentence: list) -> torch.Tensor:
+
+        if not self.downloaded:
+            self.download()
+                    
         # embed words in sentence
         sent = Sentence(sentence)
         self.embeddings.embed(sent)
