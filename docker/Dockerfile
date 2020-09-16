@@ -51,8 +51,8 @@ RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
         >> /etc/bash.bashrc \
         ; cat welcome_message.txt > /etc/motd
 
-# gensim
 RUN ln -s /root/opt/gensim-data /root/gensim-data
+RUN ln -s /root/opt/nltk_data /root/nltk_data
 
 WORKDIR /root
 EXPOSE 8080
