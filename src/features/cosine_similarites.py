@@ -14,10 +14,15 @@ import torchtext.vocab as torch_vocab
 class CosineSimilarity:
 
     def __init__(self):
+        self.downloaded = False
+
+    def download(self):
         nltk.download("punkt")
         nltk.download('averaged_perceptron_tagger')
         self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100),
                            fasttext=api.load("fasttext-wiki-news-subwords-300"))
+        self.downloaded = True
+
 
     def preprocess(self, raw_text: str, stopwords_remove: bool = True, remove_non_model: bool = False,
                    method: str = 'glove') -> list:
@@ -57,6 +62,9 @@ class CosineSimilarity:
         return round((1 - cosine) * 100, 2)
 
     def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
+
+        if not self.downloaded:
+            self.download()        
 
         df['glove_allwords'] = df.apply(lambda x: self.embedding_cosine_distance(str(x.text_1), str(x.text_2),
                                                                                  stopwords_remove=False,

@@ -10,9 +10,14 @@ import nltk
 class Bleu:
 
     def __init__(self):
+        self.downloaded = False
+
+    def download(self):
         nltk.download("punkt")
         nltk.download('averaged_perceptron_tagger')
         nltk.download('stopwords')
+        self.downloaded = True
+
 
     def preprocess(self, raw_text: str, stopwords_remove=True) -> list:
         # keep only words
@@ -33,6 +38,9 @@ class Bleu:
         return BLEUscore
 
     def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
+
+        if not self.downloaded:
+            self.download()
 
         df['bleu_allwords'] = df.apply(lambda x: self.BLEU1score(str(x.text_1), str(x.text_2),
                                                                  stopwords_remove=False), axis=1)

@@ -8,11 +8,18 @@ import torch
 class POSDistance:
 
     def __init__(self):
+        self.downloaded = False
+    
+    def download(self):
         nltk.download("punkt")
         nltk.download('averaged_perceptron_tagger')
         self.dic_glove = torch_vocab.GloVe(name='twitter.27B', dim=100)
+        self.downloaded = True
 
     def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
+
+        if not self.downloaded:
+            self.download()
 
         loss_nn_list = []
         total_loss_nn = 0
