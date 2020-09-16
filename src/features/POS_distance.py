@@ -14,7 +14,7 @@ class POSDistance:
     def download(self):
         nltk.download("punkt")
         nltk.download('averaged_perceptron_tagger')
-        self.dic_glove = torch_vocab.GloVe(name='twitter.27B', dim=100, vectors_cache=self.vector_path)
+        self.dic_glove = torch_vocab.GloVe(name='twitter.27B', dim=100, cache=self.vector_path)
         self.downloaded = True
 
     def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
