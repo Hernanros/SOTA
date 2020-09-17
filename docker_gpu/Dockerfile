@@ -31,13 +31,6 @@ RUN echo "c.NotebookApp.port = 8080" >> /root/.jupyter/jupyter_notebook_config.p
 RUN echo "c.NotebookApp.token = ''" >> /root/.jupyter/jupyter_notebook_config.py
 RUN echo "jupyter notebook --no-browser --allow-root" >> /usr/local/bin/run_notebook && chmod +x /usr/local/bin/run_notebook
 
-########
-# ROUGE
-########
-#RUN pip uninstall -yq easy-rouge
-RUN cd /tmp && mkdir rouge && git clone https://github.com/neural-dialogue-metrics/rouge.git && cd rouge && python3 ./setup.py install
-RUN cd -
-
 
 # Welcome message.
 ADD docker_gpu/welcome_message.txt /
