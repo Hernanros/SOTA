@@ -21,7 +21,7 @@ class CosineSimilarity:
         self.glove_path = glove_path
 
     def download(self):
-        self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100),
+        self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100, cache=self.glove_path),
                            fasttext=api.load("fasttext-wiki-news-subwords-300"))
         self.downloaded = True
 
