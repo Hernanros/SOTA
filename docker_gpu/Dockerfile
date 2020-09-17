@@ -40,7 +40,7 @@ RUN cd -
 
 
 # Welcome message.
-ADD docker/welcome_message.txt /
+ADD docker_gpu/welcome_message.txt /
 RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
         >> /etc/bash.bashrc \
         ; cat welcome_message.txt > /etc/motd
