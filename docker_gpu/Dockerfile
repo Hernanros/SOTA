@@ -1,15 +1,4 @@
-# FROM ubuntu:18.04
 FROM nvidia/cuda
-
-#RUN apt-get update && \
-#		apt-get install -y software-properties-common && \
-#		add-apt-repository -y "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main" && \			
-#		apt-get install -yq \
-#		python3.6 python3-pip htop nano git wget \
-#		libglib2.0-0 autoconf automake \
-#		libtool build-essential unzip \
-#		libarchive-dev vim
-
 
 ENV TZ=Europe/Kiev
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

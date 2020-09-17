@@ -1,7 +1,12 @@
 version: "3.3"
 
 services:
-  sotanlp:
+  sotanlp_cpu:
     build:
       context: ./
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker_cpu/Dockerfile
+
+  sotanlp_gpu:
+    build:
+      context: ./
+      dockerfile: ./docker_gpu/Dockerfile      
