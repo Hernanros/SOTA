@@ -1,7 +1,8 @@
 """
 run glove & fasttext embedding cosine similarity feature extraction
 """
-import pandas
+from typing import List
+import pandas as pd
 import re
 import numpy as np
 from gensim.models.fasttext import FastText
@@ -17,25 +18,11 @@ class CosineSimilarity:
                            glove=torch_vocab.GloVe(name='twitter.27B', dim=100))
         self.models['fasttext'].init_sims(replace=True)
 
-    def compute_cs(self, reference: str, candidate: str, model: str):
-        reference = reference.strip().split()
-        candidate = candidate.strip().split()
+    def compute_cs(self, reference: List[str], candidate: List[str], model: str):
 
-        reference_vectors = []
-        for word in reference:
-            if word in self.models[model].wv.vocab:
-                reference_vectors.append(self.fasttext.wv[word])
-            else:
-                pass
-        reference_vectors = np.array(reference_vectors)
+        reference_vectors = np.array([self.models[model][word] for word in reference if word in self.models[model].vocab])
 
-        candidate_vectors = []
-        for word in candidate:
-            if word in self.models[model].wv.vocab:
-                candidate_vectors.append(self.models[model].wv[word])
-            else:
-                pass
-        candidate_vectors = np.array(candidate_vectors)
+        candidate_vectors = np.array([self.models[model][word] for word in candidate if word in self.models[model].vocab])
 
         try:
             min_reference_vector = np.min(reference_vectors, axis=0)
@@ -60,21 +47,12 @@ class CosineSimilarity:
         score = cosine_similarity(reference_vector, candidate_vector)[0][0]
         return 1 - score
 
-    def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
+    def run(self, df: pd.DataFrame) -> pd.DataFrame:
+        text1 = df['text_1'].str.strip().str.split()
+        text2 = df['text_2'].str.strip().str.split()
+        pairs = pd.concat([text1, text2], axis=1)
+        df['glove_cosine'] = pairs.apply(lambda row: self.compute_cs_word2vec(row.text_1, row.text_2, 'glove'), axis=1)
+        df['fasttext_cosine'] = pairs.apply(lambda row: self.compute_cs_word2vec(row.text_1, row.text_2, 'fasttext'), axis=1)
+        return df
 
-        df['glove_cosine'] = df.apply(lambda row: self.compute_cs_word2vec(row.text_1, row.text_2, 'glove'))
-        df['fasttext_cosine'] = df.apply(lambda row: self.compute_cs_word2vec(row.text_1, row.text_2, 'fasttext'))
-        return df
-        # for i in range(df.shape[0]):
-        #     s1 = str(df['text_1'][i])
-        #     s2 = str(df['text_2'][i])
-        #     df.loc[i, 'glove_allwords'] = self.embedding_cosine_distance(s1, s2, stopwords_remove=False,
-        #                                                                  remove_non_model=False, method='glove')
-        #     df.loc[i, 'glove_withoutstop'] = self.embedding_cosine_distance(s1, s2, stopwords_remove=True,
-        #                                                                     remove_non_model=False, method='glove')
-        #     df['ftext_allwords'] = self.embedding_cosine_distance(s1, s2, stopwords_remove=False,
-        #                                                           remove_non_model=True, method='fasttext')
-        #     df['ftext_withoutstop'] = self.embedding_cosine_distance(s1, s2, stopwords_remove=True,
-        #                                                              remove_non_model=True, method='fasttext')
-        return df
 
