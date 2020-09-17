@@ -1,7 +1,7 @@
 """implements ROUGE metrics"""
 import pandas as pd
 import rouge
-
+import numpy as np
 
 class ROUGE:
 
