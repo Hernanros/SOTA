@@ -1,15 +1,5 @@
 FROM ubuntu:18.04
 
-#RUN apt-get update && \
-#		apt-get install -y software-properties-common && \
-#		add-apt-repository -y "deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main" && \			
-#		apt-get install -yq \
-#		python3.6 python3-pip htop nano git wget \
-#		libglib2.0-0 autoconf automake \
-#		libtool build-essential unzip \
-#		libarchive-dev vim
-
-
 RUN apt-get update 
 RUN apt-get install -y software-properties-common 
 RUN add-apt-repository ppa:deadsnakes/ppa 
@@ -37,11 +27,18 @@ RUN echo "c.NotebookApp.port = 8080" >> /root/.jupyter/jupyter_notebook_config.p
 RUN echo "c.NotebookApp.token = ''" >> /root/.jupyter/jupyter_notebook_config.py
 RUN echo "jupyter notebook --no-browser --allow-root" >> /usr/local/bin/run_notebook && chmod +x /usr/local/bin/run_notebook
 
+
 # Welcome message.
-ADD welcome_message.txt /
+ADD docker_cpu/welcome_message.txt /
 RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
         >> /etc/bash.bashrc \
         ; cat welcome_message.txt > /etc/motd
 
+RUN ln -s /root/opt/gensim-data /root/gensim-data
+RUN ln -s /root/opt/nltk_data /root/nltk_data
+
 WORKDIR /root
 EXPOSE 8080
+
+#expose port 22 for remote vscode
+EXPOSE 22 
