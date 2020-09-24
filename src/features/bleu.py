@@ -8,15 +8,19 @@ from nltk.translate.bleu_score import sentence_bleu
 class Bleu:
 
     def __init__(self):
-        pass
+        self.txt_col_format = 'text'
 
+    def setTextFormat(self,val):
+        self.txt_col_format = val
 
     def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
 
-        df['text1'] = df.text1.str.strip().str.split()
-        df['text2'] = df.text2.str.strip().str.split()
-        df['bleu'] = df.apply(lambda row: sentence_bleu([row.text_1], row.text_2), axis=1) #Open question whether to keep removing of stopwords or not?
-        df['bleu1'] = df.apply(lambda row: sentence_bleu([row.text_1], row.text_2), axis=1)
+        for index, row in df.iterrows():
+            row[self.txt_col_format+'1'] = row[self.txt_col_format+'1'].strip().split()
+            row[self.txt_col_format+'2'] = row[self.txt_col_format+'2'].strip().split()
+
+        df['bleu'] = df.apply(lambda row: sentence_bleu([row[self.txt_col_format+'1']], row[self.txt_col_format+'2']), axis=1) #Open question whether to keep removing of stopwords or not?
+        df['bleu1'] = df.apply(lambda row: sentence_bleu([row[self.txt_col_format+'1']], row[self.txt_col_format+'2']), axis=1)
         # df['bleu_allwords'] = 0
         # df['bleu_withoutstop'] = 0
         # for i in range(df.shape[0]):

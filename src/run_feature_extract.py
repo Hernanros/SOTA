@@ -44,8 +44,11 @@ def main(args):
             ENV = config_parser['MAIN']["ENV"]
             break
 
-
     picklefile = args.pickle
+
+    with open(picklefile, 'rb') as handle:
+        df = pickle.load(handle)
+
     extractors = dict(
         bleu=Bleu(), 
         cosine_similarites=CosineSimilarity(glove_path=Glove_twitter_27B_PATH), 
@@ -63,13 +66,11 @@ def main(args):
     else:
         features = features.lower().split(',')
 
-
-
-    with open(picklefile, 'rb') as handle:
-        df = pickle.load(handle)
+    txt_col_format = 'text_' if 'text_1' in df.columns else 'text'
 
     for feature_name, extractor in extractors.items():
         if feature_name in features:
+            extractor.setTextFormat(txt_col_format)
             df = extractor.run(df)
 
     with open(picklefile, 'wb') as handle:
