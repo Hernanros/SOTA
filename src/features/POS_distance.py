@@ -4,10 +4,12 @@ from nltk import pos_tag, word_tokenize
 import nltk
 import torchtext.vocab as torch_vocab
 import torch
+from src.features import Metric
 
-class POSDistance:
+class POSDistance(Metric):
 
-    def __init__(self, vector_path=None):
+    def __init__(self, val, vector_path=None):
+        super(POSDistance, self).__init__(val=val)
         self.downloaded = False
         self.vector_path = vector_path
     
@@ -18,8 +20,8 @@ class POSDistance:
         self.downloaded = True
 
     def pos_distance(self, row):
-        temp_res_ori = pos_tag(row.text_1)
-        temp_res_gen = pos_tag(row.text_2)
+        temp_res_ori = pos_tag(row[self.text1])
+        temp_res_gen = pos_tag(row[self.text2])
         temp_nn_ori = []
         temp_nn_gen = []
         temp_nn_vector_ori = []
@@ -57,8 +59,8 @@ class POSDistance:
             return -1
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
-        text1 = df['text_1'].str.strip().str.split()
-        text2 = df['text_2'].str.strip().str.split()
+        text1 = df[self.text1].str.strip().str.split()
+        text2 = df[self.text2].str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
         df['POS Dist score'] = pairs.apply(lambda row: self.pos_distance(row), axis=1)
         return df
