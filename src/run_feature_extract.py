@@ -5,7 +5,6 @@ This file implements running the different semantic similiarity metrics on a dat
 import pickle
 import argparse
 import configparser
-import sys
 from os import path
 
 #import sys
