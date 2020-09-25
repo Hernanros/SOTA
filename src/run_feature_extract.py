@@ -55,16 +55,18 @@ def main(args):
     with open(picklefile, 'rb') as handle:
         df = pickle.load(handle)
 
+    txt_col_format = 'text_' if 'text_1' in df.columns else 'text'
+
     extractors = dict(
-        bleu=Bleu(), 
-        cosine_similarites=CosineSimilarity(glove_path=Glove_twitter_27B_PATH), 
-        elmo_similarites=EuclideanElmoDistance(),
-        bert=BertScore(), 
-        chrf_score=chrFScore(), 
-        pos_distance=POSDistance(vector_path=Glove_twitter_27B_PATH), 
-        wmd=WMD(vector_path=GloVe_840B_300d_PATH),
-        ngram_overlap=NgramOverlap(args.max_n),
-        rouge=ROUGE())
+        bleu=Bleu(txt_col_format),
+        cosine_similarites=CosineSimilarity(val=txt_col_format, glove_path=Glove_twitter_27B_PATH),
+        elmo_similarites=EuclideanElmoDistance(val=txt_col_format),
+        bert=BertScore(val=txt_col_format),
+        chrf_score=chrFScore(val=txt_col_format),
+        pos_distance=POSDistance(val=txt_col_format, vector_path=Glove_twitter_27B_PATH),
+        wmd=WMD(val=txt_col_format, vector_path=GloVe_840B_300d_PATH),
+        ngram_overlap=NgramOverlap(args.max_n, val=txt_col_format),
+        rouge=ROUGE(val=txt_col_format))
                       
     features = args.features
     if features == 'ALL':
@@ -72,11 +74,10 @@ def main(args):
     else:
         features = features.lower().split(',')
 
-    txt_col_format = 'text_' if 'text_1' in df.columns else 'text'
+
 
     for feature_name, extractor in extractors.items():
         if feature_name in features:
-            extractor.setTextFormat(txt_col_format)
             df = extractor.run(df)
 
     with open(picklefile, 'wb') as handle:
@@ -84,15 +85,16 @@ def main(args):
 
 args = config('/Users/adam/PycharmProjects/SOTA/data/combined/no_annotators/combined_data_no_nans_rerun.pickle', 'bleu', 1)
 main(args)
-# if __name__ == '__main__':
-#
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument('--pickle', type=str, required=True, default='data/combined/no_annotators/combined_data_no_nans_rerun.pickle',
-#                         help='pickle path for combined dataset')
-#     parser.add_argument('--features', required=True, type=str, default='ALL',
-#                         help='use "ALL" for all features, or comma separated list of features')
-#     parser.add_argument('--max_n', type=int, default=1,
-#                         help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
-#
-#     args = parser.parse_args()
-#     main(args)
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--pickle', type=str, required=True, default='data/combined/no_annotators/combined_data_no_nans_rerun.pickle',
+                        help='pickle path for combined dataset')
+    parser.add_argument('--features', required=True, type=str, default='ALL',
+                        help='use "ALL" for all features, or comma separated list of features')
+    parser.add_argument('--max_n', type=int, default=1,
+                        help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
+
+    args = parser.parse_args()
+    main(args)
