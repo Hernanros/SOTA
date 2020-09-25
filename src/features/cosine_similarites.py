@@ -5,7 +5,8 @@ models:
 - glove uses torchtext, and predownloaded can be determined using 'vectors_cache'
 - fasttext uses gensim downloader, path is always ~/gensim-data. To control it, make a symlink
 """
-import pandas
+from typing import List
+import pandas as pd
 import re
 import numpy as np
 from gensim.models.fasttext import FastText
@@ -25,10 +26,9 @@ class CosineSimilarity:
                            fasttext=api.load("fasttext-wiki-news-subwords-300"))
         self.downloaded = True
 
-    def compute_cs(self, reference: str, candidate: str, model: str):
-        reference = reference.strip().split()
-        candidate = candidate.strip().split()
+    def compute_cs(self, reference: List[str], candidate: List[str], model: str):
 
+<<<<<<< HEAD:src/features/cosine_similarites.py
         reference_vectors = []
         for word in reference:
             if word in self.models[model].wv.vocab:
@@ -46,14 +46,11 @@ class CosineSimilarity:
             else:
                 pass
         reference_vectors = np.array(reference_vectors)
+=======
+        reference_vectors = np.array([self.models[model][word] for word in reference if word in self.models[model].vocab])
+>>>>>>> adam/align-features-with-ivan:src/cosine_similarites.py
 
-        candidate_vectors = []
-        for word in candidate:
-            if word in self.models[model].wv.vocab:
-                candidate_vectors.append(self.models[model].wv[word])
-            else:
-                pass
-        candidate_vectors = np.array(candidate_vectors)
+        candidate_vectors = np.array([self.models[model][word] for word in candidate if word in self.models[model].vocab])
 
         try:
             min_reference_vector = np.min(reference_vectors, axis=0)
@@ -78,6 +75,7 @@ class CosineSimilarity:
         score = cosine_similarity(reference_vector, candidate_vector)[0][0]
         return 1 - score
 
+<<<<<<< HEAD:src/features/cosine_similarites.py
 
     def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
 
@@ -104,5 +102,14 @@ class CosineSimilarity:
         print("cosine_similarites end");
 
 
+=======
+    def run(self, df: pd.DataFrame) -> pd.DataFrame:
+        text1 = df['text_1'].str.strip().str.split()
+        text2 = df['text_2'].str.strip().str.split()
+        pairs = pd.concat([text1, text2], axis=1)
+        df['glove_cosine'] = pairs.apply(lambda row: self.compute_cs_word2vec(row.text_1, row.text_2, 'glove'), axis=1)
+        df['fasttext_cosine'] = pairs.apply(lambda row: self.compute_cs_word2vec(row.text_1, row.text_2, 'fasttext'), axis=1)
+>>>>>>> adam/align-features-with-ivan:src/cosine_similarites.py
         return df
+
 
