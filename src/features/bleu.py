@@ -8,7 +8,7 @@ from src.features import Metric
 
 class Bleu(Metric):
 
-    def __init__(self, val):
+    def __init__(self, val='text_'):
         super(Bleu, self).__init__(val=val)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:

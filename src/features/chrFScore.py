@@ -4,7 +4,7 @@ from src.features import Metric
 
 class chrFScore(Metric):
 
-    def __init__(self, val):
+    def __init__(self, val='text_'):
         super(chrFScore, self).__init__(val=val)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:

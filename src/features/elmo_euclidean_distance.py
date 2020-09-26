@@ -8,7 +8,7 @@ from src.features import Metric
 
 class EuclideanElmoDistance(Metric):
 
-    def __init__(self, val):
+    def __init__(self, val='text_'):
         super(EuclideanElmoDistance, self).__init__(val=val)
         self.downloaded = False
         self.embeddings = None
