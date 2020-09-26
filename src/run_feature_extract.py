@@ -5,6 +5,7 @@ This file implements running the different semantic similiarity metrics on a dat
 import pickle
 import argparse
 import configparser
+import os
 from os import path
 
 #import sys
@@ -22,7 +23,8 @@ from src.features.ROUGE import ROUGE
 from src.features.WMD import WMD
 
 
-class config:
+class Config:
+    """Config class for debugging in IDE"""
     def __init__(self, pckl: str, features: str, max_n: int):
         self.pickle = pckl
         self.features = features
@@ -31,7 +33,7 @@ class config:
 
 def main(args):
 
-    creds_path_ar = ["/Users/adam/PycharmProjects/SOTA/credentials.ini"]
+    creds_path_ar = [path.join(path.dirname(os.getcwd()), "credentials.ini"), "credentials.ini"]
     PATH_ROOT = ""
     PATH_DATA = ""
     GloVe_840B_300d_PATH = ""
@@ -41,12 +43,12 @@ def main(args):
         if path.exists(creds_path):
             config_parser = configparser.ConfigParser()
             config_parser.read(creds_path)
-            # PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
-            # PATH_DATA = config_parser['MAIN']["PATH_DATA"]
+            PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
+            PATH_DATA = config_parser['MAIN']["PATH_DATA"]
             GloVe_840B_300d_PATH = config_parser['MAIN']["GloVe_840B_300d_PATH"]
             Glove_twitter_27B_PATH= config_parser['MAIN']["Glove_twitter_27B_PATH"]
-            # WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
-            # ENV = config_parser['MAIN']["ENV"]
+            WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
+            ENV = config_parser['MAIN']["ENV"]
             break
 
     picklefile = args.pickle
@@ -82,8 +84,8 @@ def main(args):
     with open(picklefile, 'wb') as handle:
         pickle.dump(df, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-args = config('/Users/adam/PycharmProjects/SOTA/data/combined/no_annotators/combined_data_no_nans_rerun.pickle', 'elmo_similarites', 1)
-main(args)
+# args = Config('/Users/adam/PycharmProjects/SOTA/data/combined/no_annotators/combined_data_no_nans_rerun.pickle', 'elmo_similarites', 1)
+# main(args)
 
 if __name__ == '__main__':
 
