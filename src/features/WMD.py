@@ -50,6 +50,8 @@ class WMD(Metric):
 
         if not self.downloaded:
             self.download()
-
-        df['WMD'] = df.apply(lambda x: self.model.wmdistance(x.text_1, x.text_2), axis=1)
+        text1 = df[self.text1].str.lower().str.strip().str.split()
+        text2 = df[self.text2].str.lower().str.strip().str.split()
+        pairs = pd.concat([text1, text2], axis=1)
+        df['WMD'] = pairs.apply(lambda x: self.model.wmdistance(x[self.text1], x[self.text2]), axis=1)
         return df
