@@ -20,8 +20,8 @@ class ROUGE(Metric):
 
         i = 0
         while i < len(df):
-            sentence_ori = df.iloc[i]['text_1'].strip()
-            sentence_gen = df.iloc[i]['text_2'].strip()
+            sentence_ori = df.iloc[i][self.text1].strip()
+            sentence_gen = df.iloc[i][self.text2].strip()
 
             scores = evaluator.get_scores([sentence_ori], [sentence_gen])
             scores_rouge1.append(scores[0]['rouge-1']['f'])
