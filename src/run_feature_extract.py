@@ -82,7 +82,7 @@ def main(args):
     with open(picklefile, 'wb') as handle:
         pickle.dump(df, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-args = config('/Users/adam/PycharmProjects/SOTA/data/combined/no_annotators/combined_data_no_nans_rerun.pickle', 'bleu', 1)
+args = config('/Users/adam/PycharmProjects/SOTA/data/combined/no_annotators/combined_data_no_nans_rerun.pickle', 'elmo_similarites', 1)
 main(args)
 
 if __name__ == '__main__':

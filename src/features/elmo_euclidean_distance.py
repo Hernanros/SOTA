@@ -2,13 +2,16 @@ import pandas as pd
 import numpy as np
 from flair.embeddings import ELMoEmbeddings
 from flair.data import Sentence
-from scipy.spatial.distance import euclidean
 import torch
+from src.features import Metric
 
-class EuclideanElmoDistance:
 
-    def __init__(self):
+class EuclideanElmoDistance(Metric):
+
+    def __init__(self, val):
+        super(EuclideanElmoDistance, self).__init__(val=val)
         self.downloaded = False
+        self.embeddings = None
 
     def download(self):        
         self.embeddings = ELMoEmbeddings()
@@ -23,12 +26,12 @@ class EuclideanElmoDistance:
         sent = Sentence(sentence)
         self.embeddings.embed(sent)
         # return average embedding of words in sentence
-        return torch.stack([token.embedding for token in sent]).mean(axis=0)
+        mean = torch.stack([token.embedding for token in sent]).mean(axis=1)
+        return mean.mean(axis=0).numpy()
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
-        text1 = df['text_1'].str.strip().apply(self.create_embedding)
-        text2 = df['text_2'].str.strip().apply(self.create_embedding)
+        text1 = df[self.text1].str.strip().str.split().apply(self.create_embedding)
+        text2 = df[self.text2].str.strip().str.split().apply(self.create_embedding)
         vector = text1 - text2
         df['L2_score'] = vector.apply(np.linalg.norm)
-            # pairs.apply(lambda row: euclidean(row.text_1, row.text_2), axis=1)
         return df

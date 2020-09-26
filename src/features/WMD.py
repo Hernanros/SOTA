@@ -12,14 +12,17 @@ from gensim.models import KeyedVectors
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath, get_tmpfile
 import zipfile
-
+from src.features import Metric
 import os
- 
-class WMD:
 
-    def __init__(self,vector_path=None):
+
+class WMD(Metric):
+
+    def __init__(self, val, vector_path=None):
+        super(WMD, self).__init__(val)
         self.downloaded = False
         self.vector_path = vector_path
+        self.model = None
         
     def download(self):
         if not os.path.exists(self.vector_path+'/glove.840B.300d.w2v.txt'):
