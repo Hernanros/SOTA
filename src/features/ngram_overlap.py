@@ -18,5 +18,5 @@ class NgramOverlap(Metric):
         text1 = df['text_1'].str.strip().str.split()
         text2 = df['text_2'].str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
-        df['1-gram_overlap'] = pairs.apply(lambda row: self.gram_overlap(row.text_1, row.text_2,))
+        df['1-gram_overlap'] = pairs.apply(lambda row: self.gram_overlap(row[self.text1], row[self.text2],))
         return df
