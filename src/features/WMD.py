@@ -18,7 +18,7 @@ import os
 
 class WMD(Metric):
 
-    def __init__(self, val='text_', vector_path=None):
+    def __init__(self, val, vector_path=None):
         super(WMD, self).__init__(val)
         self.downloaded = False
         self.vector_path = vector_path

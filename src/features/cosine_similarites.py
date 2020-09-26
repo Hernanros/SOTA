@@ -16,7 +16,7 @@ from src.features import Metric
 
 class CosineSimilarity(Metric):
 
-    def __init__(self, val='text_', glove_path=None):
+    def __init__(self, val, glove_path=None):
         super(CosineSimilarity, self).__init__(val)
         self.downloaded = False
         self.glove_path = glove_path

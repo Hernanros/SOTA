@@ -8,7 +8,7 @@ from src.features import Metric
 
 class POSDistance(Metric):
 
-    def __init__(self, val='text_', vector_path=None):
+    def __init__(self, val, vector_path=None):
         super(POSDistance, self).__init__(val=val)
         self.downloaded = False
         self.vector_path = vector_path

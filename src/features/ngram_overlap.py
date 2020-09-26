@@ -1,10 +1,11 @@
 import pandas as pd
-import numpy as np
+from src.features import Metric
 
 
-class NgramOverlap:
+class NgramOverlap(Metric):
 
-    def __init__(self, n):
+    def __init__(self, n, val='text_'):
+        super(NgramOverlap, self).__init__(val=val)
         self.n = n
 
     def gram_overlap(self, sent_a, sent_b):

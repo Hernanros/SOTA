@@ -5,7 +5,7 @@ from src.features import Metric
 
 class BertScore(Metric):
 
-    def __init__(self, val='text_'):
+    def __init__(self, val):
         super(BertScore, self).__init__(val)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:

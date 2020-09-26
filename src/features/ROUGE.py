@@ -7,7 +7,7 @@ from src.features import Metric
 
 class ROUGE(Metric):
 
-    def __init__(self, val='text_'):
+    def __init__(self, val):
         super(ROUGE, self).__init__(val=val)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
