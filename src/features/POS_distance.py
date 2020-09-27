@@ -5,6 +5,8 @@ import nltk
 import torchtext.vocab as torch_vocab
 import torch
 from src.features import Metric
+from tqdm import tqdm
+
 
 class POSDistance(Metric):
 
@@ -59,9 +61,10 @@ class POSDistance(Metric):
             return -1
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
+        tqdm.pandas()
         text1 = df[self.text1].str.strip().str.split()
         text2 = df[self.text2].str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
-        df['POS Dist score'] = pairs.apply(lambda row: self.pos_distance(row), axis=1)
+        df['POS Dist score'] = pairs.proggress_apply(lambda row: self.pos_distance(row), axis=1)
         return df
 

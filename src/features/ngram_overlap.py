@@ -1,5 +1,6 @@
 import pandas as pd
 from src.features import Metric
+from tqdm import tqdm
 
 
 class NgramOverlap(Metric):
@@ -16,8 +17,10 @@ class NgramOverlap(Metric):
         return score_wo
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
+        tqdm.pandas()
         text1 = df['text_1'].str.strip().str.split()
         text2 = df['text_2'].str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
-        df['1-gram_overlap'] = pairs.apply(lambda row: self.gram_overlap(row[self.text1], row[self.text2],))
+        df['1-gram_overlap'] = pairs.progress_apply(lambda row: self.gram_overlap(row[self.text1], row[self.text2]),
+                                                    axis=1)
         return df

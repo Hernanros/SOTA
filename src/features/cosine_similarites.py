@@ -12,6 +12,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import gensim.downloader as api
 import torchtext.vocab as torch_vocab
 from src.features import Metric
+from tqdm import tqdm
 
 
 class CosineSimilarity(Metric):
@@ -61,9 +62,12 @@ class CosineSimilarity(Metric):
             self.download()        
 
         print("cosine_similarites start")
+        tqdm.pandas()
         text1 = df[self.text1].str.strip().str.split()
         text2 = df[self.text2].str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
-        df['glove_cosine'] = pairs.apply(lambda row: self.compute_cs(row[self.text1], row[self.text2], 'glove'))
-        df['fasttext_cosine'] = pairs.apply(lambda row: self.compute_cs(row[self.text1], row[self.text2], 'fasttext'))
+        df['glove_cosine'] = pairs.progress_apply(lambda row: self.compute_cs(row[self.text1], row[self.text2],
+                                                                              'glove'))
+        df['fasttext_cosine'] = pairs.progress_apply(lambda row: self.compute_cs(row[self.text1], row[self.text2],
+                                                                                 'fasttext'))
         return df

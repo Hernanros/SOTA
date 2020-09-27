@@ -14,6 +14,7 @@ from gensim.test.utils import datapath, get_tmpfile
 import zipfile
 from src.features import Metric
 import os
+from tqdm import tqdm
 
 
 class WMD(Metric):
@@ -47,11 +48,11 @@ class WMD(Metric):
         self.downloaded = True
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
-
+        tqdm.pandas()
         if not self.downloaded:
             self.download()
         text1 = df[self.text1].str.lower().str.strip().str.split()
         text2 = df[self.text2].str.lower().str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
-        df['WMD'] = pairs.apply(lambda x: self.model.wmdistance(x[self.text1], x[self.text2]), axis=1)
+        df['WMD'] = pairs.progress_apply(lambda x: self.model.wmdistance(x[self.text1], x[self.text2]), axis=1)
         return df

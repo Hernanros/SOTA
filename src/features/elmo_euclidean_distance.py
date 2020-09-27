@@ -4,6 +4,7 @@ from flair.embeddings import ELMoEmbeddings
 from flair.data import Sentence
 import torch
 from src.features import Metric
+from tqdm import tqdm
 
 
 class EuclideanElmoDistance(Metric):
@@ -29,8 +30,9 @@ class EuclideanElmoDistance(Metric):
         return torch.stack([token.embedding for token in sent]).mean(axis=1)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
+        tqdm.pandas()
         text1 = df[self.text1].str.strip().str.split().apply(self.create_embedding)
         text2 = df[self.text2].str.strip().str.split().apply(self.create_embedding)
         vector = text1 - text2
-        df['L2_score'] = vector.apply(np.linalg.norm)
+        df['L2_score'] = vector.progress_apply(np.linalg.norm)
         return df
