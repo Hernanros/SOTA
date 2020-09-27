@@ -7,10 +7,40 @@ import argparse
 import configparser
 import os
 from os import path
-from src import BertScore, Bleu, CosineSimilarity, chrFScore, EuclideanElmoDistance, POSDistance, ROUGE, WMD, NgramOverlap
-# import sys
-# print(f"P:{sys.path}")
+import sys
 
+creds_path_ar = [path.join(path.dirname(os.getcwd()), "credentials.ini"), "credentials.ini"]
+PATH_ROOT = ""
+PATH_DATA = ""
+GloVe_840B_300d_PATH = ""
+Glove_twitter_27B_PATH = ""
+
+for creds_path in creds_path_ar:
+    if path.exists(creds_path):
+        config_parser = configparser.ConfigParser()
+        config_parser.read(creds_path)
+        PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
+        PATH_DATA = config_parser['MAIN']["PATH_DATA"]
+        GloVe_840B_300d_PATH = config_parser['MAIN']["GloVe_840B_300d_PATH"]
+        Glove_twitter_27B_PATH= config_parser['MAIN']["Glove_twitter_27B_PATH"]
+        WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
+        ENV = config_parser['MAIN']["ENV"]
+        break
+
+# adding cwd to path to avoid "No module named src.*" errors
+sys.path.insert(0,os.path.join(PATH_ROOT))
+
+#print(f"P:{sys.path}")
+
+from src.features.bleu import Bleu
+from src.features.bertscore import BertScore
+from src.features.chrFScore import chrFScore
+from src.features.cosine_similarites import CosineSimilarity
+from src.features.elmo_euclidean_distance import EuclideanElmoDistance
+from src.features.ngram_overlap import NgramOverlap
+from src.features.POS_distance import POSDistance
+from src.features.ROUGE import ROUGE
+from src.features.WMD import WMD
 
 class Config:
     """Config class for debugging in IDE"""
@@ -21,24 +51,6 @@ class Config:
 
 
 def main(args):
-
-    creds_path_ar = [path.join(path.dirname(os.getcwd()), "credentials.ini"), "credentials.ini"]
-    PATH_ROOT = ""
-    PATH_DATA = ""
-    GloVe_840B_300d_PATH = ""
-    Glove_twitter_27B_PATH = ""
-
-    for creds_path in creds_path_ar:
-        if path.exists(creds_path):
-            config_parser = configparser.ConfigParser()
-            config_parser.read(creds_path)
-            PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
-            PATH_DATA = config_parser['MAIN']["PATH_DATA"]
-            GloVe_840B_300d_PATH = config_parser['MAIN']["GloVe_840B_300d_PATH"]
-            Glove_twitter_27B_PATH= config_parser['MAIN']["Glove_twitter_27B_PATH"]
-            WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
-            ENV = config_parser['MAIN']["ENV"]
-            break
 
     picklefile = args.pickle
 
