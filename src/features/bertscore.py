@@ -1,16 +1,17 @@
-import pandas
+import pandas as pd
 from bert_score import score
+from src.features import Metric
 
 
-class BertScore:
+class BertScore(Metric):
 
-    def __init__(self):
-        pass
+    def __init__(self, val):
+        super(BertScore, self).__init__(val)
 
-    def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
+    def run(self, df: pd.DataFrame) -> pd.DataFrame:
         # apply function to all word pairs in dataset
-        df['text1'] = df['text_1'].str.strip()
-        df['text_2'] = df['text_2'].str.strip()
-        _, _, F1 = score(df['text1'].tolist(), df['text2'].tolist(), lang='en')
+        text1 = df[self.text1].str.strip().tolist()
+        text2 = df[self.text2].str.strip().tolist()
+        _, _, F1 = score(text1, text2, lang='en')
         df['BertScore'] = F1.numpy()
         return df

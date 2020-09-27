@@ -6,8 +6,6 @@
 **/*.virtual_documents
 __pycache__
 
-data/*
-
 credentials.ini
 .vscode/
 temp/

@@ -12,14 +12,17 @@ from gensim.models import KeyedVectors
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath, get_tmpfile
 import zipfile
-
+from src.features import Metric
 import os
- 
-class WMD:
 
-    def __init__(self,vector_path=None):
+
+class WMD(Metric):
+
+    def __init__(self, val, vector_path=None):
+        super(WMD, self).__init__(val)
         self.downloaded = False
         self.vector_path = vector_path
+        self.model = None
         
     def download(self):
         if not os.path.exists(self.vector_path+'/glove.840B.300d.w2v.txt'):
@@ -47,6 +50,8 @@ class WMD:
 
         if not self.downloaded:
             self.download()
-
-        df['WMD'] = df.apply(lambda x: self.model.wmdistance(x.text_1, x.text_2), axis=1)
+        text1 = df[self.text1].str.lower().str.strip().str.split()
+        text2 = df[self.text2].str.lower().str.strip().str.split()
+        pairs = pd.concat([text1, text2], axis=1)
+        df['WMD'] = pairs.apply(lambda x: self.model.wmdistance(x[self.text1], x[self.text2]), axis=1)
         return df

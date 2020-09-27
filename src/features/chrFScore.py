@@ -1,15 +1,16 @@
-import pandas
+import pandas as pd
 from nltk.translate import chrf_score
+from src.features import Metric
 
+class chrFScore(Metric):
 
-class chrFScore:
+    def __init__(self, val):
+        super(chrFScore, self).__init__(val=val)
 
-    def __init__(self):
-        pass
-
-    def run(self, df: pandas.DataFrame) -> pandas.DataFrame:
+    def run(self, df: pd.DataFrame) -> pd.DataFrame:
         # apply function to all word pairs in dataset
-        df['text1'] = df['text1'].str.strip().str.split()
-        df['text2'] = df['text2'].str.strip().str.split()
-        df['chrfScore'] = df.apply(lambda row: chrf_score.sentence_chrf(row.text_1, row.text_2,), axis=1)
+        text1 = df[self.text1].str.strip()
+        text2 = df[self.text2].str.strip()
+        pairs = pd.concat([text1, text2], axis=1)
+        df['chrfScore'] = pairs.apply(lambda row: chrf_score.sentence_chrf(row[self.text1], row[self.text2]), axis=1)
         return df
