@@ -60,10 +60,10 @@ class CosineSimilarity(Metric):
         if not self.downloaded:
             self.download()        
 
-        print("cosine_similarites start");
+        print("cosine_similarites start")
         text1 = df[self.text1].str.strip().str.split()
         text2 = df[self.text2].str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
-        df['glove_cosine'] = pairs.apply(lambda row: self.compute_cs_word2vec(row[self.text1], row[self.text2], 'glove'))
-        df['fasttext_cosine'] = pairs.apply(lambda row: self.compute_cs_word2vec(row[self.text1], row[self.text2], 'fasttext'))
+        df['glove_cosine'] = pairs.apply(lambda row: self.compute_cs(row[self.text1], row[self.text2], 'glove'))
+        df['fasttext_cosine'] = pairs.apply(lambda row: self.compute_cs(row[self.text1], row[self.text2], 'fasttext'))
         return df
