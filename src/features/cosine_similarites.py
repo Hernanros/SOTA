@@ -9,7 +9,6 @@ from typing import List
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-import gensim.downloader as api
 import torchtext.vocab as torch_vocab
 from src.features import Metric
 from tqdm import tqdm
@@ -26,19 +25,16 @@ class CosineSimilarity(Metric):
 
     def download(self):
         self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100, cache=self.glove_path),
-                           fasttext=api.load("fasttext-wiki-news-subwords-300"))
-        self.vocab = dict(glove=self.models['glove'].itos, fasttext=self.models['fasttext'].vocab)
+                           fasttext=torch_vocab.FastText(language='en', cache=self.glove_path))
+        self.vocab = dict(glove=self.models['glove'], fasttext=self.models['fasttext'])
         self.downloaded = True
 
     def compute_cs(self, reference: List[str], candidate: List[str], model: str):
-        reference_vectors = np.array([np.array(self.models[model][word]) for word in reference if word in self.vocab[model]])
-        candidate_vectors = np.array([np.array(self.models[model][word]) for word in candidate if word in self.vocab[model]])
+        reference_vectors = self.models[model].get_vecs_by_tokens(reference).numpy()
+        candidate_vectors = self.models[model].get_vecs_by_tokens(candidate).numpy()
 
-        try:
-            min_reference_vector = np.min(reference_vectors, axis=0)
-            min_candidate_vector = np.min(candidate_vectors, axis=0)
-        except:
-            return None
+        min_reference_vector = np.min(reference_vectors, axis=0)
+        min_candidate_vector = np.min(candidate_vectors, axis=0)
 
         mean_reference_vector = np.mean(reference_vectors, axis=0)
         mean_candidate_vector = np.mean(candidate_vectors, axis=0)
@@ -54,8 +50,10 @@ class CosineSimilarity(Metric):
         candidate_vector = candidate_vector / np.linalg.norm(candidate_vector)
         candidate_vector = np.expand_dims(candidate_vector, axis=0)
 
-        score = cosine_similarity(reference_vector, candidate_vector).item()
-        return 1 - score
+        if np.isnan(reference_vector).any() or np.isnan(candidate_vector).any():
+            return None
+        else:
+            return 1 - cosine_similarity(reference_vector, candidate_vector).item()
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
 
