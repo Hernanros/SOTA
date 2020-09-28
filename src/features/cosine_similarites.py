@@ -22,16 +22,17 @@ class CosineSimilarity(Metric):
         self.downloaded = False
         self.glove_path = glove_path
         self.models = {}
+        self.vocab = {}
 
     def download(self):
         self.models = dict(glove=torch_vocab.GloVe(name='twitter.27B', dim=100, cache=self.glove_path),
                            fasttext=api.load("fasttext-wiki-news-subwords-300"))
+        self.vocab = dict(glove=self.models['glove'].itos, fasttext=self.models['fasttext'].vocab)
         self.downloaded = True
 
     def compute_cs(self, reference: List[str], candidate: List[str], model: str):
-
-        reference_vectors = np.array([self.models[model][word] for word in reference if word in self.models[model].vocab])
-        candidate_vectors = np.array([self.models[model][word] for word in candidate if word in self.models[model].vocab])
+        reference_vectors = np.array([np.array(self.models[model][word]) for word in reference if word in self.vocab[model]])
+        candidate_vectors = np.array([np.array(self.models[model][word]) for word in candidate if word in self.vocab[model]])
 
         try:
             min_reference_vector = np.min(reference_vectors, axis=0)
@@ -53,7 +54,7 @@ class CosineSimilarity(Metric):
         candidate_vector = candidate_vector / np.linalg.norm(candidate_vector)
         candidate_vector = np.expand_dims(candidate_vector, axis=0)
 
-        score = cosine_similarity(reference_vector, candidate_vector)[0][0]
+        score = cosine_similarity(reference_vector, candidate_vector).item()
         return 1 - score
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -67,7 +68,7 @@ class CosineSimilarity(Metric):
         text2 = df[self.text2].str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
         df['glove_cosine'] = pairs.progress_apply(lambda row: self.compute_cs(row[self.text1], row[self.text2],
-                                                                              'glove'))
+                                                                              'glove'), axis=1)
         df['fasttext_cosine'] = pairs.progress_apply(lambda row: self.compute_cs(row[self.text1], row[self.text2],
-                                                                                 'fasttext'))
+                                                                                 'fasttext'), axis=1)
         return df
