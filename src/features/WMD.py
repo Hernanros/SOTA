@@ -24,29 +24,38 @@ class WMD(Metric):
         self.downloaded = False
         self.vector_path = vector_path
         self.model = None
-        
+        self.w2vfile_path = os.path.join(self.vector_path, 'glove.840B.300d.txt')
+        self.glove_w2v_format = os.path.join(self.vector_path, 'glove.840B.300d.w2v.txt')
+        self.zip_path = os.path.join(self.vector_path, 'glove.840B.300d.zip')
+
+    def convert_to_w2v(self):
+        print("[WMD] glove=>w2v")
+        glove_file = datapath(self.w2vfile_path)
+        glove_w2v_format = get_tmpfile(self.glove_w2v_format)
+        _ = glove2word2vec(glove_file, glove_w2v_format)
+
+    def download_vectors(self):
+        print("[WMD] downloading glove")
+        chakin.download(number=16, save_dir=self.vector_path)  # select GloVe.840B.300d
+
+    def unzip_vectors(self):
+        print("[WMD] unzipping")
+        zip_ref = zipfile.ZipFile(self.zip_path)
+        zip_ref.extractall(self.vector_path)
+        zip_ref.close()
+
     def download(self):
-        w2vfile_path = os.path.join(self.vector_path, 'glove.840B.300d.txt')
-        glove_w2v_format = os.path.join(self.vector_path, 'glove.840B.300d.w2v.txt')
-        zip_path = os.path.join(self.vector_path, 'glove.840B.300d.zip')
-        if not os.path.exists(glove_w2v_format):
-            if not os.path.exists(zip_path):
-                print("[WMD] downloading glove")
-                chakin.download(number=16, save_dir=self.vector_path)  # select GloVe.840B.300d
+        if not os.path.exists(self.glove_w2v_format):
+            if not os.path.exists(self.w2vfile_path):
+                if not os.path.exists(self.zip_path):
+                    self.download_vectors()
+                else:
+                    self.unzip_vectors()
+            else:
+                self.convert_to_w2v()
+        else:
+            self.model = KeyedVectors.load_word2vec_format(self.glove_w2v_format)
 
-            if not os.path.exists(w2vfile_path):
-                print("[WMD] unzipping")
-                zip_ref = zipfile.ZipFile(zip_path)
-                zip_ref.extractall(self.vector_path)
-                zip_ref.close()
-
-        if not os.path.exists(glove_w2v_format):
-            print("[WMD] glove=>w2v")
-            glove_file = datapath(w2vfile_path)
-            glove_w2v_format = get_tmpfile(glove_w2v_format)
-            _ = glove2word2vec(glove_file, glove_w2v_format)
-        
-        self.model = KeyedVectors.load_word2vec_format(glove_w2v_format)
         self.downloaded = True
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
