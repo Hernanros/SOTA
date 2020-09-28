@@ -52,7 +52,7 @@ def main(args):
         with open(picklefile, 'rb') as handle:
             df = pickle.load(handle)
     else:
-        df = pd.read_csv(picklefile, index_col=0)
+        df = pd.read_csv(picklefile)
 
     txt_col_format = 'text_' if 'text_1' in df.columns else 'text'
 
@@ -90,20 +90,25 @@ def main(args):
         df.to_csv(picklefile, index=False)
 
 
+################################
+# For debugging
+################################
+# feats = 'rouge'
+# arguments = Config('/Users/adam/PycharmProjects/SOTA/data/combined/with_annotators/combined_dataset.csv', feats, 1)
+# main(arguments)
 
-feats = 'bleu,cosine_similarites,chrf_score,pos_distance,wmd,ngram_overlap,rouge'
-arguments = Config('/Users/adam/PycharmProjects/SOTA/data/combined/with_annotators/combined_dataset.csv', feats, 1)
-main(arguments)
+################################
+# For Command-line running
+################################
+if __name__ == '__main__':
 
-# if __name__ == '__main__':
-#
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument('--pickle', type=str, required=True, default='data/combined/no_annotators/combined_data_no_nans_rerun.pickle',
-#                         help='pickle path for combined dataset')
-#     parser.add_argument('--features', required=True, type=str, default='ALL',
-#                         help='use "ALL" for all features, or comma separated list of features')
-#     parser.add_argument('--max_n', type=int, default=1,
-#                         help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
-#
-#     args = parser.parse_args()
-#     main(args)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--pickle', type=str, required=True, default='data/combined/no_annotators/combined_data_no_nans_rerun.pickle',
+                        help='pickle path for combined dataset')
+    parser.add_argument('--features', required=True, type=str, default='ALL',
+                        help='use "ALL" for all features, or comma separated list of features')
+    parser.add_argument('--max_n', type=int, default=1,
+                        help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
+
+    args = parser.parse_args()
+    main(args)
