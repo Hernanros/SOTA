@@ -51,17 +51,14 @@ class WMD(Metric):
                     self.download_vectors()
                 else:
                     self.unzip_vectors()
-            else:
-                self.convert_to_w2v()
-        else:
-            self.model = KeyedVectors.load_word2vec_format(self.glove_w2v_format)
-
+            self.convert_to_w2v()
         self.downloaded = True
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         tqdm.pandas()
         if not self.downloaded:
             self.download()
+        self.model = KeyedVectors.load_word2vec_format(self.glove_w2v_format)
         text1 = df[self.text1].str.lower().str.strip().str.split()
         text2 = df[self.text2].str.lower().str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
