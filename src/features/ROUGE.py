@@ -3,6 +3,7 @@ import pandas as pd
 import rouge
 import numpy as np
 from src.features import Metric
+from tqdm import tqdm
 
 
 class ROUGE(Metric):
@@ -11,30 +12,17 @@ class ROUGE(Metric):
         super(ROUGE, self).__init__(val=val)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
-
-        scores_rouge1 = []
-        scores_rouge2 = []
-        scores_rougel = []
-    
-        evaluator = rouge.Rouge(metrics=['rouge-1', 'rouge-2', 'rouge-l'])
-
-        i = 0
-        while i < len(df):
-            sentence_ori = df.iloc[i][self.text1].strip()
-            sentence_gen = df.iloc[i][self.text2].strip()
-
-            scores = evaluator.get_scores([sentence_ori], [sentence_gen])
-            scores_rouge1.append(scores[0]['rouge-1']['f'])
-            scores_rouge2.append(scores[0]['rouge-2']['f'])
-            scores_rougel.append(scores[0]['rouge-l']['f'])
-
-            i += 1
-
-        df['ROUGE-1 mean'] = np.mean(scores_rouge1)
-        df['ROUGE-1 std'] = np.std(scores_rouge1)
-        df['ROUGE-2 mean'] = np.mean(scores_rouge2)
-        df['ROUGE-2 std'] = np.std(scores_rouge2)
-        df['ROUGE-L mean'] = np.mean(scores_rougel)
-        df['ROUGE-L stg'] = np.std(scores_rougel)
-
+        tqdm.pandas()
+        text1 = df[self.text1].str.strip()
+        text2 = df[self.text2].str.strip()
+        pairs = pd.concat([text1, text2], axis=1)
+        evaluator = rouge.Rouge(metrics=['rouge-1'])
+        df['ROUGE-1'] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
+                                                                              [row[self.text2]])[0]['rouge-1']['f'])
+        evaluator = rouge.Rouge(metrics=['rouge-2'])
+        df['ROUGE-2'] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
+                                                                              [row[self.text2]])[0]['rouge-2']['f'])
+        evaluator = rouge.Rouge(metrics=['rouge-l'])
+        df['ROUGE-l'] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
+                                                                              [row[self.text2]])[0]['rouge-l']['f'])
         return df
