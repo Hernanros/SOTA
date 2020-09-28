@@ -26,21 +26,23 @@ class WMD(Metric):
         self.model = None
         
     def download(self):
-        if not os.path.exists(self.vector_path+'/glove.840B.300d.w2v.txt'):
-            if not os.path.exists(self.vector_path+'/glove.840B.300d.zip'):
+        w2vfile_path = os.path.join(self.vector_path, 'glove.840B.300d.txt')
+        glove_w2v_format = os.path.join(self.vector_path, 'glove.840B.300d.w2v.txt')
+        zip_path = os.path.join(self.vector_path, 'glove.840B.300d.zip')
+        if not os.path.exists(glove_w2v_format):
+            if not os.path.exists(zip_path):
                 print("[WMD] downloading glove")
                 chakin.download(number=16, save_dir=self.vector_path)  # select GloVe.840B.300d
 
-            if not os.path.exists(self.vector_path+'/glove.840B.300d.txt'):
+            if not os.path.exists(w2vfile_path):
                 print("[WMD] unzipping")
-                zip_ref = zipfile.ZipFile(self.vector_path+"/glove.840B.300d.zip")
+                zip_ref = zipfile.ZipFile(zip_path)
                 zip_ref.extractall(self.vector_path)
                 zip_ref.close()
 
-        glove_w2v_format = self.vector_path+'/glove.840B.300d.w2v.txt'
         if not os.path.exists(glove_w2v_format):
             print("[WMD] glove=>w2v")
-            glove_file = datapath(self.vector_path+'/glove.840B.300d.txt')
+            glove_file = datapath(w2vfile_path)
             glove_w2v_format = get_tmpfile(glove_w2v_format)
             _ = glove2word2vec(glove_file, glove_w2v_format)
         

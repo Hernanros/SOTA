@@ -14,10 +14,11 @@ class POSDistance(Metric):
         super(POSDistance, self).__init__(val=val)
         self.downloaded = False
         self.vector_path = vector_path
-    
-    def download(self):
+        self.dic_glove = None
         nltk.download("punkt")
         nltk.download('averaged_perceptron_tagger')
+    
+    def download(self):
         self.dic_glove = torch_vocab.GloVe(name='twitter.27B', dim=100, cache=self.vector_path)
         self.downloaded = True
 
@@ -61,10 +62,12 @@ class POSDistance(Metric):
             return -1
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
+        if not self.downloaded:
+            self.download()
         tqdm.pandas()
         text1 = df[self.text1].str.strip().str.split()
         text2 = df[self.text2].str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
-        df['POS Dist score'] = pairs.proggress_apply(lambda row: self.pos_distance(row), axis=1)
+        df['POS Dist score'] = pairs.progress_apply(lambda row: self.pos_distance(row), axis=1)
         return df
 
