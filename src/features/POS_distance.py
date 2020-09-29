@@ -65,9 +65,15 @@ class POSDistance(Metric):
         if not self.downloaded:
             self.download()
         tqdm.pandas()
-        text1 = df[self.text1].str.strip().str.split()
-        text2 = df[self.text2].str.strip().str.split()
-        pairs = pd.concat([text1, text2], axis=1)
-        df['POS Dist score'] = pairs.progress_apply(lambda row: self.pos_distance(row), axis=1)
+        metric_names = ['POS Dist score']
+        try:
+            df.drop(columns=metric_names, inplace=True)
+        except KeyError:
+            pass
+        pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
+        pairs[self.text1] = pairs[self.text1].str.strip().str.split()
+        pairs[self.text2] = pairs[self.text2].str.strip().str.split()
+        df[metric_names[0]] = pairs.progress_apply(lambda row: self.pos_distance(row), axis=1)
+        df = df.merge(pairs[metric_names], how='left', left_on='pair_id', right_index=True)
         return df
 

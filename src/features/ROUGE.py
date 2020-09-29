@@ -12,19 +12,25 @@ class ROUGE(Metric):
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         tqdm.pandas()
-        text1 = df[self.text1].str.strip()
-        text2 = df[self.text2].str.strip()
-        pairs = pd.concat([text1, text2], axis=1)
+        metric_names = ['ROUGE-1', 'ROUGE-2', 'ROUGE-l']
+        try:
+            df.drop(columns=metric_names, inplace=True)
+        except KeyError:
+            pass
+        pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
+        pairs[self.text1] = pairs[self.text1].str.strip()
+        pairs[self.text2] = pairs[self.text2].str.strip()
         evaluator = rouge.Rouge(metrics=['rouge-1'])
-        df['ROUGE-1'] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
-                                                                              [row[self.text2]])[0]['rouge-1']['f'],
-                                             axis=1)
+        pairs[metric_names[0]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
+                                                                                       [row[self.text2]]
+                                                                                       )[0]['rouge-1']['f'], axis=1)
         evaluator = rouge.Rouge(metrics=['rouge-2'])
-        df['ROUGE-2'] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
-                                                                              [row[self.text2]])[0]['rouge-2']['f'],
-                                             axis=1)
+        pairs[metric_names[1]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
+                                                                                       [row[self.text2]]
+                                                                                       )[0]['rouge-2']['f'], axis=1)
         evaluator = rouge.Rouge(metrics=['rouge-l'])
-        df['ROUGE-l'] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
-                                                                              [row[self.text2]])[0]['rouge-l']['f'],
-                                             axis=1)
+        pairs[metric_names[2]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
+                                                                                       [row[self.text2]]
+                                                                                       )[0]['rouge-l']['f'], axis=1)
+        df = df.merge(pairs[metric_names], how='left', left_on='pair_id', right_index=True)
         return df
