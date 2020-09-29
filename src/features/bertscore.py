@@ -12,6 +12,6 @@ class BertScore(Metric):
         # apply function to all word pairs in dataset
         text1 = df[self.text1].str.strip().tolist()
         text2 = df[self.text2].str.strip().tolist()
-        _, _, F1 = score(text1, text2, lang='en')
+        _, _, F1 = score(text1, text2, model_type='bert-large-uncased')
         df['BertScore'] = F1.numpy()
         return df
