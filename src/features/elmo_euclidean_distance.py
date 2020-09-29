@@ -1,3 +1,4 @@
+from typing import List
 import pandas as pd
 import numpy as np
 from flair.embeddings import ELMoEmbeddings
@@ -18,7 +19,7 @@ class EuclideanElmoDistance(Metric):
         self.embeddings = ELMoEmbeddings()
         self.downloaded = True
 
-    def create_embedding(self, sentence: list):
+    def create_embedding(self, sentence: list) -> torch.Tensor:
 
         if not self.downloaded:
             self.download()
@@ -29,13 +30,18 @@ class EuclideanElmoDistance(Metric):
         # return average embedding of words in sentence
         return torch.stack([token.embedding for token in sent]).mean(axis=1)
 
+    def calculate_l2_distance(self, candidate: List[str], reference: List[str]) -> float:
+        candidate_embedding = self.create_embedding(candidate)
+        reference_embedding = self.create_embedding(reference)
+        vector = candidate - reference_embedding
+        return np.linalg.norm(vector)
+
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         tqdm.pandas()
-        print(f'Creating embeddings for {self.text1} column')
-        text1 = df[self.text1].str.strip().str.split().progress_apply(self.create_embedding, axis=1)
-        print(f'Creating embeddings for {self.text2} column')
+        text1 = df[self.text1].str.strip().str.split()
         text2 = df[self.text2].str.strip().str.split().progress_apply(self.create_embedding, axis=1)
         print('Calculating Elmo L2 distance')
-        vector = text1 - text2
-        df['L2_score'] = vector.progress_apply(np.linalg.norm, axis=1)
+        pairs = pd.concat([text1, text2], axis=1)
+        df['L2_score'] = pairs.progress_apply(lambda row: self.calculate_l2_distance(row[self.text1], row[self.text2]),
+                                              axis=1)
         return df
