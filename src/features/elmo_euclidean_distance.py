@@ -31,8 +31,11 @@ class EuclideanElmoDistance(Metric):
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         tqdm.pandas()
-        text1 = df[self.text1].str.strip().str.split().apply(self.create_embedding)
-        text2 = df[self.text2].str.strip().str.split().apply(self.create_embedding)
+        print(f'Creating embeddings for {self.text1} column')
+        text1 = df[self.text1].str.strip().str.split().progress_apply(self.create_embedding, axis=1)
+        print(f'Creating embeddings for {self.text2} column')
+        text2 = df[self.text2].str.strip().str.split().progress_apply(self.create_embedding, axis=1)
+        print('Calculating Elmo L2 distance')
         vector = text1 - text2
-        df['L2_score'] = vector.progress_apply(np.linalg.norm)
+        df['L2_score'] = vector.progress_apply(np.linalg.norm, axis=1)
         return df
