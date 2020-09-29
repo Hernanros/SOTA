@@ -75,13 +75,12 @@ def main(args):
 
     for feature_name, extractor in extractors.items():
         if feature_name in features:
-            if feature_name not in df.columns:
-                try:
-                    print(f'Running {feature_name} metric')
-                    df = extractor.run(df)
-                except Exception as e:
-                    print(f'Threw error on {feature_name}')
-                    print(f'Threw {type(e)} with message "{e}"')
+            try:
+                print(f'Running {feature_name} metric')
+                df = extractor.run(df)
+            except Exception as e:
+                print(f'Threw error on {feature_name}')
+                print(f'Threw {type(e)} with message "{e}"')
 
     if 'pickle' in picklefile:
         with open(picklefile, 'wb') as handle:

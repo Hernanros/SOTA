@@ -18,7 +18,7 @@ class Bleu(Metric):
         text2 = df[self.text2].str.strip().str.split()
         pairs = pd.concat([text1, text2], axis=1)
         df['bleu'] = pairs.progress_apply(lambda row: sentence_bleu([row[self.text1]], row[self.text2]), axis=1) #Open question whether to keep removing of stopwords or not?
-        df['bleu1'] = pairs.progress_apply(lambda row: sentence_bleu([row[self.text1]], row[self.text2]), axis=1)
+        df['bleu1'] = pairs.progress_apply(lambda row: sentence_bleu([row[self.text1]], row[self.text2], weights=(1, 0, 0, 0)), axis=1)
 
         return df
 
