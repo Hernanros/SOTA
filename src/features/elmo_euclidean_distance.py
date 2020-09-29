@@ -39,7 +39,7 @@ class EuclideanElmoDistance(Metric):
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         tqdm.pandas()
         text1 = df[self.text1].str.strip().str.split()
-        text2 = df[self.text2].str.strip().str.split().progress_apply(self.create_embedding, axis=1)
+        text2 = df[self.text2].str.strip().str.split()
         print('Calculating Elmo L2 distance')
         pairs = pd.concat([text1, text2], axis=1)
         df['L2_score'] = pairs.progress_apply(lambda row: self.calculate_l2_distance(row[self.text1], row[self.text2]),
