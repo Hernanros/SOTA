@@ -19,7 +19,7 @@ class EuclideanElmoDistance(Metric):
         self.embeddings = ELMoEmbeddings()
         self.downloaded = True
 
-    def create_embedding(self, sentence: list) -> torch.Tensor:
+    def create_embedding(self, sentence: str) -> torch.Tensor:
 
         if not self.downloaded:
             self.download()
@@ -30,10 +30,10 @@ class EuclideanElmoDistance(Metric):
         # return average embedding of words in sentence
         return torch.stack([token.embedding for token in sent]).mean(axis=1)
 
-    def calculate_l2_distance(self, candidate: List[str], reference: List[str]) -> float:
+    def calculate_l2_distance(self, candidate: str, reference: str) -> float:
         candidate_embedding = self.create_embedding(candidate)
         reference_embedding = self.create_embedding(reference)
-        vector = candidate - reference_embedding
+        vector = candidate_embedding - reference_embedding
         return np.linalg.norm(vector)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
