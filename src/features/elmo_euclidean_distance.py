@@ -28,13 +28,15 @@ class EuclideanElmoDistance(Metric):
         sent = Sentence(sentence)
         self.embeddings.embed(sent)
         # return average embedding of words in sentence
-        return torch.stack([token.embedding for token in sent]).mean(axis=1)
+        return torch.stack([token.embedding for token in sent], ).mean(dim=1)
 
     def calculate_l2_distance(self, candidate: str, reference: str) -> float:
         candidate_embedding = self.create_embedding(candidate)
         reference_embedding = self.create_embedding(reference)
-        vector = candidate_embedding - reference_embedding
-        return np.linalg.norm(vector)
+        if candidate_embedding.shape[0] != reference_embedding.shape[0]:
+            return None
+        else:
+            return torch.norm(candidate_embedding - reference_embedding, p=2).item()
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         tqdm.pandas()
