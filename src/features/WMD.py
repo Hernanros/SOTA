@@ -4,7 +4,7 @@ glove zip => txt => gensim => wmdistance
 
 zip => txt => glove2word2vec (gensim) => model.wmdistance
 """
-
+import nltk
 import pandas as pd
 import chakin
 from gensim.models import KeyedVectors
@@ -16,6 +16,8 @@ from src.features import Metric
 import os
 from tqdm import tqdm
 
+nltk.download('stopwords')
+stopwords = nltk.corpus.stopwords.words('english')
 
 class WMD(Metric):
 
@@ -65,8 +67,8 @@ class WMD(Metric):
         except KeyError:
             pass
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
-        pairs[self.text1] = pairs[self.text1].str.lower().str.strip().str.split()
-        pairs[self.text2] = pairs[self.text2].str.lower().str.strip().str.split()
+        pairs[self.text1] = pairs[self.text1].str.lower().str.strip().str.split().apply(lambda sent: [t for t in sent if t not in stopwords])
+        pairs[self.text2] = pairs[self.text2].str.lower().str.strip().str.split().apply(lambda sent: [t for t in sent if t not in stopwords])
         pairs[metric_names[0]] = pairs.progress_apply(lambda x: self.model.wmdistance(x[self.text1], x[self.text2]),
                                                       axis=1)
         df = df.merge(pairs[metric_names], how='left', left_on='pair_id', right_index=True)
