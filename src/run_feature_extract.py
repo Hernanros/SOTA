@@ -9,7 +9,6 @@ import configparser
 import os
 from os import path
 import sys
-from src import Bleu, BertScore, chrFScore, CosineSimilarity, EuclideanElmoDistance, NgramOverlap, POSDistance, ROUGE, WMD
 
 creds_path_ar = [path.join(path.dirname(os.getcwd()), "credentials.ini"), "credentials.ini"]
 PATH_ROOT = ""
@@ -31,6 +30,7 @@ for creds_path in creds_path_ar:
 
 # adding cwd to path to avoid "No module named src.*" errors
 sys.path.insert(0, os.path.join(PATH_ROOT))
+from src import Bleu, BertScore, chrFScore, CosineSimilarity, EuclideanElmoDistance, NgramOverlap, POSDistance, ROUGE, WMD
 
 
 # print(f"P:{sys.path}")
