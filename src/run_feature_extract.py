@@ -98,8 +98,8 @@ def main(args):
 ################################
 # For debugging
 ################################
-feats = 'ALL'
-exclusion = 'elmo'
+feats = 'wmd'
+exclusion = ''
 datapath = '/Users/adam/PycharmProjects/SOTA/data/combined/with_annotators/combined_dataset.csv'
 arguments = Config(datapath, feats, 1, exclusion)
 main(arguments)
