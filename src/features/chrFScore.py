@@ -17,9 +17,9 @@ class chrFScore(Metric):
         except KeyError:
             pass
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
-        pairs[self.text1] = pairs[self.text1].str.strip()
-        pairs[self.text2] = pairs[self.text2].str.strip()
-        df[metric_names[0]] = pairs.progress_apply(lambda row: chrf_score.sentence_chrf(row[self.text1],
-                                                                                        row[self.text2]), axis=1)
+        pairs[self.text1] = pairs[self.text1].str.strip().str.split()
+        pairs[self.text2] = pairs[self.text2].str.strip().str.split()
+        pairs[metric_names[0]] = pairs.progress_apply(lambda row: chrf_score.sentence_chrf(row[self.text1],
+                                                                                           row[self.text2]), axis=1)
         df = df.merge(pairs[metric_names], how='left', left_on='pair_id', right_index=True)
         return df
