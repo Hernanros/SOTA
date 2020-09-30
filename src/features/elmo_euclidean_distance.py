@@ -27,7 +27,7 @@ class EuclideanElmoDistance(Metric):
         sent = Sentence(sentence)
         self.embeddings.embed(sent)
         # return average embedding of words in sentence
-        return torch.stack([token.embedding for token in sent], ).mean(dim=1)
+        return torch.stack([token.embedding for token in sent]).mean(dim=0)
 
     def l2_distance(self, candidate: str, reference: str) -> Union[float, None]:
         candidate_embedding = self.create_embedding(candidate)
