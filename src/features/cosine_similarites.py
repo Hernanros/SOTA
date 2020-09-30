@@ -30,8 +30,8 @@ class CosineSimilarity(Metric):
         self.downloaded = True
 
     def compute_cs(self, reference: List[str], candidate: List[str], model: str):
-        reference_vectors = self.models[model].get_vecs_by_tokens(reference).numpy()
-        candidate_vectors = self.models[model].get_vecs_by_tokens(candidate).numpy()
+        reference_vectors = self.models[model].get_vecs_by_tokens(reference, lower_case_backup=True).numpy()
+        candidate_vectors = self.models[model].get_vecs_by_tokens(candidate, lower_case_backup=True).numpy()
 
         min_reference_vector = np.min(reference_vectors, axis=0)
         min_candidate_vector = np.min(candidate_vectors, axis=0)
@@ -74,4 +74,5 @@ class CosineSimilarity(Metric):
                                                                                   'glove'), axis=1)
         pairs[metric_names[1]] = pairs.progress_apply(lambda row: self.compute_cs(row[self.text1], row[self.text2],
                                                                                   'fasttext'), axis=1)
+        df = df.merge(pairs[metric_names], how='left', left_on='pair_id', right_index=True)
         return df

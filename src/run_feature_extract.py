@@ -9,7 +9,6 @@ import configparser
 import os
 from os import path
 import sys
-from src import Bleu, BertScore, chrFScore, CosineSimilarity, EuclideanElmoDistance, NgramOverlap, POSDistance, ROUGE, WMD
 
 creds_path_ar = [path.join(path.dirname(os.getcwd()), "credentials.ini"), "credentials.ini"]
 PATH_ROOT = ""
@@ -31,6 +30,7 @@ for creds_path in creds_path_ar:
 
 # adding cwd to path to avoid "No module named src.*" errors
 sys.path.insert(0, os.path.join(PATH_ROOT))
+from src import Bleu, BertScore, chrFScore, CosineSimilarity, EuclideanElmoDistance, NgramOverlap, POSDistance, ROUGE, WMD
 
 
 # print(f"P:{sys.path}")
@@ -39,7 +39,7 @@ sys.path.insert(0, os.path.join(PATH_ROOT))
 class Config:
     """Config class for debugging in IDE"""
 
-    def __init__(self, pckl: str, features: str, max_n: int, exclude: str):
+    def __init__(self, pckl: str, features: str = 'ALL', max_n: int = 1, exclude: str = None):
         self.pickle = pckl
         self.features = features
         self.max_n = max_n
@@ -53,7 +53,7 @@ def main(args):
         with open(picklefile, 'rb') as handle:
             df = pickle.load(handle)
     else:
-        df = pd.read_csv(picklefile)
+        df = pd.read_csv(picklefile, index_col=0)
 
     txt_col_format = 'text_' if 'text_1' in df.columns else 'text'
 
@@ -92,14 +92,14 @@ def main(args):
         with open(picklefile, 'wb') as handle:
             pickle.dump(df, handle, protocol=pickle.HIGHEST_PROTOCOL)
     else:
-        df.to_csv(picklefile, index=False)
+        df.to_csv(picklefile, index=True)
 
 
 ################################
 # For debugging
 ################################
-feats = 'ALL'
-exclusion = 'elmo,bert'
+feats = 'wmd'
+exclusion = ''
 datapath = '/Users/adam/PycharmProjects/SOTA/data/combined/with_annotators/combined_dataset.csv'
 arguments = Config(datapath, feats, 1, exclusion)
 main(arguments)
@@ -114,7 +114,7 @@ main(arguments)
 #                         help='pickle path for combined dataset')
 #     parser.add_argument('--features', required=True, type=str, default='ALL',
 #                         help='use "ALL" for all features, or comma separated list of features')
-#     parser.add_argument('--exclude', required=True, type=str',
+#     parser.add_argument('--exclude', required=False, type=str', default=''
 #                         help='include comma separated list of features to exclude from calculation')
 #     parser.add_argument('--max_n', type=int, default=1,
 #                         help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
