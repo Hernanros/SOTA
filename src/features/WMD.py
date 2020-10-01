@@ -54,6 +54,10 @@ class WMD(Metric):
                 else:
                     self.unzip_vectors()
             self.convert_to_w2v()
+
+        print("[WMD] load model")
+        self.model = KeyedVectors.load_word2vec_format(self.glove_w2v_format)
+
         self.downloaded = True
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
