@@ -54,17 +54,16 @@ class WMD(Metric):
                 else:
                     self.unzip_vectors()
             self.convert_to_w2v()
-
-        print("[WMD] load model")
-        self.model = KeyedVectors.load_word2vec_format(self.glove_w2v_format)
-
         self.downloaded = True
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         tqdm.pandas()
         if not self.downloaded:
             self.download()
+        
+        print("[WMD] load model")
         self.model = KeyedVectors.load_word2vec_format(self.glove_w2v_format)
+        print("[WMD] model loaded")
         metric_names = ['WMD']
         try:
             df.drop(columns=metric_names, inplace=True)
@@ -73,6 +72,7 @@ class WMD(Metric):
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
         pairs[self.text1] = pairs[self.text1].str.lower().str.strip().str.split().apply(lambda sent: [t for t in sent if t not in stopwords])
         pairs[self.text2] = pairs[self.text2].str.lower().str.strip().str.split().apply(lambda sent: [t for t in sent if t not in stopwords])
+        print("[WMD] after update pairs" )
         pairs[metric_names[0]] = pairs.progress_apply(lambda x: self.model.wmdistance(x[self.text1], x[self.text2]),
                                                       axis=1)
         df = df.merge(pairs[metric_names], how='left', left_on='pair_id', right_index=True)
