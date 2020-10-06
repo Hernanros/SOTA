@@ -8,10 +8,9 @@ import tqdm
 from scipy.stats import pearsonr as pcorr
 import itertools
 
-non_metric_columns = ['text1','text2','label','dataset','random','duration','total_seconds','pair_id','reduced_label','annotator']
 
 def get_corr(df: pd.DataFrame, bad_annotator: list) -> dict:
-    '''
+    """
     Get the correlation between the various metrics and the human labeling filtering out particular "bad annotators"
 
     parameters:
@@ -23,24 +22,25 @@ def get_corr(df: pd.DataFrame, bad_annotator: list) -> dict:
         {pd.DataFrame} - correlations by each dataset of metric and reduced human label (-1,0,1)
         {pd.Series} - correlations of all datasets of metric and human label
         {pd.Series} - correlations of all datasets of metris and reduced human label
-    '''
+    """
 
-    non_metric_columns = ['text1','text2','label','dataset','random','duration','total_seconds','pair_id','reduced_label','annotator']
+    non_metric_columns = ['text1', 'text2', 'label', 'dataset', 'random', 'duration', 'total_seconds', 'pair_id',
+                          'reduced_label', 'annotator']
 
     if bad_annotator:
         df = df[~df.annotator.isin(bad_annotator)]
-        #Remove all pairs if there is only one annotator
+        # Remove all pairs if there is only one annotator
         df = df.groupby('pair_id').filter(lambda x: x.annotator.count() >= 2)
 
     metrics = [x for x in df.columns if x not in non_metric_columns]
     all_labels = metrics + ['label'] + ['reduced_label']
-    df = df.groupby(['pair_id','dataset','random'])[all_labels].mean().reset_index()
+    df = df.groupby(['pair_id', 'dataset', 'random'])[all_labels].mean().reset_index()
 
     label_corr = dict()
     reduced_label_corr = dict()
 
-    #Iterate through the datasets and get the correlation of each metric with label & reduced label (separately)
-    for name,group in df.groupby('dataset'):
+    # Iterate through the datasets and get the correlation of each metric with label & reduced label (separately)
+    for name, group in df.groupby('dataset'):
         label_corr[name] = group[metrics].corrwith(group['label'])
         reduced_label_corr[name] = group[metrics].corrwith(group['reduced_label'])
 
@@ -50,14 +50,14 @@ def get_corr(df: pd.DataFrame, bad_annotator: list) -> dict:
     random_label_corr = dict()
     random_reduced_label_corr = dict()
 
-    for name,group in df.groupby('random'):
+    for name, group in df.groupby('random'):
         random_label_corr[name] = group[metrics].corrwith(group['label'])
         random_reduced_label_corr[name] = group[metrics].corrwith(group['reduced_label'])
 
     correlations_dict = dict()
     correlations_dict['label_by_dataset'] = pd.DataFrame.from_dict(label_corr).T
     correlations_dict['reduced_label_by_dataset'] = pd.DataFrame.from_dict(reduced_label_corr).T
-    correlations_dict['label_by_random'] = pd.DataFrame.from_dict(random_label_corr).T 
+    correlations_dict['label_by_random'] = pd.DataFrame.from_dict(random_label_corr).T
     correlations_dict['reduced_label_by_random'] = pd.DataFrame.from_dict(random_reduced_label_corr).T
     correlations_dict['label_by_combined'] = pd.Series(combined_datasets_label_corr)
     correlations_dict['reduced_label_by_combined'] = pd.Series(combined_datasets_reduced_label_corr)
@@ -65,7 +65,7 @@ def get_corr(df: pd.DataFrame, bad_annotator: list) -> dict:
 
 
 def compare_correlations(dict_baseline, dict_filtered):
-    ''' 
+    """
     Compares the correlations between the baseline dataframe and the filtered dataframe based off removing bad annotators
 
     parameters:
@@ -74,7 +74,7 @@ def compare_correlations(dict_baseline, dict_filtered):
 
     returns:
         ab_dict -- {dict} -- dictionary of the filtered scores minus the baseline scores
-    '''
+    """
     ab_dict = dict()
 
     for key in dict_baseline.keys():
