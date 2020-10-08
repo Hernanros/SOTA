@@ -310,18 +310,9 @@ class Metrics_Models():
 
 
 class DS(Dataset):
-<<<<<<< HEAD
     '''
     Basic Dataset for the MLP.
     '''
-=======
-<<<<<<< HEAD
-    '''
-    Basic Dataset for the MLP.
-    '''
-=======
->>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
->>>>>>> 1d2ba06f45d126c121149d871f3e8e30cc6d5b6f
     def __init__(self,df,labels):
         super(DS).__init__()
         self.df = df
