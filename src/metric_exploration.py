@@ -171,6 +171,28 @@ class Metrics_Models():
         return y_pred, model
 
     def MLP(self,num_hl,X_train,y_train,X_test):
+        model = Basemodel(len(self.metrics),num_hl,1)
+        criterion = nn.MSELoss()
+        optimizer = optim.Adam(model.parameters(), lr=1e-3)
+
+        X_train = X_train.to_numpy()
+        y_train = y_train.to_numpy()
+        X_test = torch.Tensor(X_test.to_numpy()).to(dtype=torch.float32)
+
+        train_set = DS(X_train,y_train)
+        # test_set = DS(X_test,y_test)
+        train_loader=DataLoader(dataset= train_set, batch_size = 32, shuffle = True, num_workers = 2)
+        # test_loader=DataLoader(dataset= test_set, batch_size = 32, shuffle = True, num_workers = 2)
+
+        model = train_epoch(train_loader,model,criterion,optimizer,num_epochs= 30)
+        
+        if torch.cuda.is_available:
+            return model(X_test).cpu().detach().numpy(), model
+        else:
+            return model(X_test).detach().numpy(), model
+
+
+    def run_model(self, model_type = "RF", max_depth = 3, num_hl = 128):
         '''
         Multi-Layered Perceptron.
 
@@ -194,7 +216,6 @@ class Metrics_Models():
 
         train_set = DS(X_train,y_train)
         train_loader=DataLoader(dataset= train_set, batch_size = 32, shuffle = True, num_workers = 2)
-
         model = train_epoch(train_loader,model,criterion,optimizer,num_epochs= 30)
         
         if torch.cuda.is_available:
@@ -240,6 +261,7 @@ class Metrics_Models():
 
                 #Get the score from the models
                 y_pred, model = eval("self."+model_type)(max_depth,X_train,y_train,X_test)
+
                 category_scores[model_type + '_label_by_' + str(category)+ "_" + str(name)] = mean_squared_error(y_test, y_pred).T
 
                 y_pred_reduced, model2 = eval("self."+model_type)(max_depth,X_train_reduced,y_train_reduced,X_test_reduced)
@@ -288,9 +310,18 @@ class Metrics_Models():
 
 
 class DS(Dataset):
+<<<<<<< HEAD
     '''
     Basic Dataset for the MLP.
     '''
+=======
+<<<<<<< HEAD
+    '''
+    Basic Dataset for the MLP.
+    '''
+=======
+>>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
+>>>>>>> 1d2ba06f45d126c121149d871f3e8e30cc6d5b6f
     def __init__(self,df,labels):
         super(DS).__init__()
         self.df = df
