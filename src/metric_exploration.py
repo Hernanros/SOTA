@@ -15,6 +15,10 @@ from sklearn import preprocessing
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+<<<<<<< HEAD
+=======
+# import torchvision
+>>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 
@@ -151,6 +155,7 @@ class Metrics_Models():
         return data
 
     def RF(self,max_depth,X_train,y_train,X_test):
+<<<<<<< HEAD
         '''
         Random Forest Regression.
 
@@ -165,12 +170,40 @@ class Metrics_Models():
             model -- {model} -- The RF Model
 
         '''
+=======
+
+>>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
         model = RandomForestRegressor(max_depth=max_depth)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         return y_pred, model
 
     def MLP(self,num_hl,X_train,y_train,X_test):
+<<<<<<< HEAD
+=======
+        model = Basemodel(len(self.metrics),num_hl,1)
+        criterion = nn.MSELoss()
+        optimizer = optim.Adam(model.parameters(), lr=1e-3)
+
+        X_train = X_train.to_numpy()
+        y_train = y_train.to_numpy()
+        X_test = torch.Tensor(X_test.to_numpy()).to(dtype=torch.float32)
+
+        train_set = DS(X_train,y_train)
+        # test_set = DS(X_test,y_test)
+        train_loader=DataLoader(dataset= train_set, batch_size = 32, shuffle = True, num_workers = 2)
+        # test_loader=DataLoader(dataset= test_set, batch_size = 32, shuffle = True, num_workers = 2)
+
+        model = train_epoch(train_loader,model,criterion,optimizer,num_epochs= 30)
+        
+        if torch.cuda.is_available:
+            return model(X_test).cpu().detach().numpy(), model
+        else:
+            return model(X_test).detach().numpy(), model
+
+
+    def run_model(self, model_type = "RF", max_depth = 3, num_hl = 128):
+>>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
         '''
         Multi-Layered Perceptron.
 
@@ -181,6 +214,7 @@ class Metrics_Models():
             X_test -- {np.array} - Test data
         
         Return:
+<<<<<<< HEAD
             y_pred -- {np.array} - Test predicted labels
             model -- {model} -- The MLP Model
         '''
@@ -194,6 +228,9 @@ class Metrics_Models():
 
         train_set = DS(X_train,y_train)
         train_loader=DataLoader(dataset= train_set, batch_size = 32, shuffle = True, num_workers = 2)
+=======
+            scores -- {dict} -- the MSE of prediction with labels based off the categories
+>>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
 
         model = train_epoch(train_loader,model,criterion,optimizer,num_epochs= 30)
         
@@ -220,10 +257,13 @@ class Metrics_Models():
                 fi_values -- {dict} -- dictionary of the feature importance of the metrics based off categories
         '''
 
+<<<<<<< HEAD
         if (model_type != "RF") & (model_type != "MLP"):
             print("Model type is wrong! Takes either `RF` or `MLP`")
             return None
 
+=======
+>>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
         scores = dict()
         fi_values = dict()
         for category in self.categories:
@@ -240,10 +280,17 @@ class Metrics_Models():
 
                 #Get the score from the models
                 y_pred, model = eval("self."+model_type)(max_depth,X_train,y_train,X_test)
+<<<<<<< HEAD
                 category_scores[model_type + '_label_by_' + str(category)+ "_" + str(name)] = mean_squared_error(y_test, y_pred).T
 
                 y_pred_reduced, model2 = eval("self."+model_type)(max_depth,X_train_reduced,y_train_reduced,X_test_reduced)
                 category_scores[model_type + '_label_reduced_by_' + str(category)+ "_" + str(name)] = mean_squared_error(y_test_reduced, y_pred_reduced).T
+=======
+                category_scores[model_type + '_label_by_' + str(category)+ "_" + str(name)] = mean_squared_error(y_test, y_pred)
+
+                y_pred_reduced, model2 = eval("self."+model_type)(max_depth,X_train_reduced,y_train_reduced,X_test_reduced)
+                category_scores[model_type + '_label_reduced_by_' + str(category)+ "_" + str(name)] = mean_squared_error(y_test_reduced, y_pred_reduced)
+>>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
 
                 if model_type == "RF":
                     feature_importance['fi_label_by_' + str(category)+ "_" + str(name)]  = pd.DataFrame({'feature': data.columns.values, 'importance':model.feature_importances_}).sort_values('importance', ascending=False) 
@@ -263,10 +310,17 @@ class Metrics_Models():
 
         #Get the score from the models
         y_pred, model = eval("self."+model_type)(max_depth,X_train,y_train,X_test)
+<<<<<<< HEAD
         scores[model_type + '_label_combined'] = mean_squared_error(y_test, y_pred).T
 
         y_pred_reduced, model2 = eval("self."+model_type)(max_depth,X_train_reduced,y_train_reduced,X_test_reduced)
         scores[model_type + '_label_reduced_combined'] = mean_squared_error(y_test_reduced, y_pred_reduced).T
+=======
+        scores[model_type + '_label_combined'] = mean_squared_error(y_test, y_pred)
+
+        y_pred_reduced, model2 = eval("self."+model_type)(max_depth,X_train_reduced,y_train_reduced,X_test_reduced)
+        scores[model_type + '_label_reduced_combined'] = mean_squared_error(y_test_reduced, y_pred_reduced)
+>>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
 
         if model_type == "RF":
             fi_values['fi_label_combined']  = pd.DataFrame({'feature': data.columns.values, 'importance':model.feature_importances_}).sort_values('importance', ascending=False) 
@@ -288,9 +342,12 @@ class Metrics_Models():
 
 
 class DS(Dataset):
+<<<<<<< HEAD
     '''
     Basic Dataset for the MLP.
     '''
+=======
+>>>>>>> 116e624af59d29b1710c7f556ca95b7966e49561
     def __init__(self,df,labels):
         super(DS).__init__()
         self.df = df
