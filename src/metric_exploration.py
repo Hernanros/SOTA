@@ -17,9 +17,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-# import plotly.express as px
+import plotly.express as px
 from scipy.stats import pearsonr
-# from ipywidgets import interact
+from ipywidgets import interact
 
 
 # non_metric_columns = ['text1','text2','label','dataset','random','duration','total_seconds','pair_id','reduced_label','annotator','radical','radical_random','radical_non_random','is_radical','is_centralist','num_labels','bad_annotator']
@@ -419,7 +419,7 @@ if __name__ == "__main__":
     df_filtered = df[~df.annotator.isin(list_ba)]
 
     non_metric_columns = ['text1','text2','label','dataset','random','duration','total_seconds','pair_id','reduced_label','annotator','radical','radical_random','radical_non_random','radical_or_centralist','num_labels','bad_annotator']
-    categories = ['dataset', 'random','radical_or_centralist']
+    categories = ['dataset', 'random']
 
     metrics = [x for x in df.columns if x not in non_metric_columns]
     all_labels = metrics + ['label'] + ['reduced_label']
