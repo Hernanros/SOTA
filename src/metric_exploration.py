@@ -17,8 +17,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-import plotly.express as px
-from ipywidgets import interact
+# import plotly.express as px
+from scipy.stats import pearsonr
+# from ipywidgets import interact
 
 
 # non_metric_columns = ['text1','text2','label','dataset','random','duration','total_seconds','pair_id','reduced_label','annotator','radical','radical_random','radical_non_random','is_radical','is_centralist','num_labels','bad_annotator']
@@ -54,18 +55,20 @@ class Metrics_Corr():
         df = self.df.copy()
 
         if bad_annotator:
-            df= df[~df.annotator.isin(bad_annotator)]
+            df = df[~df.annotator.isin(bad_annotator)]
             #Remove all pairs if there is only one annotator
             df = df.groupby('pair_id').filter(lambda x: x.annotator.count() >= 2)
 
         metrics = [x for x in df.columns if x not in self.non_metric_columns]
         all_labels = metrics + ['label'] + ['reduced_label']
+
         df = df.groupby(['pair_id'] + self.categories)[all_labels].mean().reset_index()
 
         correlations_dict = dict()
 
         #Iterate through the various categories and get the correlation of each metric with label & reduced label (separately)
         for category in self.categories:
+
             label_corr = dict()
             reduced_label_corr = dict()
             for name,group in df.groupby(category):
@@ -107,6 +110,7 @@ class Metrics_Corr():
             ab_dict[key] = dict_filtered[key] - dict_baseline[key]
 
         return ab_dict
+
 
 
 
@@ -402,3 +406,24 @@ def visualize_fi(fi_values, categories):
         chart.set_xticklabels(chart.get_xticklabels(),rotation=45);
         chart.set_title(key_v)
         plt.show();
+
+
+
+if __name__ == "__main__":
+    df = pd.read_csv('/home/shaul/workspace/GitHub/SOTA/data/full_DS/full_metrics.csv', index_col= 0)
+
+    df.dropna(inplace=True)
+
+    with open('/home/shaul/workspace/GitHub/SOTA/data/other/ba_all.txt','r+') as f:
+        list_ba = f.read().splitlines() 
+    df_filtered = df[~df.annotator.isin(list_ba)]
+
+    non_metric_columns = ['text1','text2','label','dataset','random','duration','total_seconds','pair_id','reduced_label','annotator','radical','radical_random','radical_non_random','radical_or_centralist','num_labels','bad_annotator']
+    categories = ['dataset', 'random','radical_or_centralist']
+
+    metrics = [x for x in df.columns if x not in non_metric_columns]
+    all_labels = metrics + ['label'] + ['reduced_label']
+
+    mc = Metrics_Corr(df,non_metric_columns,categories)
+    base_results = mc.get_corr(None)
+    filtered_results = mc.get_corr(list_ba)
