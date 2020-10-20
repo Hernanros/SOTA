@@ -372,7 +372,7 @@ def train_epoch(tr_loader,model,criterion,optimizer, num_epochs):
       
     return model
 
-def visualize_score(scores_dict, title = "MSE Loss"):
+def visualize_loss(scores_dict, title = "MSE Loss"):
     comb_scores = dict()
     for key,value in scores_dict.items():
         if isinstance(value, float):
@@ -388,15 +388,36 @@ def visualize_score(scores_dict, title = "MSE Loss"):
     fig.update_layout(height=600, width=1200)
     fig.show()
 
+
+def visualize_score(scores_dict, title = "Model Improvement through filtering"):
+    comb_scores = dict()
+    for key,value in scores_dict.items():
+        if isinstance(value, float):
+            comb_scores[key] = value
+        #If the value is a DataFrame
+        else:
+            for (x,y) in zip(list(scores_dict[key].columns),scores_dict[key].values[0]):
+                comb_scores[x] = y
+    df = pd.DataFrame.from_dict(comb_scores, orient='index').reset_index().reset_index()
+    df.columns = ['index','category','MSE_Improvement']
+    fig = px.line(df, x="index", y="MSE_Improvement", color="category", title=title, hover_data={'index':False})
+    fig.update_traces(mode="markers")
+    fig.update_layout(height=600, width=1200)
+    fig.show()
+
 def visualize_fi(fi_values, categories):
     for categ in categories:
-        @interact
-        def plot_fi_dataset(key_v = fi_values[categ].keys()):
-            plt.figure(figsize=(10,5))
-            chart = sns.barplot(list(fi_values[categ][key_v].feature), fi_values[categ][key_v].importance);
-            chart.set_xticklabels(chart.get_xticklabels(),rotation=45);
-            chart.set_title(categ)
-            plt.show();
+        if categ == 'dataset':
+            visualize_dataset(fi_values)
+        else:
+            @interact
+            def plot_fi_dataset(key_v = fi_values[categ].keys()):
+                
+                plt.figure(figsize=(10,5))
+                chart = sns.barplot(list(fi_values[categ][key_v].feature), fi_values[categ][key_v].importance);
+                chart.set_xticklabels(chart.get_xticklabels(),rotation=45);
+                chart.set_title(categ)
+                plt.show();
 
     others = [x for x in fi_values.keys() if x not in categories]
     @interact
@@ -407,7 +428,16 @@ def visualize_fi(fi_values, categories):
         chart.set_title(key_v)
         plt.show();
 
-
+def visualize_dataset(fi_values):
+    categ = 'dataset'
+    @interact
+    def plot_fi_dataset(key_v = fi_values[categ].keys()):
+        
+        plt.figure(figsize=(10,5))
+        chart = sns.barplot(list(fi_values[categ][key_v].feature), fi_values[categ][key_v].importance);
+        chart.set_xticklabels(chart.get_xticklabels(),rotation=45);
+        chart.set_title(categ)
+        plt.show();
 
 if __name__ == "__main__":
     df = pd.read_csv('/home/shaul/workspace/GitHub/SOTA/data/full_DS/full_metrics.csv', index_col= 0)
