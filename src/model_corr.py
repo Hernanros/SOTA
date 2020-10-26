@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from pathlib import Path
 from sklearn.ensemble import RandomForestRegressor
 from scipy.stats import pearsonr
@@ -106,19 +107,24 @@ class Basemodel(nn.Module):
     super().__init__()
   
     self.input_dim = n_feature    
-    self.hidden = nn.Linear(n_feature, n_hidden) 
-    self.predict = nn.Linear(n_hidden, n_output)
+    self.hidden = nn.Linear(n_feature, n_hidden)
+    self.hidden2 = nn.Linear(n_hidden, n_hidden // 2) 
+    self.predict = nn.Linear(n_hidden // 2, n_output)
     self.dropout = nn.Dropout(keep_probab)
+    self.dropout2 = nn.Dropout(keep_probab)
     # self.pool = nn.MaxPool2d(2, 2)
-    # self.norm = nn.BatchNorm2d(self.num_filters)
+    # self.norm = nn.BatchNorm2d(self.num_filters
 
 
   def forward(self, x):
     x = self.dropout(F.relu(self.hidden(x)))
+    x = self.dropout2(F.relu(self.hidden2(x)))
     x = self.predict(x)
     return x
 
-def train_epoch(tr_loader,model,criterion,optimizer, num_epochs):
+def train_epochs(tr_loader,model,criterion,optimizer, num_epochs):
+
+    log_loss = []
 
     if torch.cuda.is_available():
       device = torch.device('cuda:0')
@@ -128,22 +134,26 @@ def train_epoch(tr_loader,model,criterion,optimizer, num_epochs):
 
     for epoch in range(num_epochs):
     #   print("started training epoch no. {}".format(epoch+1))
-      for step,batch in enumerate(tr_loader):
+        epoch_loss = 0
+        for step,batch in enumerate(tr_loader):
             feats,labels = batch
             feats = feats.to(device,dtype=torch.float32)
             labels = labels.to(device,dtype=torch.float32)
             outputs = model(feats)
             loss = criterion(outputs, labels)
             loss.backward()
+            epoch_loss += loss.item()
             optimizer.step()
             optimizer.zero_grad()
-      
+        log_loss.append(epoch_loss / tr_loader.__len__())
+
+    plt.plot(list(range(num_epochs)), log_loss)
     return model
 
-def MLP_corr(X_train,X_test,y_train,y_test, num_hl = 128):
+def MLP_corr(X_train,X_test,y_train,y_test, num_hl = 128, batch_size = 128, num_epochs=100, lr = 1e-3):
     model = Basemodel(X_train.shape[1],num_hl,1)
     criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=1e-3)
+    optimizer = optim.Adam(model.parameters(), lr=lr)
 
     X_train = X_train.to_numpy()
     y_train = y_train.to_numpy()
@@ -151,16 +161,16 @@ def MLP_corr(X_train,X_test,y_train,y_test, num_hl = 128):
 
     train_set = DS(X_train,y_train)
     # test_set = DS(X_test,y_test)
-    train_loader=DataLoader(dataset= train_set, batch_size = 32, shuffle = True, num_workers = 2)
+    train_loader=DataLoader(dataset= train_set, batch_size = batch_size, shuffle = True, num_workers = 2)
     # test_loader=DataLoader(dataset= test_set, batch_size = 32, shuffle = True, num_workers = 2)
 
-    model = train_epoch(train_loader,model,criterion,optimizer,num_epochs= 30)
+    model = train_epochs(train_loader,model,criterion,optimizer,num_epochs= num_epochs)
     
     if torch.cuda.is_available:
         y_pred = model(X_test).cpu().detach().numpy().flatten()
     else:
         y_pred = model(X_test).detach().numpy().flatten()
 
-    return pearsonr(list(y_pred),list(y_test))[0]
+    return pearsonr(list(y_pred),list(y_test))
 
 ##################
