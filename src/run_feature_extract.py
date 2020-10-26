@@ -12,7 +12,15 @@ import argparse
 import pandas as pd
 import configparser
 from os import path
-from src import Bleu, BertScore, chrFScore, CosineSimilarity, EuclideanElmoDistance, NgramOverlap, POSDistance, ROUGE, WMD
+from src.features.bleu import Bleu
+from src.features.bertscore import BertScore
+from src.features.chrFScore import chrFScore
+from src.features.cosine_similarites import CosineSimilarity
+from src.features.elmo_euclidean_distance import EuclideanElmoDistance
+from src.features.ngram_overlap import NgramOverlap
+from src.features.POS_distance import POSDistance
+from src.features.ROUGE import ROUGE
+from src.features.WMD import WMD
 
 
 creds_path_ar = [path.join(path.dirname(os.getcwd()), "credentials.ini"), "credentials.ini"]
@@ -55,6 +63,11 @@ def main(args):
 
     txt_col_format = 'text_' if 'text_1' in df.columns else 'text'
 
+    df.dropna(subset=[f'{txt_col_format}1', f'{txt_col_format}2'], inplace=True)
+
+    df = df[(df[f'{txt_col_format}1'].str.strip().str.split().apply(len) >= 2) &
+            (df[f'{txt_col_format}2'].str.strip().str.split().apply(len) >= 2)].copy()
+
     extractors = dict(
         bleu=Bleu(txt_col_format),
         cosine_similarites=CosineSimilarity(val=txt_col_format, glove_path=Glove_twitter_27B_PATH),
@@ -96,9 +109,9 @@ def main(args):
 ################################
 # For debugging
 ################################
-# feats = 'wmd'
-# exclusion = ''
-# datapath = '/Users/adam/PycharmProjects/SOTA/data/combined/with_annotators/combined_dataset.csv'
+# feats = 'ALL'
+# exclusion = 'wmd,elmo,bert'
+# datapath = '/Users/adam/SOTA/data/eval_data/stsbenchmark/sts.csv'
 # arguments = Config(datapath, feats, 1, exclusion)
 # main(arguments)
 
