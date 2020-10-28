@@ -440,11 +440,11 @@ def visualize_dataset(fi_values):
         plt.show();
 
 if __name__ == "__main__":
-    df = pd.read_csv('/home/shaul/workspace/GitHub/SOTA/data/full_DS/full_metrics.csv', index_col= 0)
+    df = pd.read_csv('data/full_DS/full_metrics.csv', index_col= 0)
 
     df.dropna(inplace=True)
 
-    with open('/home/shaul/workspace/GitHub/SOTA/data/other/ba_all.txt','r+') as f:
+    with open('/data/other/ba_all.txt','r+') as f:
         list_ba = f.read().splitlines() 
     df_filtered = df[~df.annotator.isin(list_ba)]
 
