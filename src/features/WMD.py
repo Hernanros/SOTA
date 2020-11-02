@@ -15,6 +15,9 @@ import zipfile
 from src.features import Metric
 import os
 from tqdm import tqdm
+import string 
+import re
+
 
 nltk.download('stopwords')
 stopwords = nltk.corpus.stopwords.words('english')
@@ -57,6 +60,13 @@ class WMD(Metric):
         self.downloaded = True
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df [~((df[self.text1].apply(lambda x: len(re.findall('\[math\]',x)))>0)|(df[self.text2].apply(lambda x: len(re.findall('\[math\]',x)))>0))]
+        
+        remove = string.punctuation
+        pattern = r"[{}]".format(remove) # create the pattern
+        
+        
+        
         tqdm.pandas()
         if not self.downloaded:
             self.download()
@@ -69,9 +79,10 @@ class WMD(Metric):
             df.drop(columns=metric_names, inplace=True)
         except KeyError:
             pass
+        
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
-        pairs[self.text1] = pairs[self.text1].str.lower().str.strip().str.split().apply(lambda sent: [t for t in sent if t not in stopwords])
-        pairs[self.text2] = pairs[self.text2].str.lower().str.strip().str.split().apply(lambda sent: [t for t in sent if t not in stopwords])
+        pairs[self.text1] = pairs[self.text1].apply(lambda x: [word for word in re.sub(pattern,"",x).lower().strip().split() if word not in stopwords])
+        pairs[self.text2] = pairs[self.text2].apply(lambda x: [word for word in re.sub(pattern,"",x).lower().strip().split() if word not in stopwords])
         print("[WMD] after update pairs" )
         pairs[metric_names[0]] = pairs.progress_apply(lambda x: self.model.wmdistance(x[self.text1], x[self.text2]),
                                                       axis=1)
