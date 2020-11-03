@@ -24,16 +24,15 @@ November 2, 2020
 
 <h2> Outcome of Meeting </h2>
 
-[ ] - Ivan will review our metric code to ensure validity...
+[ ] - Ivan will review our metric code to ensure validity... <br>
 
-[ ] - Filter stopwords ONLY for BLEU and ROUGE.
-[ ] - Replace Contractions
-[ ] - Remove punctuation (after contractions)
-[ ] - WE MOVE TO TELEGRAM
-[ ] - Change unicode -> ascii acceptable
-[ ] - Throw away Latex sentences
-
-[ ] - We will compare scores to paper's scores...
-[ ] - Recalculate Metric Scores
+[ ] - Filter stopwords ONLY for BLEU and ROUGE. <br>
+[ ] - Replace Contractions <br>
+[ ] - Remove punctuation (after contractions) <br>
+[ ] - WE MOVE TO TELEGRAM <br>
+[ ] - Change unicode -> ascii acceptable <br>
+[ ] - Throw away Latex sentences <br>
+[ ] - We will compare scores to paper's scores... <br>
+[ ] - Recalculate Metric Scores <br> <br>
 
 HARD DEADLINE - END EXPERIMENTS BY JAN 2021
