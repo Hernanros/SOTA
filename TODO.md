@@ -18,7 +18,22 @@ November 2, 2020
 <h2> Results from EDA on Datasets </h2>
 
 [ ] - We should remove latex examples. <br>
-[ ] - In the QQP dataset have a lot of unicode (non-ascii) characters - what should we do with them? <br>
+[x] - In the QQP dataset have a lot of unicode (non-ascii) characters - what should we do with them? <br>
       We found code that maps non-ascii to the counterpart ascii character, but only works in a limited number of scenarios (weird letters but not on special characters or special punctuation) <br>
 
 
+<h2> Outcome of Meeting </h2>
+
+[ ] - Ivan will review our metric code to ensure validity...
+
+[ ] - Filter stopwords ONLY for BLEU and ROUGE.
+[ ] - Replace Contractions
+[ ] - Remove punctuation (after contractions)
+[ ] - WE MOVE TO TELEGRAM
+[ ] - Change unicode -> ascii acceptable
+[ ] - Throw away Latex sentences
+
+[ ] - We will compare scores to paper's scores...
+[ ] - Recalculate Metric Scores
+
+HARD DEADLINE - END EXPERIMENTS BY JAN 2021
