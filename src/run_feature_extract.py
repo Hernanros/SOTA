@@ -5,6 +5,7 @@ This file implements running the different semantic similiarity metrics on a dat
 # adding cwd to path to avoid "No module named src.*" errors
 import os
 import sys
+import nltk
 sys.path.insert(0, os.path.abspath(os.getcwd()))
 
 import pickle
@@ -54,6 +55,7 @@ class Config:
 
 
 def main(args):
+    nltk.download('stopwords')
     picklefile = args.pickle
 
     if 'pickle' in picklefile:
@@ -73,7 +75,7 @@ def main(args):
     df[f'{txt_col_format}2'] = text_preprocessing(df[f'{txt_col_format}2'])
 
     extractors = dict(
-        bleu=Bleu(txt_col_format),
+        bleu=Bleu(txt_col_format, stopwords=True),
         cosine_similarites=CosineSimilarity(val=txt_col_format, glove_path=Glove_twitter_27B_PATH),
         elmo=EuclideanElmoDistance(val=txt_col_format),
         bert=BertScore(val=txt_col_format),
@@ -81,7 +83,7 @@ def main(args):
         pos_distance=POSDistance(val=txt_col_format, vector_path=Glove_twitter_27B_PATH),
         wmd=WMD(val=txt_col_format, vector_path=GloVe_840B_300d_PATH),
         ngram_overlap=NgramOverlap(args.max_n, val=txt_col_format),
-        rouge=ROUGE(val=txt_col_format))
+        rouge=ROUGE(val=txt_col_format, stopwords=True))
 
     features = args.features
     exclude = args.exclude
@@ -113,7 +115,7 @@ def main(args):
 ###############################
 #####  For debugging   ########
 ###############################
-feats = 'ALL'
+feats = 'bleu'
 exclusion = 'wmd,elmo,bert'
 datapath = '/Users/adam/SOTA/data/eval_data/qqp.csv'
 arguments = Config(datapath, feats, 1, exclusion)
