@@ -21,6 +21,7 @@ from src.features.ngram_overlap import NgramOverlap
 from src.features.POS_distance import POSDistance
 from src.features.ROUGE import ROUGE
 from src.features.WMD import WMD
+from src.preprocessing import text_preprocessing
 
 
 creds_path_ar = [path.join(path.dirname(os.getcwd()), "credentials.ini"), "credentials.ini"]
@@ -68,6 +69,9 @@ def main(args):
     df = df[(df[f'{txt_col_format}1'].str.strip().str.split().apply(len) >= 2) &
             (df[f'{txt_col_format}2'].str.strip().str.split().apply(len) >= 2)].copy()
 
+    df[f'{txt_col_format}1'] = text_preprocessing(df[f'{txt_col_format}1'])
+    df[f'{txt_col_format}2'] = text_preprocessing(df[f'{txt_col_format}2'])
+
     extractors = dict(
         bleu=Bleu(txt_col_format),
         cosine_similarites=CosineSimilarity(val=txt_col_format, glove_path=Glove_twitter_27B_PATH),
@@ -106,29 +110,29 @@ def main(args):
         df.to_csv(picklefile, index=True)
 
 
-################################
-# For debugging
-################################
-# feats = 'ALL'
-# exclusion = 'wmd,elmo,bert'
-# datapath = '/Users/adam/SOTA/data/eval_data/stsbenchmark/sts.csv'
-# arguments = Config(datapath, feats, 1, exclusion)
-# main(arguments)
+###############################
+#####  For debugging   ########
+###############################
+feats = 'ALL'
+exclusion = 'wmd,elmo,bert'
+datapath = '/Users/adam/SOTA/data/eval_data/qqp.csv'
+arguments = Config(datapath, feats, 1, exclusion)
+main(arguments)
 
-################################
-# For Command-line running
-################################
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--pickle', type=str, required=True, default='data/combined/no_annotators/combined_data_no_nans_rerun.pickle',
-                        help='pickle path for combined dataset')
-    parser.add_argument('--features', required=True, type=str, default='ALL',
-                        help='use "ALL" for all features, or comma separated list of features')
-    parser.add_argument('--exclude', required=False, type=str, default='',
-                        help='include comma separated list of features to exclude from calculation')
-    parser.add_argument('--max_n', type=int, default=1,
-                        help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
-
-    args = parser.parse_args()
-    main(args)
+# ################################
+# # For Command-line running
+# ################################
+# if __name__ == '__main__':
+#
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument('--pickle', type=str, required=True, default='data/combined/no_annotators/combined_data_no_nans_rerun.pickle',
+#                         help='pickle path for combined dataset')
+#     parser.add_argument('--features', required=True, type=str, default='ALL',
+#                         help='use "ALL" for all features, or comma separated list of features')
+#     parser.add_argument('--exclude', required=False, type=str, default='',
+#                         help='include comma separated list of features to exclude from calculation')
+#     parser.add_argument('--max_n', type=int, default=1,
+#                         help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
+#
+#     args = parser.parse_args()
+#     main(args)
