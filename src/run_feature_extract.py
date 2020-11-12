@@ -44,16 +44,6 @@ for creds_path in creds_path_ar:
         break
 
 
-class Config:
-    """Config class for debugging in IDE"""
-
-    def __init__(self, pckl: str, features: str = 'ALL', max_n: int = 1, exclude: str = None):
-        self.pickle = pckl
-        self.features = features
-        self.max_n = max_n
-        self.exclude = exclude
-
-
 def main(args):
     nltk.download('stopwords')
     picklefile = args.pickle
@@ -111,30 +101,20 @@ def main(args):
     else:
         df.to_csv(picklefile, index=True)
 
+################################
+# For Command-line running
+################################
+if __name__ == '__main__':
 
-###############################
-#####  For debugging   ########
-###############################
-feats = 'bleu'
-exclusion = 'wmd,elmo,bert'
-datapath = '/Users/adam/SOTA/data/eval_data/qqp.csv'
-arguments = Config(datapath, feats, 1, exclusion)
-main(arguments)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--pickle', type=str, required=True, default='data/combined/no_annotators/combined_data_no_nans_rerun.pickle',
+                        help='pickle path for combined dataset')
+    parser.add_argument('--features', required=True, type=str, default='ALL',
+                        help='use "ALL" for all features, or comma separated list of features')
+    parser.add_argument('--exclude', required=False, type=str, default='',
+                        help='include comma separated list of features to exclude from calculation')
+    parser.add_argument('--max_n', type=int, default=1,
+                        help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
 
-# ################################
-# # For Command-line running
-# ################################
-# if __name__ == '__main__':
-#
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument('--pickle', type=str, required=True, default='data/combined/no_annotators/combined_data_no_nans_rerun.pickle',
-#                         help='pickle path for combined dataset')
-#     parser.add_argument('--features', required=True, type=str, default='ALL',
-#                         help='use "ALL" for all features, or comma separated list of features')
-#     parser.add_argument('--exclude', required=False, type=str, default='',
-#                         help='include comma separated list of features to exclude from calculation')
-#     parser.add_argument('--max_n', type=int, default=1,
-#                         help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
-#
-#     args = parser.parse_args()
-#     main(args)
+    args = parser.parse_args()
+    main(args)
