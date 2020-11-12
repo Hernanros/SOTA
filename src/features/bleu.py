@@ -9,8 +9,8 @@ from tqdm import tqdm
 
 class Bleu(Metric):
 
-    def __init__(self, val):
-        super(Bleu, self).__init__(val=val)
+    def __init__(self, val, stopwords=True):
+        super(Bleu, self).__init__(val=val, stopwords=stopwords)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         tqdm.pandas()
@@ -20,8 +20,12 @@ class Bleu(Metric):
         except KeyError:
             pass
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
-        pairs[self.text1] = pairs[self.text1].str.strip().str.split()
-        pairs[self.text2] = pairs[self.text2].str.strip().str.split()
+        if self.stopwords:
+            pairs[self.text1] = self.remove_stopwords(pairs[self.text1]).str.strip().str.split()
+            pairs[self.text2] = self.remove_stopwords(pairs[self.text2]).str.strip().str.split()
+        else:
+            pairs[self.text1] = pairs[self.text1].str.strip().str.split()
+            pairs[self.text2] = pairs[self.text2].str.strip().str.split()
 
         pairs[metric_names[0]] = pairs.progress_apply(lambda row: sentence_bleu([row[self.text1]], row[self.text2]),
                                                       axis=1)

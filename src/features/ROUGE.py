@@ -7,8 +7,8 @@ from tqdm import tqdm
 
 class ROUGE(Metric):
 
-    def __init__(self, val):
-        super(ROUGE, self).__init__(val=val)
+    def __init__(self, val, stopwords=True):
+        super(ROUGE, self).__init__(val=val, stopwords=stopwords)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         tqdm.pandas()
@@ -18,8 +18,13 @@ class ROUGE(Metric):
         except KeyError:
             pass
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
-        pairs[self.text1] = pairs[self.text1].str.strip()
-        pairs[self.text2] = pairs[self.text2].str.strip()
+        if self.stopwords:
+            pairs[self.text1] = self.remove_stopwords(pairs[self.text1]).str.strip()
+            pairs[self.text2] = self.remove_stopwords(pairs[self.text2]).str.strip()
+        else:
+            pairs[self.text1] = pairs[self.text1].str.strip()
+            pairs[self.text2] = pairs[self.text2].str.strip()
+
         evaluator = rouge.Rouge(metrics=['rouge-1'])
         pairs[metric_names[0]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
                                                                                        [row[self.text2]]

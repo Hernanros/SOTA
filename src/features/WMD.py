@@ -19,9 +19,6 @@ import string
 import re
 
 
-nltk.download('stopwords')
-stopwords = nltk.corpus.stopwords.words('english')
-
 class WMD(Metric):
 
     def __init__(self, val, vector_path=None):
@@ -81,8 +78,9 @@ class WMD(Metric):
             pass
         
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
-        pairs[self.text1] = pairs[self.text1].apply(lambda x: [word for word in re.sub(pattern,"",x).lower().strip().split() if word not in stopwords])
-        pairs[self.text2] = pairs[self.text2].apply(lambda x: [word for word in re.sub(pattern,"",x).lower().strip().split() if word not in stopwords])
+        pairs[self.text1] = pairs[self.text1].str.strip()
+        pairs[self.text2] = pairs[self.text2].str.strip()
+
         print("[WMD] after update pairs" )
         pairs[metric_names[0]] = pairs.progress_apply(lambda x: self.model.wmdistance(x[self.text1], x[self.text2]),
                                                       axis=1)
