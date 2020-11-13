@@ -10,6 +10,7 @@ class Config:
         self.features = features
         self.max_n = max_n
         self.exclude = exclude
+        self.keep_stopwords = True
 
 
 feats = 'rouge'
