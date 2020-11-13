@@ -1,33 +1,22 @@
-from typing import Tuple
-
 import pandas as pd
 import numpy as np
 from pathlib import Path
 import configparser
 
 FILEPATH = Path(Path.cwd().parents[1].resolve()) / 'data'
+CRED_PATH = Path(__file__).resolve().parents[1] / 'credentials.ini'
 
 
-def get_environment_variables() -> object:
-    src_path = Path.cwd()
-    creds_path_ar = src_path.parents[1] / "credentials.ini"
+def get_environment_variables():
     config_parser = configparser.ConfigParser()
-    PATH_ROOT: str = ""
-    PATH_DATA: str = ""
-    GloVe_840B_300d_PATH: str = ""
-    Glove_twitter_27B_PATH: str = ""
-    WANDB_enable: bool = False
-    ENV: str = ""
-
-    if creds_path_ar.exists():
-        config_parser.read(creds_path_ar)
-        PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
-        PATH_DATA = config_parser['MAIN']["PATH_DATA"]
-        GloVe_840B_300d_PATH = config_parser['MAIN']["GloVe_840B_300d_PATH"]
-        Glove_twitter_27B_PATH = config_parser['MAIN']["Glove_twitter_27B_PATH"]
-        WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
-        ENV = config_parser['MAIN']["ENV"]
-
+    print(CRED_PATH)
+    config_parser.read(CRED_PATH)
+    PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
+    PATH_DATA = config_parser['MAIN']["PATH_DATA"]
+    GloVe_840B_300d_PATH = config_parser['MAIN']["GloVe_840B_300d_PATH"]
+    Glove_twitter_27B_PATH = config_parser['MAIN']["Glove_twitter_27B_PATH"]
+    WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
+    ENV = config_parser['MAIN']["ENV"]
     return PATH_ROOT, PATH_DATA, GloVe_840B_300d_PATH, Glove_twitter_27B_PATH, WANDB_enable, ENV
 
 

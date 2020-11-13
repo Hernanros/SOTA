@@ -7,8 +7,8 @@ import nltk
 from pathlib import Path
 
 # adding cwd to path to avoid "No module named src.*" errors
-src_path = Path.cwd()
-sys.path.insert(0, str(src_path))
+MODULE_PATH = Path(__file__).resolve().parents[1].resolve()
+sys.path.insert(0, str(MODULE_PATH))
 
 import pickle
 import argparse
@@ -78,8 +78,8 @@ def main(args):
                 print(f'Running {feature_name} metric')
                 df = extractor.run(df)
             except Exception as e:
-                print(f'Threw error on {feature_name}')
-                print(f'Threw {type(e)} with message "{e}"')
+                print(f'Threw error on ')
+                print(f'Running {feature_name} generated {type(e)} with message "{e}"')
 
     if 'pickle' in picklefile:
         with open(picklefile, 'wb') as handle:
