@@ -8,14 +8,14 @@ import nltk
 import pandas as pd
 import chakin
 from gensim.models import KeyedVectors
-#import torchtext.vocab as torch_vocab
+# import torchtext.vocab as torch_vocab
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath, get_tmpfile
 import zipfile
 from src.features import Metric
 import os
 from tqdm import tqdm
-import string 
+import string
 import re
 
 
@@ -57,31 +57,20 @@ class WMD(Metric):
         self.downloaded = True
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df [~((df[self.text1].apply(lambda x: len(re.findall('\[math\]',x)))>0)|(df[self.text2].apply(lambda x: len(re.findall('\[math\]',x)))>0))]
-        
-        remove = string.punctuation
-        pattern = r"[{}]".format(remove) # create the pattern
-        
-        
-        
-        tqdm.pandas()
         if not self.downloaded:
             self.download()
-        
+
         print("[WMD] load model")
         self.model = KeyedVectors.load_word2vec_format(self.glove_w2v_format)
         print("[WMD] model loaded")
         metric_names = ['WMD']
-        try:
-            df.drop(columns=metric_names, inplace=True)
-        except KeyError:
-            pass
-        
+        self.validate_columns(df, metric_names)
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
         pairs[self.text1] = pairs[self.text1].str.strip()
         pairs[self.text2] = pairs[self.text2].str.strip()
 
-        print("[WMD] after update pairs" )
+        print("[WMD] after update pairs")
+        tqdm.pandas(desc=metric_names[0])
         pairs[metric_names[0]] = pairs.progress_apply(lambda x: self.model.wmdistance(x[self.text1], x[self.text2]),
                                                       axis=1)
         df = df.merge(pairs[metric_names], how='left', left_on='pair_id', right_index=True)

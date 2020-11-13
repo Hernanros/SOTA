@@ -12,10 +12,7 @@ class ROUGE(Metric):
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         metric_names = ['ROUGE-1', 'ROUGE-2', 'ROUGE-l']
-        try:
-            df.drop(columns=metric_names, inplace=True)
-        except KeyError:
-            pass
+        self.validate_columns(df, metric_names)
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
         if self.stopwords:
             pairs[self.text1] = self.remove_stopwords(pairs[self.text1]).str.strip()
