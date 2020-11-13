@@ -2,17 +2,18 @@
 This file implements running the different semantic similiarity metrics on a dataset of paired sentences
 """
 
-# adding cwd to path to avoid "No module named src.*" errors
-import os
 import sys
 import nltk
-sys.path.insert(0, os.path.abspath(os.getcwd()))
+from pathlib import Path
+
+# adding cwd to path to avoid "No module named src.*" errors
+src_path = Path.cwd()
+sys.path.insert(0, str(src_path))
 
 import pickle
 import argparse
 import pandas as pd
-import configparser
-from os import path
+from src.utils import get_environment_variables
 from src.features.bleu import Bleu
 from src.features.bertscore import BertScore
 from src.features.chrFScore import chrFScore
@@ -25,28 +26,11 @@ from src.features.WMD import WMD
 from src.preprocessing import text_preprocessing
 
 
-creds_path_ar = [path.join(path.dirname(os.getcwd()), "credentials.ini"), "credentials.ini"]
-PATH_ROOT = ""
-PATH_DATA = ""
-GloVe_840B_300d_PATH = ""
-Glove_twitter_27B_PATH = ""
-
-for creds_path in creds_path_ar:
-    if path.exists(creds_path):
-        config_parser = configparser.ConfigParser()
-        config_parser.read(creds_path)
-        PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
-        PATH_DATA = config_parser['MAIN']["PATH_DATA"]
-        GloVe_840B_300d_PATH = config_parser['MAIN']["GloVe_840B_300d_PATH"]
-        Glove_twitter_27B_PATH = config_parser['MAIN']["Glove_twitter_27B_PATH"]
-        WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
-        ENV = config_parser['MAIN']["ENV"]
-        break
-
-
 def main(args):
+    PATH_ROOT, PATH_DATA, GloVe_840B_300d_PATH, Glove_twitter_27B_PATH, WANDB_enable, ENV = get_environment_variables()
     nltk.download('stopwords')
     picklefile = args.pickle
+    stopwords = args.keep_stopwords == False
 
     if 'pickle' in picklefile:
         with open(picklefile, 'rb') as handle:
@@ -64,8 +48,10 @@ def main(args):
     df[f'{txt_col_format}1'] = text_preprocessing(df[f'{txt_col_format}1'])
     df[f'{txt_col_format}2'] = text_preprocessing(df[f'{txt_col_format}2'])
 
+    df.dropna(subset=[f'{txt_col_format}1', f'{txt_col_format}2'], inplace=True)
+
     extractors = dict(
-        bleu=Bleu(txt_col_format, stopwords=True),
+        bleu=Bleu(txt_col_format, stopwords=stopwords),
         cosine_similarites=CosineSimilarity(val=txt_col_format, glove_path=Glove_twitter_27B_PATH),
         elmo=EuclideanElmoDistance(val=txt_col_format),
         bert=BertScore(val=txt_col_format),
@@ -73,7 +59,7 @@ def main(args):
         pos_distance=POSDistance(val=txt_col_format, vector_path=Glove_twitter_27B_PATH),
         wmd=WMD(val=txt_col_format, vector_path=GloVe_840B_300d_PATH),
         ngram_overlap=NgramOverlap(args.max_n, val=txt_col_format),
-        rouge=ROUGE(val=txt_col_format, stopwords=True))
+        rouge=ROUGE(val=txt_col_format, stopwords=stopwords))
 
     features = args.features
     exclude = args.exclude
@@ -101,13 +87,14 @@ def main(args):
     else:
         df.to_csv(picklefile, index=True)
 
+
 ################################
 # For Command-line running
 ################################
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
-    parser.add_argument('--pickle', type=str, required=True, default='data/combined/no_annotators/combined_data_no_nans_rerun.pickle',
+    parser.add_argument('--pickle', type=str, required=True,
+                        default='data/datasets/combined',
                         help='pickle path for combined dataset')
     parser.add_argument('--features', required=True, type=str, default='ALL',
                         help='use "ALL" for all features, or comma separated list of features')
@@ -115,6 +102,8 @@ if __name__ == '__main__':
                         help='include comma separated list of features to exclude from calculation')
     parser.add_argument('--max_n', type=int, default=1,
                         help='maximum number of n-gram overlap score to calculate, e.g. max_n=2 creates 1-gram-overlap & 2-gram-overlap')
-
+    parser.add_argument('--keep-stopwords', dest='keep_stopwords', action='store_true')
+    parser.add_argument('--no-keep-stopwords', dest='keep_stopwords', action='store_false')
+    parser.set_defaults(keep_stopwords=True)
     args = parser.parse_args()
     main(args)
