@@ -4,19 +4,15 @@ glove zip => txt => gensim => wmdistance
 
 zip => txt => glove2word2vec (gensim) => model.wmdistance
 """
-import nltk
 import pandas as pd
 import chakin
 from gensim.models import KeyedVectors
-# import torchtext.vocab as torch_vocab
 from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath, get_tmpfile
 import zipfile
 from src.features import Metric
 import os
 from tqdm import tqdm
-import string
-import re
 
 
 class WMD(Metric):
@@ -35,6 +31,7 @@ class WMD(Metric):
         glove_file = datapath(self.w2vfile_path)
         glove_w2v_format = get_tmpfile(self.glove_w2v_format)
         _ = glove2word2vec(glove_file, glove_w2v_format)
+        os.rmdir(self.w2vfile_path)
 
     def download_vectors(self):
         print("[WMD] downloading glove")
@@ -45,14 +42,14 @@ class WMD(Metric):
         zip_ref = zipfile.ZipFile(self.zip_path)
         zip_ref.extractall(self.vector_path)
         zip_ref.close()
+        os.rmdir(self.zip_path)
 
     def download(self):
         if not os.path.exists(self.glove_w2v_format):
             if not os.path.exists(self.w2vfile_path):
                 if not os.path.exists(self.zip_path):
                     self.download_vectors()
-                else:
-                    self.unzip_vectors()
+                self.unzip_vectors()
             self.convert_to_w2v()
         self.downloaded = True
 

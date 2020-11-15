@@ -5,7 +5,7 @@ This file implements running the different semantic similiarity metrics on a dat
 import sys
 import nltk
 from pathlib import Path
-
+nltk.download('stopwords')
 # adding cwd to path to avoid "No module named src.*" errors
 MODULE_PATH = Path(__file__).resolve().parents[1].resolve()
 sys.path.insert(0, str(MODULE_PATH))
@@ -28,7 +28,6 @@ from src.preprocessing import text_preprocessing
 
 def main(args):
     PATH_ROOT, PATH_DATA, GloVe_840B_300d_PATH, Glove_twitter_27B_PATH, WANDB_enable, ENV = get_environment_variables()
-    nltk.download('stopwords')
     picklefile = args.pickle
     stopwords = args.keep_stopwords == False
 
