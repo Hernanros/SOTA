@@ -27,7 +27,7 @@ from src.preprocessing import text_preprocessing
 
 
 def main(args):
-    PATH_ROOT, PATH_DATA, GloVe_840B_300d_PATH, Glove_twitter_27B_PATH, WANDB_enable, ENV = get_environment_variables()
+    PATH_ROOT, PATH_DATA, GloVe_840B_300d_PATH, Glove_twitter_27B_PATH, ENV = get_environment_variables()
     picklefile = args.pickle
     stopwords = args.keep_stopwords == False
 

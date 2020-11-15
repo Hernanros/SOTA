@@ -11,6 +11,7 @@ from gensim.scripts.glove2word2vec import glove2word2vec
 from gensim.test.utils import datapath, get_tmpfile
 import zipfile
 from src.features import Metric
+from pathlib import Path
 import os
 from tqdm import tqdm
 
@@ -23,7 +24,7 @@ class WMD(Metric):
         self.vector_path = vector_path
         self.model = None
         self.w2vfile_path = os.path.join(self.vector_path, 'glove.840B.300d.txt')
-        self.glove_w2v_format = os.path.join(self.vector_path, 'glove.840B.300d.w2v.txt')
+        self.glove_w2v_format = os.path.join(self.vector_path, 'glove.840B.300d.w2vformat.txt')
         self.zip_path = os.path.join(self.vector_path, 'glove.840B.300d.zip')
 
     def convert_to_w2v(self):

@@ -15,9 +15,8 @@ def get_environment_variables():
     PATH_DATA = config_parser['MAIN']["PATH_DATA"]
     GloVe_840B_300d_PATH = config_parser['MAIN']["GloVe_840B_300d_PATH"]
     Glove_twitter_27B_PATH = config_parser['MAIN']["Glove_twitter_27B_PATH"]
-    WANDB_enable = config_parser['MAIN']["WANDB_ENABLE"] == 'TRUE'
     ENV = config_parser['MAIN']["ENV"]
-    return PATH_ROOT, PATH_DATA, GloVe_840B_300d_PATH, Glove_twitter_27B_PATH, WANDB_enable, ENV
+    return PATH_ROOT, PATH_DATA, GloVe_840B_300d_PATH, Glove_twitter_27B_PATH, ENV
 
 
 def convert_tsv_to_csv_sts(path=FILEPATH):
