@@ -61,17 +61,15 @@ class CosineSimilarity(Metric):
             self.download()        
 
         print("cosine_similarites start")
-        tqdm.pandas()
         metric_names = ['glove_cosine', 'fasttext_cosine']
-        try:
-            df.drop(columns=metric_names, inplace=True)
-        except KeyError:
-            pass
+        self.validate_columns(df, metric_names)
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
         pairs[self.text1] = pairs[self.text1].str.strip().str.split()
         pairs[self.text2] = pairs[self.text2].str.strip().str.split()
+        tqdm.pandas(desc=metric_names[0])
         pairs[metric_names[0]] = pairs.progress_apply(lambda row: self.compute_cs(row[self.text1], row[self.text2],
                                                                                   'glove'), axis=1)
+        tqdm.pandas(desc=metric_names[1])
         pairs[metric_names[1]] = pairs.progress_apply(lambda row: self.compute_cs(row[self.text1], row[self.text2],
                                                                                   'fasttext'), axis=1)
         df = df.merge(pairs[metric_names], how='left', left_on='pair_id', right_index=True)

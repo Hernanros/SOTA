@@ -11,12 +11,8 @@ class ROUGE(Metric):
         super(ROUGE, self).__init__(val=val, stopwords=stopwords)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
-        tqdm.pandas()
         metric_names = ['ROUGE-1', 'ROUGE-2', 'ROUGE-l']
-        try:
-            df.drop(columns=metric_names, inplace=True)
-        except KeyError:
-            pass
+        self.validate_columns(df, metric_names)
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
         if self.stopwords:
             pairs[self.text1] = self.remove_stopwords(pairs[self.text1]).str.strip()
@@ -26,14 +22,17 @@ class ROUGE(Metric):
             pairs[self.text2] = pairs[self.text2].str.strip()
 
         evaluator = rouge.Rouge(metrics=['rouge-1'])
+        tqdm.pandas(desc=metric_names[0])
         pairs[metric_names[0]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
                                                                                        [row[self.text2]]
                                                                                        )[0]['rouge-1']['f'], axis=1)
         evaluator = rouge.Rouge(metrics=['rouge-2'])
+        tqdm.pandas(desc=metric_names[1])
         pairs[metric_names[1]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
                                                                                        [row[self.text2]]
                                                                                        )[0]['rouge-2']['f'], axis=1)
         evaluator = rouge.Rouge(metrics=['rouge-l'])
+        tqdm.pandas(desc=metric_names[2])
         pairs[metric_names[2]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
                                                                                        [row[self.text2]]
                                                                                        )[0]['rouge-l']['f'], axis=1)

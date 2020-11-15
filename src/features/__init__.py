@@ -11,6 +11,13 @@ class Metric:
         self.stopwords = stopwords
 
     @staticmethod
+    def validate_columns(df, metric_names):
+        try:
+            df.drop(columns=metric_names, inplace=True)
+        except KeyError:
+            pass
+
+    @staticmethod
     def remove_stopwords(text_series: pd.Series) -> pd.Series:
         stopwords_to_remove = ['against', 'no', 'nor', 'not']
         new_stopwords = [word for word in stopwords if word not in stopwords_to_remove]
