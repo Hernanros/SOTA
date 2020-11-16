@@ -15,7 +15,7 @@ class Config:
 
 feats = 'rouge'
 exclusion = 'wmd,elmo,bert'
-datapath = '/Users/adam/SOTA/data/datasets/qqp.csv'
+datapath = '/Users/adam/SOTA/data/datasets/combined_dataset.csv'
 arguments = Config(datapath, feats, 1, exclusion)
 main(arguments)
 
