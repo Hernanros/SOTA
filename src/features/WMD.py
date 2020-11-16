@@ -24,7 +24,7 @@ class WMD(Metric):
         self.vector_path = vector_path
         self.model = None
         self.w2vfile_path = os.path.join(self.vector_path, 'glove.840B.300d.txt')
-        self.glove_w2v_format = os.path.join(self.vector_path, 'glove.840B.300d.w2vformat.txt')
+        self.glove_w2v_format = os.path.join(self.vector_path, 'glove.840B.300d.w2v.txt')
         self.zip_path = os.path.join(self.vector_path, 'glove.840B.300d.zip')
 
     def convert_to_w2v(self):
@@ -32,7 +32,7 @@ class WMD(Metric):
         glove_file = datapath(self.w2vfile_path)
         glove_w2v_format = get_tmpfile(self.glove_w2v_format)
         _ = glove2word2vec(glove_file, glove_w2v_format)
-        os.rmdir(self.w2vfile_path)
+        Path(self.w2vfile_path).unlink(missing_ok=True)
 
     def download_vectors(self):
         print("[WMD] downloading glove")
@@ -43,7 +43,7 @@ class WMD(Metric):
         zip_ref = zipfile.ZipFile(self.zip_path)
         zip_ref.extractall(self.vector_path)
         zip_ref.close()
-        os.rmdir(self.zip_path)
+        Path(self.zip_path).unlink(missing_ok=True)
 
     def download(self):
         if not os.path.exists(self.glove_w2v_format):
