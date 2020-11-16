@@ -7,14 +7,14 @@ from tqdm import tqdm
 
 class ROUGE(Metric):
 
-    def __init__(self, val, stopwords=True):
-        super(ROUGE, self).__init__(val=val, stopwords=stopwords)
+    def __init__(self, val, stopwords=False):
+        super(ROUGE, self).__init__(val=val, keep_stopwords=stopwords)
 
     def run(self, df: pd.DataFrame) -> pd.DataFrame:
         metric_names = ['ROUGE-1', 'ROUGE-2', 'ROUGE-l']
         self.validate_columns(df, metric_names)
         pairs = df.groupby('pair_id')[[self.text1, self.text2]].last()
-        if self.stopwords:
+        if self.keep_stopwords:
             pairs[self.text1] = self.remove_stopwords(pairs[self.text1]).str.strip()
             pairs[self.text2] = self.remove_stopwords(pairs[self.text2]).str.strip()
         else:

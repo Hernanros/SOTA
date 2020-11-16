@@ -9,7 +9,6 @@ CRED_PATH = Path(__file__).resolve().parents[1] / 'credentials.ini'
 
 def get_environment_variables():
     config_parser = configparser.ConfigParser()
-    print(CRED_PATH)
     config_parser.read(CRED_PATH)
     PATH_ROOT = config_parser['MAIN']["PATH_ROOT"]
     PATH_DATA = config_parser['MAIN']["PATH_DATA"]
