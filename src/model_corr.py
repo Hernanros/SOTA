@@ -26,6 +26,9 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
 
     if test_path is None:
         df = pd.read_csv(train_path, index_col=0)
+
+        #drop null values
+        df.dropna(inplace=True)
         
         #If we are dealing with the sts dataset, where it has within it a pre-defined train/val/test
         if Path(train_path).stem == 'sts':
@@ -42,6 +45,8 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
     else:
         train_data = pd.read_csv(train_path, index_col=0)
         test_data = pd.read_csv(test_path, index_col=0)
+        train_data.dropna(inplace=True)
+        test_data.dropna(inplace=True)
 
     #To test it on 
     metrics = [x for x in test_data.columns if x in all_metrics]
