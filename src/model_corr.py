@@ -65,6 +65,8 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
         if scale_label:
             if max(df.label) != 1:
                 df['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in df.label]
+            else:
+                df['label'] = [5 if score ==1 else 0 for score in df.label]
         
         #If we are dealing with the sts dataset, where it has within it a pre-defined train/val/test
         if Path(train_path).stem == 'sts':
@@ -94,7 +96,10 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
         if scale_label:
             if max(df.label) != 1:
                 train_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in train_data.label]
-                train_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in train_data.label]
+                test_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in test_data.label]
+            else:
+                train_data['label'] = [ 5 if score == 1 else 0 for score in train_data.label]
+                test_data['label'] = [ 5 if score == 1 else 0 for score in test_data.label]
 
     #To test it on 
     metrics = [x for x in test_data.columns if x in all_metrics]
@@ -135,7 +140,13 @@ def RF_corr(X_train,X_test,y_train,y_test, max_depth = 3):
     '''
     model = RandomForestRegressor(max_depth=max_depth)
     model.fit(X_train, y_train)
-    y_pred = model.predict(X_test)
+
+    features = pd.DataFrame([model.feature_importances_], columns=X_train.columns, index = ["Importance"]).T
+    features.sort_values("Importance",ascending=False)[:3]
+    features.apply(lambda x: x / float(features.sum()))
+    y_pred = (X_test[features.index] * features.values.reshape(1,-1)).sum(axis=1)
+
+    # y_pred = model.predict(X_test)
     return pearsonr(y_pred,y_test)[0], model
 
 ##################
