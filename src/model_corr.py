@@ -9,9 +9,31 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+from sklearn.preprocessing import MinMaxScaler
+
+metrics = ['bleu', 
+           'bleu1',
+           'glove_cosine',
+           'fasttext_cosine',
+           'BertScore',
+           'chrfScore',
+           'POS Dist score',
+           '1-gram_overlap',
+           'ROUGE-1',
+           'ROUGE-2',
+           'ROUGE-l',
+           'L2_score',
+           'WMD']
+
+distance_metrics = ['glove_cosine',
+                    'fasttext_cosine',
+                    'BertScore',
+                    'POS_Dist_score',
+                    'L2_score',
+                    'WMD']
 
 
-def get_train_test_data(train_path: str, all_metrics: list, test_path: str = None) -> tuple:
+def get_train_test_data(train_path: str, all_metrics: list, test_path: str = None, filtered_ba = "", scale_features = True, scale_label=False) -> tuple:
     '''
     Retrieve the data from the paths and split into train/test based off if they are from the same dataset or otherwise.
 
@@ -19,16 +41,30 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
         train_path -- {str} -- Path to the training dataset
         metrics -- {list} -- name of the metrics we want to use as features
         test_path -- {str} -- Path to the test dataset (by default is None, and then is the same as Train_path)
+        filtered_ba -- {list} -- list of annotators to filter out
 
     Returns:
         {tuple} -- (X_train, X_test, y_train, y_test)
     '''
+    if (filtered_ba  != "") & ("combined_dataset" == train_path.stem):
+        print("Filtering only accesible in combined_dataset")
+        return None
 
     if test_path is None:
         df = pd.read_csv(train_path, index_col=0)
 
         #drop null values
         df.dropna(inplace=True)
+
+        if filtered_ba:
+            df = df[~df.annotator.isin(filtered_ba)]
+
+        if scale_features:
+            df = scale_for_similarity(df)
+
+        if scale_label:
+            if max(df.label) != 1:
+                df['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in df.label]
         
         #If we are dealing with the sts dataset, where it has within it a pre-defined train/val/test
         if Path(train_path).stem == 'sts':
@@ -48,6 +84,18 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
         train_data.dropna(inplace=True)
         test_data.dropna(inplace=True)
 
+        if filtered_ba:
+            train_data = train_data[~train_data.annotator.isin(filtered_ba)]
+
+        if scale_features:
+            train_data = scale_for_similarity(train_data)
+            test_data = scale_for_similarity(test_data)
+
+        if scale_label:
+            if max(df.label) != 1:
+                train_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in train_data.label]
+                train_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in train_data.label]
+
     #To test it on 
     metrics = [x for x in test_data.columns if x in all_metrics]
     if len(metrics) != len(all_metrics):
@@ -58,6 +106,16 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
 
     print(f"Size of train_data: {train_data.shape[0]}\tSize of test_data: {test_data.shape[0]}")
     return (train_data[metrics], test_data[metrics], train_data['label'], test_data['label'])
+
+def scale_for_similarity(df):
+    scaler = MinMaxScaler()
+    df2 = df.copy()
+    for column in metrics:
+        df2[column] = scaler.fit_transform(df2[column].values.reshape(-1,1))
+        if column in distance_metrics:
+            df2[column] = 1 - df2[column]
+    return df2
+
 
 ####### RF #######
 
@@ -75,10 +133,10 @@ def RF_corr(X_train,X_test,y_train,y_test, max_depth = 3):
         model -- {model} -- The RF Model
 
     '''
-    model = RandomForestRegressor(max_depth=3)
+    model = RandomForestRegressor(max_depth=max_depth)
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
-    return pearsonr(y_pred,y_test)[0]
+    return pearsonr(y_pred,y_test)[0], model
 
 ##################
 
@@ -165,9 +223,7 @@ def MLP_corr(X_train,X_test,y_train,y_test, num_hl = 128, batch_size = 128, num_
     X_test = torch.Tensor(X_test.to_numpy()).to(dtype=torch.float32)
 
     train_set = DS(X_train,y_train)
-    # test_set = DS(X_test,y_test)
     train_loader=DataLoader(dataset= train_set, batch_size = batch_size, shuffle = True, num_workers = 2)
-    # test_loader=DataLoader(dataset= test_set, batch_size = 32, shuffle = True, num_workers = 2)
 
     model = train_epochs(train_loader,model,criterion,optimizer,num_epochs= num_epochs)
     

@@ -112,11 +112,6 @@ class Metrics_Corr():
         return ab_dict
 
 
-
-
-
-
-
 class Metrics_Models():
     '''
     In order to make a generalizable method to run the Linear and Non-Linear Model.
