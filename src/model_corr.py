@@ -33,7 +33,7 @@ distance_metrics = ['glove_cosine',
                     'WMD']
 
 
-def get_train_test_data(train_path: str, all_metrics: list, test_path: str = None, filtered_ba = "", scale_features = True, scale_label=False) -> tuple:
+def get_train_test_data(train_path: str, all_metrics: list, test_path: str = None, filtered_ba_path = None, scale_features = True, scale_label=False) -> tuple:
     '''
     Retrieve the data from the paths and split into train/test based off if they are from the same dataset or otherwise.
 
@@ -46,27 +46,32 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
     Returns:
         {tuple} -- (X_train, X_test, y_train, y_test)
     '''
-    if (filtered_ba  != "") & ("combined_dataset" == train_path.stem):
-        print("Filtering only accesible in combined_dataset")
-        return None
+    if ("combined_dataset" != train_path.stem):
+        assert (filtered_ba_path is None), "Filtering only accesible in combined_dataset"
 
+    
+    if filtered_ba_path:
+        with open(filtered_ba_path) as f:
+            filtered_ba = f.read().split("\n")
+
+ 
     if test_path is None:
         df = pd.read_csv(train_path, index_col=0)
 
         #drop null values
         df.dropna(inplace=True)
 
-        if filtered_ba:
+        if filtered_ba_path:
             df = df[~df.annotator.isin(filtered_ba)]
 
         if scale_features:
-            df = scale_for_similarity(df)
+            df, _ = scale_for_similarity(df)
 
         if scale_label:
             if max(df.label) != 1:
                 df['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in df.label]
             else:
-                df['label'] = [5 if score ==1 else 0 for score in df.label]
+                df['label'] = [1 if score == 1 else -1 for score in df.label]
         
         #If we are dealing with the sts dataset, where it has within it a pre-defined train/val/test
         if Path(train_path).stem == 'sts':
@@ -86,45 +91,47 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
         train_data.dropna(inplace=True)
         test_data.dropna(inplace=True)
 
-        if filtered_ba:
+        if filtered_ba_path:
             train_data = train_data[~train_data.annotator.isin(filtered_ba)]
 
         if scale_features:
-            train_data = scale_for_similarity(train_data)
-            test_data = scale_for_similarity(test_data)
+            train_data, test_data = scale_for_similarity(train_data, test_data)
 
         if scale_label:
             if max(df.label) != 1:
                 train_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in train_data.label]
                 test_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in test_data.label]
             else:
-                train_data['label'] = [ 5 if score == 1 else 0 for score in train_data.label]
-                test_data['label'] = [ 5 if score == 1 else 0 for score in test_data.label]
+                train_data['label']= [ 1 if score == 1 else -1 for score in train_data.label]
+                test_data['label'] = [ 1 if score == 1 else -1 for score in test_data.label]
 
     #To test it on 
     metrics = [x for x in test_data.columns if x in all_metrics]
     if len(metrics) != len(all_metrics):
         print(f"Still missing the following metrics: {set(all_metrics).difference(set(metrics))}")
 
-    train_data.dropna(inplace=True)
-    test_data.dropna(inplace=True)
-
     print(f"Size of train_data: {train_data.shape[0]}\tSize of test_data: {test_data.shape[0]}")
     return (train_data[metrics], test_data[metrics], train_data['label'], test_data['label'])
 
-def scale_for_similarity(df):
+def scale_for_similarity(train_df, test_df = None):
     scaler = MinMaxScaler()
-    df2 = df.copy()
+
     for column in metrics:
-        df2[column] = scaler.fit_transform(df2[column].values.reshape(-1,1))
+        train_df[column] = scaler.fit_transform(train_df[column].values.reshape(-1,1))
+        if test_df:
+            test_df[column] = scaler.transform(test_df[column].values.reshape(-1,1))
+
         if column in distance_metrics:
-            df2[column] = 1 - df2[column]
-    return df2
+            train_df[column] = 1 - train_df[column]
+            if test_df:
+                test_df[column] = 1 - test_df[column]
+
+    return train_df, test_df
 
 
 ####### RF #######
 
-def RF_corr(X_train,X_test,y_train,y_test, max_depth = 3):
+def RF_corr(X_train,X_test,y_train,y_test, max_depth = 6, top_n_features = None):
     '''
     Random Forest Regression.
 
@@ -142,12 +149,22 @@ def RF_corr(X_train,X_test,y_train,y_test, max_depth = 3):
     model.fit(X_train, y_train)
 
     features = pd.DataFrame([model.feature_importances_], columns=X_train.columns, index = ["Importance"]).T
-    features.sort_values("Importance",ascending=False)[:3]
-    features.apply(lambda x: x / float(features.sum()))
-    y_pred = (X_test[features.index] * features.values.reshape(1,-1)).sum(axis=1)
+    features = features.sort_values("Importance",ascending=False)
 
-    # y_pred = model.predict(X_test)
-    return pearsonr(y_pred,y_test)[0], model
+
+    if top_n_features:
+        features = features[:top_n_features]
+        features.apply(lambda x: x / float(features.sum()))
+        y_pred = (X_test[features.index] * features.values.reshape(1,-1)).sum(axis=1)
+    else:
+        y_pred = model.predict(X_test)
+
+    return pearsonr(y_pred,y_test)[0], features.reset_index()
+
+
+
+
+
 
 ##################
 
@@ -226,7 +243,7 @@ def train_epochs(tr_loader,model,criterion,optimizer, num_epochs):
 
 def MLP_corr(X_train,X_test,y_train,y_test, num_hl = 128, batch_size = 128, num_epochs=100, lr = 1e-3):
     model = Basemodel(X_train.shape[1],num_hl,1)
-    criterion = nn.MSELoss()
+    criterion = nn.MAELoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
     X_train = X_train.to_numpy()
