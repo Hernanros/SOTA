@@ -97,8 +97,8 @@ class Config():
     def __getitem__(self, key):
         return self.__dict__[key]
 
-def wandb_logging(config):
-    wandb.init(project="semantic_similarity",config=config)
+def wandb_logging(config, project_name = "semantic_similarity"):
+    run = wandb.init(project=project_name,config=config,reinit=True)
 
     X_train, X_test, y_train, y_test = model_corr.get_train_test_data(train_path = config.train_dataset, 
                                                                       test_path = config.test_dataset,
@@ -108,6 +108,9 @@ def wandb_logging(config):
                                                                       scale_label = config.scale_labels)
 
     base_metrics = X_test.corrwith(y_test).apply(lambda x: abs(x)).sort_values(ascending=False).reset_index()
+
+    wandb.log({"Base Top Correlation": base_metrics.iloc[0][0]})
+
     base_metrics.columns = ['Features','Importance']
 
     table = wandb.Table(dataframe=base_metrics, columns=["Features","Importance"])
@@ -119,3 +122,5 @@ def wandb_logging(config):
     table2 =  wandb.Table(dataframe=features, columns=["Features","Importance"])
 
     wandb.log({"RF PearsonR": pearsonr, "RF Metrics":  wandb.plot.bar(table2, "Features", "Importance", title="RF Metric Table")})
+
+    run.finish()

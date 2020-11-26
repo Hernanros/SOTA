@@ -32,8 +32,12 @@ distance_metrics = ['glove_cosine',
                     'L2_score',
                     'WMD']
 
+MODULE_PATH = Path(__file__).resolve().parents[1].resolve()
+DATA_PATH = MODULE_PATH / 'data' / 'datasets'
+BA_PATH = MODULE_PATH / 'data' / 'bad_annotators'
 
-def get_train_test_data(train_path: str, all_metrics: list, test_path: str = None, filtered_ba_path = None, scale_features = True, scale_label=False) -> tuple:
+
+def get_train_test_data(train_path: str, all_metrics: list = metrics, test_path: str = None, filtered_ba_path = None, scale_features = True, scale_label=False) -> tuple:
     '''
     Retrieve the data from the paths and split into train/test based off if they are from the same dataset or otherwise.
 
@@ -46,17 +50,17 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
     Returns:
         {tuple} -- (X_train, X_test, y_train, y_test)
     '''
-    if ("combined_dataset" != train_path.stem):
+    if ("combined_dataset.csv" != train_path) and ("combined_dataset.csv" != test_path):
         assert (filtered_ba_path is None), "Filtering only accesible in combined_dataset"
 
     
     if filtered_ba_path:
-        with open(filtered_ba_path) as f:
+        with open(BA_PATH / filtered_ba_path) as f:
             filtered_ba = f.read().split("\n")
 
  
     if test_path is None:
-        df = pd.read_csv(train_path, index_col=0)
+        df = pd.read_csv(DATA_PATH / train_path, index_col=0)
 
         #drop null values
         df.dropna(inplace=True)
@@ -86,23 +90,30 @@ def get_train_test_data(train_path: str, all_metrics: list, test_path: str = Non
             train_data= df.iloc[:len_df]
             test_data = df.iloc[len_df:]
     else:
-        train_data = pd.read_csv(train_path, index_col=0)
-        test_data = pd.read_csv(test_path, index_col=0)
+        train_data = pd.read_csv(DATA_PATH / train_path, index_col=0)
+        test_data = pd.read_csv(DATA_PATH / test_path, index_col=0)
         train_data.dropna(inplace=True)
         test_data.dropna(inplace=True)
 
         if filtered_ba_path:
-            train_data = train_data[~train_data.annotator.isin(filtered_ba)]
+            if train_path == "combined_dataset.csv":
+                train_data = train_data[~train_data.annotator.isin(filtered_ba)]
+            else:
+                test_data = test_data[~test_data.annotator.isin(filtered_ba)]
+
 
         if scale_features:
             train_data, test_data = scale_for_similarity(train_data, test_data)
 
         if scale_label:
-            if max(df.label) != 1:
+            if max(train_data.label) != 1:
                 train_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in train_data.label]
-                test_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in test_data.label]
             else:
                 train_data['label']= [ 1 if score == 1 else -1 for score in train_data.label]
+            
+            if max(test_data.label) != 1:
+                test_data['label'] = [1 if score > 3 else -1 if score < 3 else 0 for score in test_data.label]
+            else:
                 test_data['label'] = [ 1 if score == 1 else -1 for score in test_data.label]
 
     #To test it on 
@@ -118,12 +129,12 @@ def scale_for_similarity(train_df, test_df = None):
 
     for column in metrics:
         train_df[column] = scaler.fit_transform(train_df[column].values.reshape(-1,1))
-        if test_df:
+        if test_df is not None:
             test_df[column] = scaler.transform(test_df[column].values.reshape(-1,1))
 
         if column in distance_metrics:
             train_df[column] = 1 - train_df[column]
-            if test_df:
+            if test_df is not None:
                 test_df[column] = 1 - test_df[column]
 
     return train_df, test_df
@@ -153,17 +164,13 @@ def RF_corr(X_train,X_test,y_train,y_test, max_depth = 6, top_n_features = None)
 
 
     if top_n_features:
-        features = features[:top_n_features]
-        features.apply(lambda x: x / float(features.sum()))
-        y_pred = (X_test[features.index] * features.values.reshape(1,-1)).sum(axis=1)
+        top_features = features[:top_n_features].index
+        model.fit(X_train[top_features], y_train)
+        y_pred = model.predict(X_test[top_features])
     else:
         y_pred = model.predict(X_test)
 
     return pearsonr(y_pred,y_test)[0], features.reset_index()
-
-
-
-
 
 
 ##################
