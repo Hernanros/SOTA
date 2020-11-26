@@ -3,6 +3,11 @@ import numpy as np
 from pathlib import Path
 import configparser
 import wandb
+import sys
+
+MODULE_PATH = Path(__file__).parents[1].resolve()
+sys.path.insert(0,str(MODULE_PATH))
+
 from src import model_corr
 from src import metric_exploration
 from src.testing import df_validation
@@ -12,6 +17,13 @@ import matplotlib.pyplot as plt
 
 FILEPATH = Path(Path.cwd().parents[1].resolve()) / 'data'
 CRED_PATH = Path(__file__).resolve().parents[1] / 'credentials.ini'
+
+
+path_combined = 'combined_dataset.csv'
+path_sts = 'sts.csv'
+path_qqp = 'qqp.csv'
+path_qqp_sample = 'sample_qqp.csv'
+path_ba = 'ba_all.txt'
 
 METRICS = ['bleu', 
            'bleu1',
@@ -33,6 +45,9 @@ DISTANCE_METRICS = ['glove_cosine',
                     'POS_Dist_score',
                     'L2_score',
                     'WMD']
+
+SELECTED_METRICS = ['WMD','BertScore', 'POS Dist score']
+
 
 def get_environment_variables():
     config_parser = configparser.ConfigParser()
@@ -83,7 +98,8 @@ class Config():
                  scale_features: bool = True,
                  scale_labels: bool = False,
                  rf_depth: int = 6,
-                 rf_top_n_features: int = 3
+                 rf_top_n_features: int = 3,
+                 metrics = METRICS
                  ):
         self.config = dict()
         self.train_dataset = train_dataset
@@ -93,34 +109,45 @@ class Config():
         self.scale_labels = scale_labels
         self.rf_depth = rf_depth
         self.rf_top_n_features = rf_top_n_features
+        self.metrics = metrics
     
     def __getitem__(self, key):
         return self.__dict__[key]
 
-def wandb_logging(config, project_name = "semantic_similarity"):
-    run = wandb.init(project=project_name,config=config,reinit=True)
+
+def wandb_logging(config, project_name = "semantic_similarity", run_wandb=True):
+    if run_wandb:
+        run = wandb.init(project=project_name,config=config,reinit=True)
 
     X_train, X_test, y_train, y_test = model_corr.get_train_test_data(train_path = config.train_dataset, 
                                                                       test_path = config.test_dataset,
-                                                                      all_metrics = METRICS,
+                                                                      all_metrics = config.metrics,
                                                                       filtered_ba_path = config.bad_annotators,
                                                                       scale_features = config.scale_features,
                                                                       scale_label = config.scale_labels)
 
     base_metrics = X_test.corrwith(y_test).apply(lambda x: abs(x)).sort_values(ascending=False).reset_index()
 
-    wandb.log({"Base Top Correlation": base_metrics.iloc[0][0]})
+    if run_wandb:
+        wandb.log({"Base Top Correlation": base_metrics.iloc[0][0]})
 
     base_metrics.columns = ['Features','Importance']
 
-    table = wandb.Table(dataframe=base_metrics, columns=["Features","Importance"])
-
-    wandb.log({"Base Metrics": wandb.plot.bar(table, "Features", "Importance", title="Base Metric Table")})
+    if run_wandb:
+        table = wandb.Table(dataframe=base_metrics, columns=["Features","Importance"])
+        wandb.log({"Base Metrics": wandb.plot.bar(table, "Features", "Importance", title="Base Metric Table")})
     
     pearsonr, features = model_corr.RF_corr(X_train,X_test,y_train,y_test,config.rf_depth, config.rf_top_n_features)
     features.columns = ["Features", "Importance"]
-    table2 =  wandb.Table(dataframe=features, columns=["Features","Importance"])
 
-    wandb.log({"RF PearsonR": pearsonr, "RF Metrics":  wandb.plot.bar(table2, "Features", "Importance", title="RF Metric Table")})
+    if run_wandb:
+        table2 =  wandb.Table(dataframe=features, columns=["Features","Importance"])
+        wandb.log({"RF PearsonR": pearsonr, "RF Metrics":  wandb.plot.bar(table2, "Features", "Importance", title="RF Metric Table")})
+        run.finish()
+    else:
+        return base_metrics, pearsonr, features
 
-    run.finish()
+
+if __name__ == "__main__":
+    pass
+    
