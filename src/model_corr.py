@@ -86,7 +86,7 @@ def get_train_test_data(train_path: str, all_metrics: list = metrics, test_path:
             #shuffle the dataframe
             len_df = int(df.shape[0] * 0.8)
 
-            df = df.sample(frac=1)
+            df = df.sample(frac=1, random_state=42)
             train_data= df.iloc[:len_df]
             test_data = df.iloc[len_df:]
     else:

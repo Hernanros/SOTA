@@ -90,6 +90,18 @@ def convert_tsv_to_csv_sts(path=FILEPATH):
 
 
 class Config():
+    '''
+    Configuration of the parameters to test base_metric and RF_correlation score.
+        train_dataset -- {Path} -- path of the train dataset
+        test_dataset -- {Union[Path, None]} -- path of the test dataset. If None - the data will be split 80/20 between train/test
+                                            slight modification for sts as internally is split train/dev/test
+        bad_annotators -- {Union[Path,None]} -- path of the bad_annotator list we wish to take. Only used in case of combined_dataset
+        scale_features -- {bool} -- Min/Max scaling and converting all to similarity metrices
+        scale_labels -- {bool} -- Turns [0,5] to {-1,0,1} labeling
+        rf_depth  -- {int} -- Depth of the Random Forest Trees
+        rf_top_n_features -- {Union[int,None]} -- the number of features to take. If None - will take all the features
+        metrics -- {list} -- the list of metrics to explore correlation on. By default we take all the metrics.
+    '''
 
     def __init__(self, 
                  train_dataset: Path,
@@ -116,6 +128,16 @@ class Config():
 
 
 def wandb_logging(config, project_name = "semantic_similarity", run_wandb=True):
+    '''
+    Call src.model_corr to explore the base_metrics and and RF correlation score and to save the important details to wandb.
+
+    Parameters:
+        config -- {Config} -- instance of the Config class with the parameters determined
+        project_name -- {str} -- name of the project the trial will be saved within Wandb
+        run_wandb -- {bool} -- Default is true. Used in false if want to debug code and dont want to send to wandb.
+    '''
+
+
     if run_wandb:
         run = wandb.init(project=project_name,config=config,reinit=True)
 
