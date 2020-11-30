@@ -120,9 +120,9 @@ class filter_annotators:
         
         '''
         if self.labelers is not None:
-            self.labelers = self.labelers.join(pd.DataFrame(self.df.groupby(self.labelers_col).mean(),columns = [self.duration_col] ))           
+            self.labelers = self.labelers.join(pd.DataFrame(self.df.groupby(self.labelers_col)[self.duration_col].mean(),columns = [self.duration_col] ))           
         else:
-            self.labelers = pd.DataFrame(self.df.groupby(self.labelers_col).mean())
+            self.labelers = pd.DataFrame(self.df.groupby(self.labelers_col)[self.duration_col].mean())
     
         if method =='seconds':
             return list(self.labelers[self.labelers[self.duration_col]>limit].index.values)
@@ -231,7 +231,7 @@ class filter_annotators:
         df['bleu'] = df.apply(lambda x: sentence_bleu(x[self.text_1].strip().split(),x[self.text_2].strip().split(),weights = [1,0,0,0]), axis = 1)
 
         #filter out annotator who show inconsistent stratagy for sentences with high BLEU but different sentiment 
-        return list(df[(df['bleu'] > bleu_thresh) & (df['sent_diff'] > sent_thresh)].groupby('annotator')['label'].std().dropna().index)
+        return list(df[(df['bleu'] > bleu_thresh) & (df['sent_diff'] > sent_thresh)].groupby(self.labelers_col)[self.label_col].std().dropna().index)
 
 
         
