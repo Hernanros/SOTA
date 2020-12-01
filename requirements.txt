@@ -34,7 +34,6 @@ defusedxml==0.6.0
 Deprecated==1.2.10
 docker-pycreds==0.4.0
 docutils==0.15.2
-easy-rouge==0.2.2
 editdistance==0.5.3
 efficiency==0.4
 entrypoints==0.3
@@ -86,6 +85,7 @@ langcodes==2.1.0
 langdetect==1.0.8
 language-tool-python==2.4.6
 lazy-object-proxy==1.4.3
+llvmlite==0.34.0
 lxml==4.5.2
 marisa-trie==0.7.5
 MarkupSafe==1.1.1
@@ -103,6 +103,7 @@ nbformat==5.0.7
 networkx==2.4
 nltk==3.5
 notebook==6.0.3
+numba==0.51.2
 numpy==1.19.0
 numpydoc==1.1.0
 overrides==3.0.0
@@ -160,9 +161,11 @@ segtok==1.5.10
 Send2Trash==1.5.0
 sentencepiece==0.1.91
 sentry-sdk==0.19.4
+shap==0.37.0
 shortuuid==1.0.1
 six==1.15.0
 sklearn==0.0
+slicer==0.0.3
 smart-open==2.1.0
 smmap==3.0.4
 snowballstemmer==2.0.0

@@ -29,10 +29,10 @@ class WMD(Metric):
 
     def convert_to_w2v(self):
         print("[WMD] glove=>w2v")
-        glove_file = datapath(self.w2vfile_path)
-        glove_w2v_format = get_tmpfile(self.glove_w2v_format)
-        _ = glove2word2vec(glove_file, glove_w2v_format)
-        Path(self.w2vfile_path).unlink(missing_ok=True)
+        # glove_file = self.w2vfile_path #datapath(self.w2vfile_path)
+        # glove_w2v_format = get_tmpfile(self.glove_w2v_foWrmat)
+        _ = glove2word2vec(self.w2vfile_path, self.glove_w2v_format)
+        # Path(self.w2vfile_path).unlink(missing_ok=True)
 
     def download_vectors(self):
         print("[WMD] downloading glove")

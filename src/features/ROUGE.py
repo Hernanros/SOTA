@@ -1,6 +1,6 @@
 """implements ROUGE metrics"""
 import pandas as pd
-import rouge
+from rouge import Rouge
 from src.features import Metric
 from tqdm import tqdm
 
@@ -21,17 +21,17 @@ class ROUGE(Metric):
             pairs[self.text1] = pairs[self.text1].str.strip()
             pairs[self.text2] = pairs[self.text2].str.strip()
 
-        evaluator = rouge.Rouge(metrics=['rouge-1'])
+        evaluator = Rouge(metrics=['rouge-1'])
         tqdm.pandas(desc=metric_names[0])
         pairs[metric_names[0]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
                                                                                        [row[self.text2]]
                                                                                        )[0]['rouge-1']['f'], axis=1)
-        evaluator = rouge.Rouge(metrics=['rouge-2'])
+        evaluator = Rouge(metrics=['rouge-2'])
         tqdm.pandas(desc=metric_names[1])
         pairs[metric_names[1]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
                                                                                        [row[self.text2]]
                                                                                        )[0]['rouge-2']['f'], axis=1)
-        evaluator = rouge.Rouge(metrics=['rouge-l'])
+        evaluator = Rouge(metrics=['rouge-l'])
         tqdm.pandas(desc=metric_names[2])
         pairs[metric_names[2]] = pairs.progress_apply(lambda row: evaluator.get_scores([row[self.text1]],
                                                                                        [row[self.text2]]

@@ -92,10 +92,10 @@ def main(args):
 ################################
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--pickle', type=str, required=True,
-                        default='data/datasets/combined',
+    parser.add_argument('--pickle', type=str, required=False,
+                        default='data/datasets/Yelp_human.csv',
                         help='pickle path for combined dataset')
-    parser.add_argument('--features', required=True, type=str, default='ALL',
+    parser.add_argument('--features', required=False, type=str, default='WMD',
                         help='use "ALL" for all features, or comma separated list of features')
     parser.add_argument('--exclude', required=False, type=str, default='',
                         help='include comma separated list of features to exclude from calculation')

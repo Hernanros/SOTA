@@ -47,7 +47,7 @@ distance_metrics = ['glove_cosine',
                     'L2_score',
                     'WMD']
 
-SELECTED_METRICS = ['WMD','BertScore', 'POS Dist score']
+SELECTED_METRICS = ['WMD','BertScore', 'POS Dist score','fasttext_cosine']
 
 
 def main_sweep():
@@ -59,7 +59,7 @@ def main_sweep():
     test_dataset = [None, path_sts,path_combined,path_qqp_sample]
     bad_annotators = [path_ba, None]
     scale_features = [True, False]
-    scale_labels = [True, False]
+    scale_labels = [False]
     rf_depth = np.arange(5,10)
     rf_top_n_features = [None]
     metrics = SELECTED_METRICS
@@ -90,7 +90,7 @@ def main_sweep():
                             rf_top_n_features = rf_tn,
                             metrics=metrics)
         try:
-            utils.wandb_logging(config, "Semantic Similarity Sweeping - Top 3 (Ivan) Features", run_wandb=True)
+            utils.wandb_logging(config, "Semantic Similarity Sweeping - Top 4 Features (+ cosine)", run_wandb=True)
         except AssertionError:
             continue
 
@@ -105,7 +105,7 @@ def main():
                         scale_features = True,
                         scale_labels = False,
                         rf_depth = 6,
-                        rf_top_n_features = 5)z
+                        rf_top_n_features = 5)
     try:
         utils.wandb_logging(config, "Semantic Similarity Sweeping Misc.")
     except AssertionError:
