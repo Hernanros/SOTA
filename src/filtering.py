@@ -12,7 +12,7 @@ class filter_annotators:
                 text_1_col = 'text_1', text_2_col = 'text_2', sentences_id = 'pair_id',
                 time_method = 'seconds', time_limit = 300,
                 min_labels = 4, unpopular_share = 0.5,
-                bleu_thresh = 0.8, sent_thresh = 1.9,
+                inconsistent_thresh = 1,bleu_thresh = 0.8, sent_thresh = 1.9,
                 exclude = ''):
         '''
         Arguments:
@@ -27,6 +27,7 @@ class filter_annotators:
             time_limit {float or int}: argument for time outlier function, high bound cap
             min_labels {int}: argument for varience and honeypot functions, minimum number of labels for labelers to calcukate groupby's
             unpopular_share {float}: argument for unpopular voter function, threshold value of the share of labels being on the monirity vote
+            inconsistent_thresh {float or int}: argument for inconsistenet_sentiment function , low bound for inconsistency measurement 
             bleu_thresh {float}: argument for inconsistenet_sentiment function , low bound for Bleu similarity score between sentences
             sent_thresh {float}: argument for inconsistenet_sentiment function , low bound for sentiment difference between sentences
             exclude {str or list}: functions not to run [time_outliers, random_honeypot, no_varience, unpopular, sentiment_inconsistent]
@@ -45,6 +46,7 @@ class filter_annotators:
         self.sentences_id = sentences_id
         self.min_labels = min_labels
         self.unpopular_share = unpopular_share
+        self.inconsistent_thresh = inconsistent_thresh
         self.bleu_thresh = bleu_thresh
         self.sent_thresh = sent_thresh        
         if isinstance(exclude, str):
@@ -203,7 +205,7 @@ class filter_annotators:
 
         return list(((total_opinion[(total_opinion.total_opinion>min_labels) & (total_opinion.unpopular_share>unpopular_share)])).index.values)
 
-    def inconsistenet_sentiment(self, bleu_thresh = 0.8, sent_thresh = 1.9):
+    def inconsistenet_sentiment(self, thresh = self.inconsistent_thresh, bleu_thresh = 0.8, sent_thresh = 1.9):
         '''
         identify labelers who show inconsistenet labeling stratagy: 
         for sentence pairs which have high BLEU score (i.e most words are similar), but high sentiment difference (i.e probably negation between them)
@@ -226,12 +228,16 @@ class filter_annotators:
         df['text_1_sent'] = df[self.text_1].progress_apply(lambda x: sentiment_pipe(x)).apply(lambda x: sent[x[0]['label']]*x[0]['score'])
         df['text_2_sent'] = df[self.text_2].progress_apply(lambda x: sentiment_pipe(x)).apply(lambda x: sent[x[0]['label']]*x[0]['score'])
         df['sent_diff'] = (df['text_1_sent'] - df['text_2_sent']).abs()
+
+        self.df['sent_diff'] = df['sent_diff'] 
         
-        #calculate BLEU scores for each pair https://www.nltk.org/_modules/nltk/translate/bleu_score.html
-        df['bleu'] = df.apply(lambda x: sentence_bleu(x[self.text_1].strip().split(),x[self.text_2].strip().split(),weights = [1,0,0,0]), axis = 1)
+        self.df['sent_diff'] = df['sent_diff'] 
+
+        #std high bleu high diff
+        bleu_diff_std = df[(df['bleu1'] > bleu_thresh) & (df['sent_diff'] > sent_thresh)].groupby(self.labelers_col)[self.label_col].std()
 
         #filter out annotator who show inconsistent stratagy for sentences with high BLEU but different sentiment 
-        return list(df[(df['bleu'] > bleu_thresh) & (df['sent_diff'] > sent_thresh)].groupby(self.labelers_col)[self.label_col].std().dropna().index)
+        return list(bleu_diff_std[bleu_diff_std > thresh].dropna().index)
 
 
         
