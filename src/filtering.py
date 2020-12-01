@@ -185,12 +185,13 @@ class filter_annotators:
         uniquelabels = self.df.groupby(self.sentences_id)[self.reduced_col].nunique()
         # reduce dataset to only have 2 unique answers
         pairs_two_agree = uniquelabels[uniquelabels==2].index.values
-        df_twoagree = self.df[self.df[self.sentences_id].isin(pairs_two_agree)]
+        df_twoagree = self.df[self.df[self.sentences_id].isin(pairs_two_agree)]    
 
         # set the generally agreed labels as popular vote 
         df_id_reducedlabel = df_twoagree.groupby(self.sentences_id)[self.reduced_col].median()
-        df_twoagree['generally_accepted_label']  = df_id_reducedlabel.values.repeat(3)
-
+        df_twoagree = df_twoagree.set_index(self.sentences_id).join(df_id_reducedlabel.rename('generally_accepted_label'))
+        
+        
         #count for each labeler how many times they were on the unpopular vote
         df_unpopularopinion = pd.DataFrame(df_twoagree[df_twoagree.reduced_label != df_twoagree.generally_accepted_label].groupby(self.labelers_col).size(), columns = ['unpopular_opinion_times'])
 
