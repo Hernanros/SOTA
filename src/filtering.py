@@ -11,7 +11,7 @@ class filter_annotators:
                 label_col = 'label', reduced_col = 'reduced_label', 
                 text_1_col = 'text_1', text_2_col = 'text_2', sentences_id = 'pair_id',
                 time_method = 'seconds', time_limit = 300,
-                min_labels = 4, unpopular_share = 0.5,
+                min_labels = 4, min_var = 1, unpopular_share = 0.5,
                 inconsistent_thresh = 1,bleu_thresh = 0.8, sent_thresh = 1.9,
                 exclude = ''):
         '''
@@ -26,6 +26,7 @@ class filter_annotators:
             time_method {str}: argument for time outlier function, wheather to use seconds or percentiles
             time_limit {float or int}: argument for time outlier function, high bound cap
             min_labels {int}: argument for varience and honeypot functions, minimum number of labels for labelers to calcukate groupby's
+            min_var {float or int}: argument for varience function, minimal threshold value
             unpopular_share {float}: argument for unpopular voter function, threshold value of the share of labels being on the monirity vote
             inconsistent_thresh {float or int}: argument for inconsistenet_sentiment function , low bound for inconsistency measurement 
             bleu_thresh {float}: argument for inconsistenet_sentiment function , low bound for Bleu similarity score between sentences
@@ -45,6 +46,7 @@ class filter_annotators:
         self.time_limit = time_limit
         self.sentences_id = sentences_id
         self.min_labels = min_labels
+        self.min_var = min_var
         self.unpopular_share = unpopular_share
         self.inconsistent_thresh = inconsistent_thresh
         self.bleu_thresh = bleu_thresh
@@ -82,7 +84,7 @@ class filter_annotators:
             if 'random_honeypot' not in self.exclude:
                 self.ba['high_random'] = self.random_honey_pot()
             if 'no_varience' not in self.exclude:
-                self.ba['no_variance'] = self.no_variance()
+                self.ba['no_variance'] = self.no_variance(min_var= self.min_var)
 
         # set up time outliers filter
         if self.duration_col is not None:     
@@ -96,7 +98,8 @@ class filter_annotators:
 
         #set up inconsistent sentiment
         if 'sentiment_inconsistent' not in self.exclude:
-            self.ba['sentiment_inconsistent'] = self.inconsistenet_sentiment(bleu_thresh = self.bleu_thresh , sent_thresh = self.sent_thresh)
+            self.ba['sentiment_inconsistent'] = self.inconsistenet_sentiment(thresh = self.inconsistent_thresh, 
+                                                                            bleu_thresh = self.bleu_thresh , sent_thresh = self.sent_thresh)
         
         if labelers is not None:
             self.labelers = labelers
@@ -166,7 +169,7 @@ class filter_annotators:
             self.labelers = self.labelers.join(total_std)
         else:
             self.labelers = labelers
-        return list((self.labelers[self.labelers['total_std']<0]).index.values)
+        return list((self.labelers[self.labelers['total_std']<min_var]).index.values)
 
     def unpopular_voter(self, min_labels = 4 , unpopular_share = 0.5):
         '''
@@ -205,12 +208,13 @@ class filter_annotators:
 
         return list(((total_opinion[(total_opinion.total_opinion>min_labels) & (total_opinion.unpopular_share>unpopular_share)])).index.values)
 
-    def inconsistenet_sentiment(self, thresh = self.inconsistent_thresh, bleu_thresh = 0.8, sent_thresh = 1.9):
+    def inconsistenet_sentiment(self, thresh = 1, bleu_thresh = 0.8, sent_thresh = 1.9):
         '''
         identify labelers who show inconsistenet labeling stratagy: 
         for sentence pairs which have high BLEU score (i.e most words are similar), but high sentiment difference (i.e probably negation between them)
         the labeler have high std. meaning that the stratagy for labeling similar sentneces with opposite sentiment is inconsistenet
         args:
+            thresh {float}
             bleu_thresh {float}
             sent_thresh {float}
         Returns :
@@ -231,8 +235,6 @@ class filter_annotators:
 
         self.df['sent_diff'] = df['sent_diff'] 
         
-        self.df['sent_diff'] = df['sent_diff'] 
-
         #std high bleu high diff
         bleu_diff_std = df[(df['bleu1'] > bleu_thresh) & (df['sent_diff'] > sent_thresh)].groupby(self.labelers_col)[self.label_col].std()
 
