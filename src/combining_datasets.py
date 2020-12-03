@@ -13,7 +13,7 @@ for i, file in enumerate(glob.glob('data/raw_data/*.csv')):
         temp['dataset'] = file[5:-4].lower()
         df = pd.concat((df,temp),axis = 0)
 df['random'] = df.dataset.apply(lambda x: 'random' in  x).astype(int)
-df['duration'] = pd.to_datetigit dime(df.SubmitTime)-pd.to_datetime(df.AcceptTime)
+df['duration'] = pd.to_datetime(df.SubmitTime)-pd.to_datetime(df.AcceptTime)
 
 df = df.drop(['HITId','HITTypeId', 'Title', 'Description', 'Keywords',
        'RequesterAnnotation', 'AssignmentDurationInSeconds', 'AssignmentId','AssignmentStatus','AcceptTime', 'SubmitTime','AutoApprovalTime', 'ApprovalTime', 'RejectionTime','RequesterFeedback', 'WorkTimeInSeconds', 'LifetimeApprovalRate','Last30DaysApprovalRate', 'Last7DaysApprovalRate','Approve', 'Reject'],axis = 1)

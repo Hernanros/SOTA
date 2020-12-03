@@ -26,7 +26,7 @@ path_qqp = 'qqp.csv'
 path_qqp_sample = 'sample_qqp.csv'
 path_ba = 'ba_all.txt'
 
-metrics = ['bleu', 
+METRICS = ['bleu', 
            'bleu1',
            'glove_cosine',
            'fasttext_cosine',
@@ -47,7 +47,8 @@ distance_metrics = ['glove_cosine',
                     'L2_score',
                     'WMD']
 
-SELECTED_METRICS = ['WMD','BertScore', 'POS Dist score','fasttext_cosine']
+TOP_3_METRICS = ['WMD','BertScore', 'POS Dist score']
+TOP_4_METRICS = ['WMD','BertScore', 'POS Dist score','fasttext_cosine']
 
 
 def main_sweep():
@@ -59,38 +60,55 @@ def main_sweep():
     test_dataset = [None, path_sts,path_combined,path_qqp_sample]
     bad_annotators = [path_ba, None]
     scale_features = [True, False]
-    scale_labels = [False]
     rf_depth = np.arange(5,10)
-    rf_top_n_features = [None]
-    metrics = SELECTED_METRICS
+    rf_top_n_features = list(np.arange(3,7)) + [None]
+    metrics = [METRICS, TOP_3_METRICS, TOP_4_METRICS]
 
     all_options = itertools.product(train_dataset,
                                     test_dataset,
                                     bad_annotators,
                                     scale_features,
-                                    scale_labels,
                                     rf_depth,
-                                    rf_top_n_features)
+                                    rf_top_n_features,
+                                    metrics)
 
-    for tr_d, tst_d, ba, sf, sl, rf_d, rf_tn in all_options:
+    # jump_to_option = 2812
 
+    for i, (tr_d, tst_d, ba, sf, rf_d, rf_tn, met) in enumerate(all_options):
+
+        tr_d = path_sts
+        tst_d = path_qqp_sample
+        ba = None
+        sf = False
+        rf_d = 5
+        rf_tn = None
+        met =  TOP_4_METRICS
+
+        # The function takes the same dataset when tst_d == None, no need for when they have the same dataset name
         if tr_d == tst_d:
             continue
 
+        # ba parameter is only viable when one of the datasets is the combined dataset
         if (tr_d != path_combined) and (tst_d != path_combined) and (ba is not None):
             continue
 
+        # The various top_n features is only something we can for when we take all the metrics
+        if (len(met) != len(METRICS)) and (rf_tn is not None):
+            continue
+
+        # if i < jump_to_option:
+        #     continue
 
         config = utils.Config(train_dataset = tr_d,
                             test_dataset = tst_d,
                             bad_annotators = ba,
                             scale_features = sf,
-                            scale_labels = sl,
+                            scale_labels = False,
                             rf_depth = rf_d,
                             rf_top_n_features = rf_tn,
-                            metrics=metrics)
+                            metrics=met)
         try:
-            utils.wandb_logging(config, "Semantic Similarity Sweeping - Top 4 Features (+ cosine)", run_wandb=True)
+            utils.wandb_logging(config, "Semantic Similarity Sweeping - Combined pair fixed", run_wandb=False)
         except AssertionError:
             continue
 
