@@ -31,7 +31,7 @@ class filter_annotators:
             inconsistent_thresh {float or int}: argument for inconsistenet_sentiment function , low bound for inconsistency measurement 
             bleu_thresh {float}: argument for inconsistenet_sentiment function , low bound for Bleu similarity score between sentences
             sent_thresh {float}: argument for inconsistenet_sentiment function , low bound for sentiment difference between sentences
-            exclude {str or list}: functions not to run [time_outliers, random_honeypot, no_varience, unpopular, sentiment_inconsistent]
+            exclude {str or list}: functions not to run [time_outliers, random_honeypot, unpopular, sentiment_inconsistent]
         '''
         self.df = None
         self.labelers = None
@@ -56,7 +56,6 @@ class filter_annotators:
         
         self.ba = {'duration': None,
                     'high_random': None,
-                    'no_variance':None,
                     'unpopular': None,
                     'sentiment_inconsistent': None,
                     'ba_combined': None}
@@ -71,7 +70,6 @@ class filter_annotators:
             - inconsistenet_sentiment
         stores each list of suspicious labelers in the dictionary and creates a combined list of suspicious labelers
         '''
-        
         labelers = None
 
         self.df = df
@@ -79,12 +77,15 @@ class filter_annotators:
             self.df['reduced_label'] = self.df[self.label_col].apply(lambda x: 1 if x > 3 else -1 if x < 3 else 0) 
             self.reduced_col = 'reduced_label'
        
-        # set up random honey pot and no varience filters       
+        # set up random honey pot and no varience filters, 
+        # this filter takes arguments that satisfy both conditions: 
+        #   - low varience 
+        #   - higher random mean than non-random       
         if self.random_col is not None:
             if 'random_honeypot' not in self.exclude:
-                self.ba['high_random'] = self.random_honey_pot()
-            if 'no_varience' not in self.exclude:
-                self.ba['no_variance'] = self.no_variance(min_var= self.min_var)
+                self.ba['high_random'] = list(set(self.random_honey_pot()) \
+                                        .intersection(set(self.no_variance(min_var= self.min_var))))
+
 
         # set up time outliers filter
         if self.duration_col is not None:     
