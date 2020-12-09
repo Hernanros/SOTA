@@ -31,7 +31,7 @@ class filter_annotators:
             inconsistent_thresh {float or int}: argument for inconsistenet_sentiment function , low bound for inconsistency measurement 
             bleu_thresh {float}: argument for inconsistenet_sentiment function , low bound for Bleu similarity score between sentences
             sent_thresh {float}: argument for inconsistenet_sentiment function , low bound for sentiment difference between sentences
-            exclude {str or list}: functions not to run [time_outliers, random_honeypot, unpopular, sentiment_inconsistent]
+            exclude {str or list}: functions not to run [time_outliers, random_honeypot,high_random, no_varience, unpopular, sentiment_inconsistent]
         '''
         self.df = None
         self.labelers = None
@@ -53,8 +53,11 @@ class filter_annotators:
         self.sent_thresh = sent_thresh        
         if isinstance(exclude, str):
             self.exclude = [exclude]
+        self.exclude = exclude
         
         self.ba = {'duration': None,
+                    'random_honeypot': None,
+                    'low_std': None,
                     'high_random': None,
                     'unpopular': None,
                     'sentiment_inconsistent': None,
@@ -65,6 +68,7 @@ class filter_annotators:
         preforms all the filtering functions listed below:
             - time_outliers
             - random_honeypot
+            - high_random
             - no_varience
             - unpopular_voter
             - inconsistenet_sentiment
@@ -82,9 +86,16 @@ class filter_annotators:
         #   - low varience 
         #   - higher random mean than non-random       
         if self.random_col is not None:
+            rands = self.random_honey_pot()
+            stds = self.no_variance()
+            
             if 'random_honeypot' not in self.exclude:
-                self.ba['high_random'] = list(set(self.random_honey_pot()) \
-                                        .intersection(set(self.no_variance(min_var= self.min_var))))
+                self.ba['random_honeypot'] = list(set(rands) \
+                                        .intersection(set(stds)))
+            if 'high_random' not in self.exclude:
+                self.ba['high_random'] = rands
+            if 'no_varience' not in self.exclude:
+                self.ba['low_std'] = stds
 
 
         # set up time outliers filter
