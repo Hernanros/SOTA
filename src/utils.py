@@ -144,7 +144,7 @@ def wandb_logging(config, project_name = "semantic_similarity", run_wandb=True):
     X_train, X_test, y_train, y_test = model_corr.get_train_test_data(train_path = config.train_dataset, 
                                                                       test_path = config.test_dataset,
                                                                       all_metrics = config.metrics,
-                                                                      filtered_ba_path = config.bad_annotators,
+                                                                      filtered_ba_category = config.bad_annotators,
                                                                       scale_features = config.scale_features,
                                                                       scale_label = config.scale_labels)
 

@@ -50,39 +50,32 @@ distance_metrics = ['glove_cosine',
 TOP_3_METRICS = ['WMD','BertScore', 'POS Dist score']
 TOP_4_METRICS = ['WMD','BertScore', 'POS Dist score','fasttext_cosine']
 
+filtering_heursitics = ['duration', 'random_honeypot', 'low_std', 'high_random', 'unpopular', 'sentiment_inconsistent']
+
+
 
 def main_sweep():
     '''
     Iterating through all the permutations list below, each viable combination will be tested and sent to wandb.
     '''
 
-    train_dataset = [path_sts,path_combined,path_qqp_sample]
-    test_dataset = [None, path_sts,path_combined,path_qqp_sample]
-    bad_annotators = [path_ba, None]
-    scale_features = [True, False]
-    rf_depth = np.arange(5,10)
-    rf_top_n_features = list(np.arange(3,7)) + [None]
+    train_dataset = [path_combined]
+    test_dataset = [None, path_sts,path_qqp_sample]
+    # bad_annotators = [c for i in range(1,len(filtering_heursitics)+1) for c in itertools.combinations(filtering_heursitics,i)]
+    bad_annotators = [None]
+    # scale_features = [True]
+    # rf_depth = [6]
+    rf_top_n_features =  [6, None]
     metrics = [METRICS, TOP_3_METRICS, TOP_4_METRICS]
 
     all_options = itertools.product(train_dataset,
                                     test_dataset,
                                     bad_annotators,
-                                    scale_features,
-                                    rf_depth,
                                     rf_top_n_features,
                                     metrics)
 
-    # jump_to_option = 2812
 
-    for i, (tr_d, tst_d, ba, sf, rf_d, rf_tn, met) in enumerate(all_options):
-
-        tr_d = path_sts
-        tst_d = path_qqp_sample
-        ba = None
-        sf = False
-        rf_d = 5
-        rf_tn = None
-        met =  TOP_4_METRICS
+    for tr_d, tst_d, ba, rf_tn, met in all_options:
 
         # The function takes the same dataset when tst_d == None, no need for when they have the same dataset name
         if tr_d == tst_d:
@@ -96,19 +89,21 @@ def main_sweep():
         if (len(met) != len(METRICS)) and (rf_tn is not None):
             continue
 
-        # if i < jump_to_option:
-        #     continue
+        # counter += 1
+
+        # if counter < jump_option:
+        #     continue 
 
         config = utils.Config(train_dataset = tr_d,
                             test_dataset = tst_d,
                             bad_annotators = ba,
-                            scale_features = sf,
+                            scale_features = True,
                             scale_labels = False,
-                            rf_depth = rf_d,
+                            rf_depth = 6,
                             rf_top_n_features = rf_tn,
                             metrics=met)
         try:
-            utils.wandb_logging(config, "Semantic Similarity Sweeping - Combined pair fixed", run_wandb=False)
+            utils.wandb_logging(config, "Filtering Heuristics Sweep 2", run_wandb=True)
         except AssertionError:
             continue
 
@@ -120,10 +115,8 @@ def main():
     config = utils.Config(train_dataset = path_sts,
                         test_dataset = path_qqp,
                         bad_annotators = path_ba,
-                        scale_features = True,
-                        scale_labels = False,
-                        rf_depth = 6,
-                        rf_top_n_features = 5)
+                        scale_features = True)
+
     try:
         utils.wandb_logging(config, "Semantic Similarity Sweeping Misc.")
     except AssertionError:

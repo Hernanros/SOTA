@@ -10,6 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from sklearn.preprocessing import MinMaxScaler
+import pickle
 
 metrics = ['bleu', 
            'bleu1',
@@ -34,38 +35,41 @@ distance_metrics = ['glove_cosine',
 
 MODULE_PATH = Path(__file__).resolve().parents[1].resolve()
 DATA_PATH = MODULE_PATH / 'data' / 'datasets'
-BA_PATH = MODULE_PATH / 'data' / 'bad_annotators'
+ba_path =  MODULE_PATH / 'data' / 'bad_annotators' / 'combined_ba.pickle'
 
 
-def get_train_test_data(train_path: str, all_metrics: list = metrics, test_path: str = None, filtered_ba_path = None, scale_features = True, scale_label=False) -> tuple:
+def get_train_test_data(train_path: str, all_metrics: list = metrics, test_path: str = None, filtered_ba_category = None, scale_features = True, scale_label=False) -> tuple:
     '''
     Retrieve the data from the paths and split into train/test based off if they are from the same dataset or otherwise.
 
-    Parameters:
+    Parameters:['duration', 'random_honeypot', 'low_std', 'high_random', 'unpopular', 'sentiment_inconsistent', 'ba_combined']
         train_path -- {str} -- Path to the training dataset
         metrics -- {list} -- name of the metrics we want to use as features
         test_path -- {str} -- Path to the test dataset (by default is None, and then is the same as Train_path)
-        filtered_ba -- {list} -- list of annotators to filter out
+        filtered_ba_category -- {list} -- list of annotator filtering heuristics
 
     Returns:
         {tuple} -- (X_train, X_test, y_train, y_test)
     '''
     if ("combined_dataset.csv" != train_path) and ("combined_dataset.csv" != test_path):
-        assert (filtered_ba_path is None), "Filtering only accesible in combined_dataset"
+        assert (filtered_ba_category is None), "Filtering only accesible in combined_dataset"
 
     
-    if filtered_ba_path:
-        with open(BA_PATH / filtered_ba_path) as f:
-            filtered_ba = f.read().split("\n")
+    if filtered_ba_category:
+        ba_list = np.array([])
+        with open(ba_path, "rb") as f:
+            filtered_ba = pickle.load(f)
+        for key in filtered_ba_category:
+            ba_list = np.concatenate((ba_list, np.array(filtered_ba[key])))
+        ba_list = list(set(ba_list.flatten()))
 
- 
     if test_path is None:
         df = pd.read_csv(DATA_PATH / train_path, index_col=0)
 
         #drop null values
         df.dropna(inplace=True)
 
-        if filtered_ba_path:
+        if filtered_ba_category:
             df = df[~df.annotator.isin(filtered_ba)]
 
         if scale_features:
@@ -95,7 +99,7 @@ def get_train_test_data(train_path: str, all_metrics: list = metrics, test_path:
         train_data.dropna(inplace=True)
         test_data.dropna(inplace=True)
 
-        if filtered_ba_path:
+        if filtered_ba_category:
             if train_path == "combined_dataset.csv":
                 train_data = train_data[~train_data.annotator.isin(filtered_ba)]
             else:
