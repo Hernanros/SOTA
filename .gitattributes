@@ -13,3 +13,4 @@ data/reports/wandb_sweeping_top4.csv filter=lfs diff=lfs merge=lfs -text
 data/reports/wandb_sweeping.csv filter=lfs diff=lfs merge=lfs -text
 data/reports/wandb_sweeping_ivanfeatures.csv filter=lfs diff=lfs merge=lfs -text
 data/reports/wandb_total_experiment.csv filter=lfs diff=lfs merge=lfs -text
+data/reports/filtering_heuristic_sweeps.csv filter=lfs diff=lfs merge=lfs -text
