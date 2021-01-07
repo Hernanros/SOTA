@@ -86,7 +86,7 @@ langdetect==1.0.8
 language-tool-python==2.4.6
 lazy-object-proxy==1.4.3
 llvmlite==0.34.0
-lxml==4.5.2
+lxml==4.6.2
 marisa-trie==0.7.5
 MarkupSafe==1.1.1
 matplotlib==3.2.2
