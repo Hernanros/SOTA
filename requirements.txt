@@ -41,7 +41,7 @@ filelock==3.0.12
 flair==0.6
 flaky==3.7.0
 Flask==1.1.2
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 ftfy==5.8
 future==0.18.2
 gensim==3.8.3
